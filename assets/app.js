@@ -1,747 +1,1478 @@
+/**
+ * ============================================================================
+ * Website Resmi Sin Tradisional (sintradisional.com) - Katalog End-User,
+ * Pembanding Harga Toko vs Aplikasi Online, Stok Live POS & Info Snack Box PO
+ * ============================================================================
+ */
+
+const POS_PUBLIC_STOK_URL =
+  'https://script.google.com/macros/s/AKfycbyCBySvO-HcLsmnmchp1RL4WC8AKSQ2iMxru2OZMoJKteyqZjvcnvCY9d4IiC_Y2ur-/exec?action=public_stok';
+
+const WA_KASIR_PHONE = '62895330012673';
+const WA_MANAGER_PHONE = '62895412228351';
+
+// Katalog visual harian & paket acara dari 4 folder aktif (regular, kue kue, Spesial, paket)
 const PRODUCTS = [
-  // KUE BASAH TRADISIONAL (MANIS)
+  // ==================== KATEGORI REGULAR ====================
   {
-    id: "kue-bugis",
-    name: "Kue Bugis (Bungkus Daun)",
-    cat: "manis",
-    badge: "Terlaris 1978",
-    img: "foto_produk/foto-produk-kue-basah-bandung-sin-tradisional-12.jpg",
-    desc: "Kue ketan lembut isi unti kelapa gula merah asli, dibungkus daun pisang segar berbentuk lipat persegi klasik."
+    id: 'bugis',
+    sku: 'INT-KB-BGS-B1K',
+    name: 'Kue Bugis',
+    category: 'regular',
+    posCat: 'Regular',
+    unit: '1 pcs',
+    hargaToko: 5000,
+    hargaOnline: 6500,
+    img: 'assets/img/regular/foto-produk-bugis-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Kue ketan hitam/hijau kenyal dengan isian unti kelapa gula aren asli, dibungkus daun pisang segar.',
+    featured: true
   },
   {
-    id: "bugis-mandi",
-    name: "Kue Bugis Mandi",
-    cat: "manis",
-    badge: "Favorit",
-    img: "bugis-mandi-kue-basah-bandung-sin-tradisional-10.jpg",
-    desc: "Bola ketan isi unti kelapa manis yang disiram saus fla santan kental gurih di dalam cup mika higienis."
+    id: 'nagasari',
+    sku: 'INT-KB-NAG-B1K',
+    name: 'Nagasari',
+    category: 'regular',
+    posCat: 'Regular',
+    unit: '1 pcs',
+    hargaToko: 5000,
+    hargaOnline: 6500,
+    img: 'assets/img/regular/foto-produk-nagasari-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Kue pisang lembut berbalut tepung beras santan wangi pandan dan daun pisang kukus.'
   },
   {
-    id: "nagasari-pisang",
-    name: "Nagasari Pisang",
-    cat: "manis",
-    badge: "Terlaris 1978",
-    img: "nagasari-kue-basah-bandung-sin-tradisional-gmn-01.jpg",
-    desc: "Olahan tepung beras dan santan lembut dengan potongan pisang pilihan, dikukus wangi dalam balutan daun pisang."
+    id: 'bubur-lolos',
+    sku: 'INT-KB-BBL-B1K',
+    name: 'Bubur Lolos',
+    category: 'regular',
+    posCat: 'Regular',
+    unit: '1 pcs',
+    hargaToko: 5000,
+    hargaOnline: 6500,
+    img: 'assets/img/regular/foto-produk-bubur-lolos-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Bubur sumsum gurih berpadu kinca gula merah legit, lembut dibungkus daun pisang.'
   },
   {
-    id: "dadar-gulung",
-    name: "Dadar Gulung Pandan",
-    cat: "manis",
-    badge: "Favorit",
-    img: "dadar-gulung-kue-basah-bandung-sin-tradisional-gmn-01.jpg",
-    desc: "Kulit dadar pandan asli yang wangi dan lembut dengan isian unti kelapa gula merah manis legit."
+    id: 'dadar-gulung',
+    sku: 'KSN-KB-DDG-B2',
+    name: 'Dadar Gulung (Isi 2)',
+    category: 'regular',
+    posCat: 'Regular',
+    unit: '1 mika (Isi 2)',
+    hargaToko: 10000,
+    hargaOnline: 12500,
+    img: 'assets/img/regular/foto-produk-dadar-gulung-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Kulit dadar pandan berpori halus berisi kelapa parut manis gula merah. Kemasan mika isi 2 pcs.'
   },
   {
-    id: "bubur-lolos",
-    name: "Bubur Lolos",
-    cat: "manis",
-    badge: "Khas Bandung",
-    img: "bubur-lolos-kue-basah-bandung-sin-tradisional-gmn-01.jpg",
-    desc: "Kue tradisional khas Bandung bertekstur sangat lembut dengan perpaduan gula merah aren dan santan gurih."
+    id: 'talam-pandan',
+    sku: 'INT-KB-TLP-B1K',
+    name: 'Talam Pandan',
+    category: 'regular',
+    posCat: 'Regular',
+    unit: '1 pcs',
+    hargaToko: 5000,
+    hargaOnline: 6500,
+    img: 'assets/img/regular/foto-produk-talam-pandan-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Perpaduan lapisan pandan hijau harum dan santan putih gurih yang lembut lumer.'
   },
   {
-    id: "talam-pandan",
-    name: "Talam Pandan",
-    cat: "manis",
-    badge: "Resep 1978",
-    img: "talam-pandan-kue-basah-bandung-sin-tradisional-gmn-01.jpg",
-    desc: "Perpaduan harmonis lapisan bawah pandan manis wangi dan lapisan atas santan gurih lembut."
+    id: 'talam-ubi',
+    sku: 'INT-KB-TLU-B1K',
+    name: 'Talam Ubi',
+    category: 'regular',
+    posCat: 'Regular',
+    unit: '1 pcs',
+    hargaToko: 5000,
+    hargaOnline: 6500,
+    img: 'assets/img/regular/foto-produk-talam-ubi-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Kue talam berbahan ubi pilihan yang legit dan gurih, 100% tanpa pengawet.'
   },
   {
-    id: "talam-ubi",
-    name: "Talam Ubi Kuning",
-    cat: "manis",
-    badge: "Resep 1978",
-    img: "talam-ubi-kue-basah-bandung-sin-tradisional-gmn-01.jpg",
-    desc: "Kue talam dari ubi kuning asli pilihan dengan lapisan atas santan kental yang gurih dan lembut."
+    id: 'talam-pisang',
+    sku: 'INT-KB-TPG-B1',
+    name: 'Talam Pisang',
+    category: 'regular',
+    posCat: 'Regular',
+    unit: '1 pcs',
+    hargaToko: 5000,
+    hargaOnline: 6500,
+    img: 'assets/img/regular/foto-produk-talam-pisang-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Kue talam manis dengan irisan pisang raja wangi, tekstur kenyal dan lembut.'
   },
   {
-    id: "talam-pisang",
-    name: "Talam Pisang",
-    cat: "manis",
-    badge: "Lembut",
-    img: "talam-pisang-kue-basah-bandung-sin-tradisional-01.jpeg",
-    desc: "Kue talam manis gurih dengan potongan pisang matang di dalamnya dan lapisan santan segar."
+    id: 'talam-ebi',
+    sku: 'INT-KB-TLE-B1',
+    name: 'Talam Ebi (Asin)',
+    category: 'regular',
+    posCat: 'Regular',
+    unit: '1 pcs',
+    hargaToko: 5000,
+    hargaOnline: 6500,
+    img: 'assets/img/regular/foto-produk-talam-asin-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Talam gurih klasik dengan taburan tumisan ebi wangi & bawang goreng renyah.',
+    featured: true
   },
   {
-    id: "lupis-ketan",
-    name: "Lupis Ketan Gula Aren",
-    cat: "manis",
-    badge: "Terlaris",
-    img: "lupis-kue-basah-bandung-sin-tradisional-gmn-01.jpg",
-    desc: "Ketan pulen kukus berbalut kelapa parut segar, disajikan dengan siraman kinca gula aren kental."
+    id: 'lupis',
+    sku: 'INT-KB-LPS-B1',
+    name: 'Kue Lupis',
+    category: 'regular',
+    posCat: 'Regular',
+    unit: '1 porsi + gula merah',
+    hargaToko: 5000,
+    hargaOnline: 6500,
+    img: 'assets/img/regular/foto-produk-lupis-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Lupis ketan segitiga kenyal dengan kelapa parut gurih dan siraman kinca gula aren.'
   },
   {
-    id: "putri-noong",
-    name: "Putri Noong",
-    cat: "manis",
-    badge: "Khas Sunda",
-    img: "putri-noong-kue-basah-bandung-sin-tradisional-gmn-01.jpg",
-    desc: "Jajanan pasar khas Sunda dari singkong parut warna-warni berisi pisang manis dan taburan kelapa parut."
+    id: 'putri-noong',
+    sku: 'INT-KB-PTN-B1K',
+    name: 'Putri Noong',
+    category: 'regular',
+    posCat: 'Regular',
+    unit: '1 mika',
+    hargaToko: 5000,
+    hargaOnline: 6000,
+    img: 'assets/img/regular/foto-produk-putri-noong-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Kue tradisional singkong parut balut pisang manis di tengahnya dengan taburan kelapa segar.'
   },
   {
-    id: "ketimus",
-    name: "Ketimus Singkong",
-    cat: "manis",
-    badge: "Tradisional",
-    img: "foto_produk/foto-produk-kue-basah-bandung-sin-tradisional-13.jpg",
-    desc: "Olahan singkong parut, kelapa, dan gula merah pilihan yang dikukus matang di dalam daun pisang."
+    id: 'putu-mayang',
+    sku: 'INT-KB-PTM-B1',
+    name: 'Putu Mayang',
+    category: 'regular',
+    posCat: 'Regular',
+    unit: '1 mika + kinca',
+    hargaToko: 5000,
+    hargaOnline: 6500,
+    img: 'assets/img/regular/foto-produk-putu-mayang-hijau-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    variants: [
+      { label: 'Hijau Pandan', img: 'assets/img/regular/foto-produk-putu-mayang-hijau-kue-basah-bandung-sin-tradisional-261113-01.jpg' },
+      { label: 'Merah Muda', img: 'assets/img/regular/foto-produk-putu-mayang-pink-kue-basah-bandung-sin-tradisional-261113-01.jpg' },
+      { label: 'Putih Ori', img: 'assets/img/regular/foto-produk-putu-mayang-putih-kue-basah-bandung-sin-tradisional-261113-01.jpg' }
+    ],
+    desc: 'Putu mayang tradisional tersedia pilihan warna hijau pandan, pink, dan putih, lengkap dengan kuah kinca santan gula merah.'
   },
   {
-    id: "putu-mayang",
-    name: "Putu Mayang Kinca",
-    cat: "manis",
-    badge: "Favorit",
-    img: "putu-mayang-kue-basah-bandung-sin-tradisional-gmn-01.jpg",
-    desc: "Putu mayang tepung beras lembut disajikan bersama kuah kinca santan gula merah yang harum."
+    id: 'serabi-kinca',
+    sku: 'KSN-KB-SRB-B1',
+    name: 'Serabi Kinca',
+    category: 'regular',
+    posCat: 'Regular',
+    unit: '1 mika + kinca',
+    hargaToko: 5000,
+    hargaOnline: 6500,
+    img: 'assets/img/regular/foto-produk-serabi-kinca-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Serabi pandan empuk khas Bandung disajikan dengan kuah kinca gula merah santan gurih.'
   },
   {
-    id: "klepon-ketan",
-    name: "Klepon Ketan Gula Merah",
-    cat: "manis",
-    badge: "Segar Subuh",
-    img: "klepon-kue-basah-bandung-sin-tradisional-11.jpg",
-    desc: "Bola ketan pandan kenyal dengan isian gula merah cair yang lumer di mulut dan balutan kelapa parut."
+    id: 'serabi-oncom',
+    sku: 'KSN-KB-SRO-B1',
+    name: 'Serabi Oncom',
+    category: 'regular',
+    posCat: 'Regular',
+    unit: '1 pcs',
+    hargaToko: 5000,
+    hargaOnline: 6500,
+    img: 'assets/img/regular/foto-produk-serabi-oncom-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Serabi gurih khas Bandung dengan topping tumisan oncom berbumbu pedas gurih sedap.'
   },
   {
-    id: "serabi-kinca",
-    name: "Serabi Kinca Gula Merah",
-    cat: "manis",
-    badge: "Hangat & Lembut",
-    img: "serabi-kinca-kue-basah-bandung-sin-tradisional-gmn-01.jpg",
-    desc: "Serabi Bandung bertekstur empuk berpori dengan siraman kuah kinca santan gula aren asli."
+    id: 'kelepon',
+    sku: 'KSN-KB-KLP-B2',
+    name: 'Kelepon',
+    category: 'regular',
+    posCat: 'Regular',
+    unit: '1 mika',
+    hargaToko: 5000,
+    hargaOnline: 6000,
+    img: 'assets/img/regular/foto-produk-kelepon-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Bola ketan kenyal isi gula merah lumer saat digigit, dibalut parutan kelapa muda.'
   },
   {
-    id: "kue-ijo",
-    name: "Kue Ijo (Kue Lumpang)",
-    cat: "manis",
-    badge: "Pandan Asli",
-    img: "kue-ijo-kue-basah-bandung-sin-tradisional-05.jpeg",
-    desc: "Kue tradisional berlesung pipit dari daun pandan asli, kenyal lembut dengan taburan kelapa parut."
+    id: 'ongol-ongol',
+    sku: 'KSN-KB-ONG-B2',
+    name: 'Ongol-Ongol',
+    category: 'regular',
+    posCat: 'Regular',
+    unit: '1 mika (Isi 2)',
+    hargaToko: 5000,
+    hargaOnline: 6000,
+    img: 'assets/img/regular/foto-produk-ongol-ongol-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Kue sagu gula merah kenyal manis dengan baluran kelapa parut kukus.'
   },
   {
-    id: "cantik-manis",
-    name: "Cantik Manis (Cente Manis)",
-    cat: "manis",
-    badge: "Lembut",
-    img: "cantik-manis-kue-basah-bandung-sin-tradisional-01.jpeg",
-    desc: "Olahan tepung hunkwe lembut dan santan segar dengan taburan mutiara sagu yang manis."
+    id: 'kue-ijo',
+    sku: 'INT-KB-KIJ-B1',
+    name: 'Kue Ijo',
+    category: 'regular',
+    posCat: 'Regular',
+    unit: '1 pcs',
+    hargaToko: 5000,
+    hargaOnline: 6500,
+    img: 'assets/img/regular/foto-produk-kue-basah-bandung-sin-tradisional-05.jpg',
+    desc: 'Kue basah panggang/kukus aroma pandan wangi beralas daun pisang segar.'
   },
   {
-    id: "kue-pelita",
-    name: "Kue Pelita Daun Pandan",
-    cat: "manis",
-    badge: "Harum Pandan",
-    img: "pelita-kue-basah-bandung-sin-tradisional-01.jpeg",
-    desc: "Kue lembut dua lapis pandan dan santan yang disajikan di dalam takir daun pandan wangi."
-  },
-  {
-    id: "lapis-hijau",
-    name: "Kue Lapis Hijau Pandan",
-    cat: "manis",
-    badge: "Klasik",
-    img: "lapis-hijau-kue-basah-bandung-sin-tradisional-01.jpeg",
-    desc: "Kue lapis beras kenyal berlapis-lapis dengan aroma pandan alami tanpa bahan pengawet."
-  },
-  {
-    id: "lapis-coklat",
-    name: "Kue Lapis Coklat",
-    cat: "manis",
-    badge: "Klasik",
-    img: "lapis-coklat-kue-basah-bandung-sin-tradisional-01.jpeg",
-    desc: "Kue lapis tradisional perpaduan rasa coklat dan santan gurih yang disukai seluruh anggota keluarga."
-  },
-  {
-    id: "singkong-bangkok",
-    name: "Singkong Thailand / Bangkok",
-    cat: "manis",
-    badge: "Spesial",
-    img: "singkong-bangkok-kue-basah-bandung-sin-tradisional-02.jpg",
-    desc: "Singkong empuk pilihan yang dimasak manis lembut dengan siraman vla santan gurih kental."
-  },
-  {
-    id: "ongol-ongol",
-    name: "Ongol-Ongol Gula Merah",
-    cat: "manis",
-    badge: "Tradisional",
-    img: "foto_produk/foto-produk-kue-basah-bandung-sin-tradisional-09.jpg",
-    desc: "Kue kenyal lembut dari gula aren asli dengan balutan kelapa parut kukus yang gurih."
-  },
-  {
-    id: "kolak-candil",
-    name: "Kolak Biji Salak & Candil",
-    cat: "manis",
-    badge: "Segar",
-    img: "foto_produk/foto-produk-kue-basah-bandung-sin-tradisional-47.jpg",
-    desc: "Biji salak ubi kuning kenyal dan kolang-kaling dalam kuah gula merah aren serta santan gurih."
-  },
-  {
-    id: "kue-sus-vla",
-    name: "Kue Sus Vla Vanila",
-    cat: "manis",
-    badge: "Favorit Snack Box",
-    img: "foto_produk/foto-produk-kue-basah-bandung-sin-tradisional-37.jpg",
-    desc: "Kulit sus panggang lembut dengan isian vla susu vanila yang manis pas dan segar."
-  },
-  {
-    id: "bolu-kukus",
-    name: "Bolu Kukus Mekar",
-    cat: "manis",
-    badge: "Favorit Snack Box",
-    img: "foto_produk/foto-produk-kue-basah-bandung-sin-tradisional-39.jpg",
-    desc: "Bolu kukus mekar bertekstur empuk dan wangi, cocok untuk isian Snack Box maupun teman minum teh."
-  },
-
-  // GURIH & ASIN
-  {
-    id: "serabi-oncom",
-    name: "Serabi Oncom Pedas Gurih",
-    cat: "gurih",
-    badge: "Terlaris Gurih",
-    img: "serabi-oncom-kue-basah-bandung-sin-tradisional-gmn-01.jpg",
-    desc: "Serabi Bandung hangat dengan taburan tumis oncom bumbu kencur khas Sunda dan irisan cabai rawit."
-  },
-  {
-    id: "talam-ebi",
-    name: "Talam Ebi Spesial",
-    cat: "gurih",
-    badge: "Khas Sin 1978",
-    img: "talam-ebi-kue-basah-bandung-sin-tradisional-gmn-01.jpg",
-    desc: "Kue talam santan gurih dengan taburan ebi sangrai berbumbu harum di bagian atasnya."
-  },
-  {
-    id: "lemper-ayam",
-    name: "Lemper Ayam Spesial",
-    cat: "gurih",
-    badge: "Favorit Rapat",
-    img: "foto_produk/foto-produk-kue-basah-bandung-sin-tradisional-38.jpg",
-    desc: "Ketan kukus santan pulen berisi suwiran daging ayam bumbu rempah gurih dalam balutan daun pisang."
-  },
-  {
-    id: "risoles-ragout",
-    name: "Risoles Ragout Ayam Sayur",
-    cat: "gurih",
-    badge: "Terlaris Gurih",
-    img: "foto_produk/foto-produk-kue-basah-bandung-sin-tradisional-20.jpg",
-    desc: "Risoles goreng keemasan dengan kulit lembut dan isian ragout ayam wortel kentang yang creamy."
-  },
-  {
-    id: "pastel-risoles-segitiga",
-    name: "Risoles & Pastel Segitiga",
-    cat: "gurih",
-    badge: "Gurih Renyah",
-    img: "foto_produk/foto-produk-kue-basah-bandung-sin-tradisional-40.jpg",
-    desc: "Gorengan gurih renyah lengkap dengan cabai rawit hijau segar untuk sajian rapat dan acara."
-  },
-  {
-    id: "kroket-panada",
-    name: "Kroket / Roti Goreng Isi",
-    cat: "gurih",
-    badge: "Mengenyangkan",
-    img: "foto_produk/foto-produk-kue-basah-bandung-sin-tradisional-36.jpg",
-    desc: "Olahan roti/kentang goreng berbalut tepung panir keemasan dengan isian gurih lezat."
-  },
-  {
-    id: "bakwan-udang",
-    name: "Bakwan Udang Spesial",
-    cat: "gurih",
-    badge: "Lengkap Saus",
-    img: "foto_produk/foto-produk-kue-basah-bandung-sin-tradisional-32.jpg",
-    desc: "Bakwan sayur udang renyah gurih disajikan dengan saus sambal dalam kemasan higienis."
+    id: 'cantik-manis',
+    sku: 'KSN-KB-CTM-B1',
+    name: 'Cantik Manis',
+    category: 'regular',
+    posCat: 'Regular',
+    unit: '1 pcs',
+    hargaToko: 5000,
+    hargaOnline: 6500,
+    img: 'assets/img/regular/foto-produk-cantik-manis-kue-basah-bandung-sin-tradisional-16.jpeg',
+    desc: 'Hunkwe lembut manis gurih dengan taburan sagu mutiara warna-warni.'
   },
 
-  // PAKET SNACK BOX & KUE TAMPAH
+  // ==================== KATEGORI SPESIAL ====================
   {
-    id: "paket-snack-box",
-    name: "Paket Snack Box Acara & Rapat",
-    cat: "paket",
-    badge: "Hemat s.d. 40% via WA",
-    featured: true,
-    hotBadge: "🔥 Terlaris Acara",
-    img: "snack-box-kue-basah-bandung-sin-tradisional-09.jpg",
-    desc: "Paket kustom isi 3–5 kue basah segar (kombinasi manis & gurih) untuk rapat kantor, pengajian, seminar & syukuran."
+    id: 'bugis-mandi-4',
+    sku: 'INT-KB-BGM-B4',
+    name: 'Bugis Mandi (Isi 4)',
+    category: 'spesial',
+    posCat: 'Spesial',
+    unit: '1 cup (Isi 4)',
+    hargaToko: 10000,
+    hargaOnline: 12500,
+    img: 'assets/img/Spesial/foto-produk-bugis-mandi-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Kue Bugis lembut disiram vla santan putih kental gurih dalam kemasan cup praktis isi 4 pcs.',
+    featured: true
   },
   {
-    id: "kue-tampah-klasik",
-    name: "Kue Tampah Tradisional Klasik",
-    cat: "paket",
-    badge: "Hemat s.d. 40% via WA",
-    featured: true,
-    hotBadge: "👑 Favorit Hantaran",
-    img: "tampah-kue-basah-bandung-sin-tradisional-53.jpg",
-    desc: "Sajian aneka jajanan pasar warna-warni ditata rapi di atas tampah bambu beralas daun pisang untuk syukuran & arisan."
+    id: 'bugis-mandi-6',
+    sku: 'INT-KB-BGM-B6',
+    name: 'Bugis Mandi (Isi 6)',
+    category: 'spesial',
+    posCat: 'Spesial',
+    unit: '1 cup (Isi 6)',
+    hargaToko: 15000,
+    hargaOnline: 18500,
+    img: 'assets/img/Spesial/foto-produk-bugis-mandi-kue-basah-bandung-sin-tradisional-261113-02.jpg',
+    desc: 'Porsi keluarga isi 6 pcs Kue Bugis lembut dengan siraman vla santan kental gurih nikmat.'
   },
   {
-    id: "kue-tampah-spesial",
-    name: "Kue Tampah Spesial Besar",
-    cat: "paket",
-    badge: "Acara Besar",
-    img: "tampah-kue-basah-bandung-sin-tradisional-70.jpg",
-    desc: "Paket tampah ukuran besar dengan variasi lengkap kue basah manis dan gurih untuk jamuan tamu VIP & keluarga."
+    id: 'biji-salak-sagu',
+    sku: 'INT-KB-BJS-B1',
+    name: 'Biji Salak Sagu',
+    category: 'spesial',
+    posCat: 'Spesial',
+    unit: '1 cup',
+    hargaToko: 10000,
+    hargaOnline: 12500,
+    img: 'assets/img/Spesial/foto-produk-kue-kue-biji-salak-sagu-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Biji salak kenyal dengan kuah gula merah kental manis legit dalam cup siap santap.'
   },
   {
-    id: "paket-kombinasi",
-    name: "Paket Kombinasi Varian Terlaris",
-    cat: "paket",
-    badge: "Harga Toko Terbaik",
-    featured: true,
-    hotBadge: "🏅 Terlaris 1978",
-    img: "kombinasi-kue-basah-bandung-sin-tradisional-09.jpg",
-    desc: "Kombinasi kue basah paling dicari (Serabi Oncom, Bugis, Nagasari, Dadar Gulung, Putri Noong & Talam) siap saji."
+    id: 'lapis-coklat',
+    sku: 'INT-KB-LPC-B1',
+    name: 'Lapis Coklat (Cup)',
+    category: 'spesial',
+    posCat: 'Spesial',
+    unit: '1 cup',
+    hargaToko: 10000,
+    hargaOnline: 12500,
+    img: 'assets/img/Spesial/foto-produk-lapis-coklat-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Kue lapis basah lembut dengan perpaduan rasa coklat legit dan santan gurih.'
   },
   {
-    id: "paket-tray",
-    name: "Paket Tray Jajanan Pasar",
-    cat: "paket",
-    badge: "Praktis & Rapi",
-    img: "tray-kue-basah-bandung-sin-tradisional-04.jpg",
-    desc: "Kemasan nampan/tray modern yang praktis dibawa sebagai buah tangan, hantaran keluarga, atau suguhan rapat."
+    id: 'lapis-hijau',
+    sku: 'INT-KB-LPH-B1',
+    name: 'Lapis Hijau (Cup)',
+    category: 'spesial',
+    posCat: 'Spesial',
+    unit: '1 cup',
+    hargaToko: 10000,
+    hargaOnline: 12500,
+    img: 'assets/img/Spesial/foto-produk-lapis-hijau-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Kue lapis pandan hijau berlapis rapi, wangi pandan asli dan kenyal lembut.'
   },
   {
-    id: "paket-hampers",
-    name: "Hampers & Paket Hari Raya",
-    cat: "paket",
-    badge: "Edisi Spesial",
-    img: "paket-natal-kue-basah-bandung-sin-tradisional-100.jpg",
-    desc: "Paket hantaran eksklusif berisi kue basah pilihan untuk bingkisan Lebaran, Natal, Imlek, dan hari spesial."
-  },
-  {
-    id: "paket-imlek",
-    name: "Paket Spesial Imlek & Syukuran",
-    cat: "paket",
-    badge: "Pre-Order WA",
-    img: "imlek-2024-kue-basah-bandung-sin-tradisional-88.jpg",
-    desc: "Rangkaian kue tradisional pilihan penuh makna untuk perayaan keluarga dan hantaran kerabat."
+    id: 'pelita',
+    sku: 'INT-KB-PLT-B1',
+    name: 'Kue Pelita (Cup)',
+    category: 'spesial',
+    posCat: 'Spesial',
+    unit: '1 cup',
+    hargaToko: 10000,
+    hargaOnline: 12500,
+    img: 'assets/img/Spesial/foto-produk-pelita-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Lapisan santan putih lembut di atas sari pandan gula merah yang manis wangi.'
   },
 
-  // KERINGAN KEMASAN TOPLES
+  // ==================== KATEGORI KUE & GURIH (kue kue) ====================
   {
-    id: "peyek-teri",
-    name: "Peyek Teri Renyah (Toples)",
-    cat: "keringan",
-    badge: "Keringan Toples",
-    img: "kombinasi-kue-basah-bandung-sin-tradisional-09.jpg",
-    desc: "Rempeyek tipis renyah dengan taburan ikan teri pilihan dan aroma daun jeruk dalam kemasan toples."
+    id: 'otak-otak',
+    sku: 'KSN-KB-OTK-B5',
+    name: 'Otak-Otak (Isi 5)',
+    category: 'kue',
+    posCat: 'Kue',
+    unit: '1 bungkus (Isi 5)',
+    hargaToko: 20000,
+    hargaOnline: 30000,
+    img: 'assets/img/kue kue/foto-produk-kue-kue-otak-otak-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Otak-otak ikan bakar bungkus daun pisang lengkap dengan sambal kacang. Jauh lebih murah beli langsung Harga Toko (hemat Rp 10.000 dibanding Ojol!).',
+    featured: true
   },
   {
-    id: "peyek-kacang",
-    name: "Peyek Kacang Tanah (Toples)",
-    cat: "keringan",
-    badge: "Keringan Toples",
-    img: "kombinasi-kue-basah-bandung-sin-tradisional-09.jpg",
-    desc: "Rempeyek kacang tanah gurih dan renyah tahan lama, cocok untuk stok camilan rumah maupun oleh-oleh."
+    id: 'risoles-ragout',
+    sku: 'KSN-KB-RSR-B2',
+    name: 'Risoles Ragout (Isi 2)',
+    category: 'kue',
+    posCat: 'Kue',
+    unit: '1 mika (Isi 2)',
+    hargaToko: 11000,
+    hargaOnline: 16500,
+    img: 'assets/img/kue kue/foto-produk-kue-kue-risoles-ety-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Risoles goreng renyah isi ragout ayam & sayuran creamy plus cabai rawit. Kemasan mika isi 2 pcs.',
+    featured: true
   },
   {
-    id: "gabus-keju",
-    name: "Telur Gabus Keju (Toples)",
-    cat: "keringan",
-    badge: "Keringan Toples",
-    img: "kombinasi-kue-basah-bandung-sin-tradisional-09.jpg",
-    desc: "Camilan stik gabus keju yang gurih, renyah, dan lumer di mulut dalam kemasan praktis."
+    id: 'lemper-ayam',
+    sku: 'PTS-KB-LPA-B1',
+    name: 'Lemper Ayam',
+    category: 'kue',
+    posCat: 'Kue',
+    unit: '1 pcs',
+    hargaToko: 5000,
+    hargaOnline: 6500,
+    img: 'assets/img/kue kue/foto-produk-lemper-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Ketan pulen gurih berisi suwiran daging ayam berbumbu rempah tradisional.'
   },
   {
-    id: "sale-pisang",
-    name: "Sale Pisang Manis Renyah",
-    cat: "keringan",
-    badge: "Oleh-Oleh Bandung",
-    img: "kombinasi-kue-basah-bandung-sin-tradisional-09.jpg",
-    desc: "Olahan sale pisang khas Bandung yang manis alami dan renyah untuk buah tangan keluarga."
+    id: 'soes-mini',
+    sku: 'PTS-KB-SOS-B3',
+    name: 'Soes Mini (Isi 3)',
+    category: 'kue',
+    posCat: 'Kue',
+    unit: '1 mika (Isi 3)',
+    hargaToko: 5000,
+    hargaOnline: 6500,
+    img: 'assets/img/kue kue/foto-produk-soes-mini-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Kue sus mini lembut berisi vla vanila manis creamy, praktis isi 3 pcs per mika.'
   },
   {
-    id: "popcorn-caramel",
-    name: "Popcorn Caramel (Toples)",
-    cat: "keringan",
-    badge: "Keringan Toples",
-    img: "kombinasi-kue-basah-bandung-sin-tradisional-09.jpg",
-    desc: "Popcorn renyah berbalut karamel manis legit dalam kemasan toples kedap udara."
+    id: 'mochi',
+    sku: 'KSN-KB-MCH-B1',
+    name: 'Mochi Pandan Kacang',
+    category: 'kue',
+    posCat: 'Kue',
+    unit: '1 mika',
+    hargaToko: 8000,
+    hargaOnline: 13000,
+    img: 'assets/img/kue kue/foto-produk-kue-kue-mochi-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Mochi kenyal lembut isi kacang tanah manis gurih.'
   },
   {
-    id: "samosa-springroll",
-    name: "Samosa & Spring Roll Renyah",
-    cat: "keringan",
-    badge: "Camilan Gurih",
-    img: "kombinasi-kue-basah-bandung-sin-tradisional-09.jpg",
-    desc: "Kulit lumpia/samosa renyah dengan isian gurih berbumbu rempah khas."
+    id: 'bolu-pisang',
+    sku: 'KSN-KB-BLP-B1',
+    name: 'Bolu Pisang',
+    category: 'kue',
+    posCat: 'Kue',
+    unit: '1 pcs',
+    hargaToko: 5000,
+    hargaOnline: 7000,
+    img: 'assets/img/kue kue/foto-produk-kue-kue-bolu-pisang-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Bolu pisang panggang empuk dan harum aroma pisang matang.'
+  },
+  {
+    id: 'cucur',
+    sku: 'KSN-KB-CCR-B1',
+    name: 'Kue Cucur',
+    category: 'kue',
+    posCat: 'Kue',
+    unit: '1 pcs',
+    hargaToko: 4000,
+    hargaOnline: 5500,
+    img: 'assets/img/kue kue/foto-produk-kue-kue-cucur-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Kue cucur gula merah bersarang cantik dengan pinggiran renyah dan tengah empuk.'
+  },
+  {
+    id: 'lapis-cianjur',
+    sku: 'KSN-KB-LPJ-B1',
+    name: 'Lapis Cianjur',
+    category: 'kue',
+    posCat: 'Kue',
+    unit: '1 pcs',
+    hargaToko: 5000,
+    hargaOnline: 7000,
+    img: 'assets/img/kue kue/foto-produk-kue-kue-lapis-cianjur-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Kue lapis tradisional kenyal manis khas rumahan, tersedia varian lapis warna & pepe coklat.'
+  },
+
+  // ==================== KATEGORI PAKET ACARA (PRE-ORDER) ====================
+  {
+    id: 'kue-tampah',
+    sku: null,
+    name: 'Kue Tampah Tradisional',
+    category: 'paket',
+    posCat: 'Paket PO',
+    isPreOrder: true,
+    unit: 'Custom Isi & Ukuran',
+    hargaToko: null,
+    hargaOnline: null,
+    img: 'assets/img/paket/foto-produk-tampah-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Nampan tampah bambu hias daun pisang isi aneka jajanan pasar pilihan. Cocok untuk syukuran, lamaran & acara kantor (Pre-Order WA Manager PO).',
+    featured: true
+  },
+  {
+    id: 'kue-tray',
+    sku: null,
+    name: 'Kue Tray Hantaran',
+    category: 'paket',
+    posCat: 'Paket PO',
+    isPreOrder: true,
+    unit: 'Custom Isi & Ukuran',
+    hargaToko: null,
+    hargaOnline: null,
+    img: 'assets/img/paket/foto-produk-tray-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Sajian kue basah tertata rapi di tray praktis tutup transparan untuk suguhan rapat & hantaran keluarga (Pre-Order WA Manager PO).'
   }
 ];
 
+// Item Jalur Toko di Master_Produk yang belum punya foto baru (ditampilkan ringkas & tersinkron live POS)
+const EXTRA_STORE_ITEMS = [
+  { id: 'ext-pyk', sku: 'PTS-SN-PYK-B1', name: 'Peyek Kacang', posCat: 'Keringan', unit: '1 toples/bungkus', hargaToko: 22000, hargaOnline: 27000 },
+  { id: 'ext-pyt', sku: 'PTS-SN-PYT-B1', name: 'Peyek Teri', posCat: 'Keringan', unit: '1 toples/bungkus', hargaToko: 22000, hargaOnline: 28000 },
+  { id: 'ext-gbk', sku: 'PTS-SN-GBK-B1', name: 'Gabus Keju', posCat: 'Keringan', unit: '1 bungkus', hargaToko: 18000, hargaOnline: 22000 },
+  { id: 'ext-slp', sku: 'PTS-SN-SLP-B1', name: 'Sale Pisang', posCat: 'Keringan', unit: '1 bungkus', hargaToko: 13000, hargaOnline: 16000 },
+  { id: 'ext-sms', sku: 'PTS-SN-SMS-B1', name: 'Samosa Kering', posCat: 'Keringan', unit: '1 toples/bungkus', hargaToko: 20000, hargaOnline: 25000 },
+  { id: 'ext-spr', sku: 'PTS-SN-SPR-B1', name: 'Spring Roll Kering', posCat: 'Keringan', unit: '1 toples/bungkus', hargaToko: 20000, hargaOnline: 25000 },
+  { id: 'ext-ppc', sku: 'PTS-SN-PPC-B1', name: 'Popcorn Caramel', posCat: 'Keringan', unit: '1 bungkus', hargaToko: 20000, hargaOnline: 25000 },
+  { id: 'ext-bsg', sku: 'KSN-KB-BSG-B1', name: 'Baso Goreng', posCat: 'Kue', unit: '1 porsi', hargaToko: 8000, hargaOnline: 13000 },
+  { id: 'ext-smg', sku: 'KSN-KB-SMG-B2', name: 'Siomay Goreng', posCat: 'Kue', unit: '1 mika (Isi 2)', hargaToko: 12000, hargaOnline: 20000 },
+  { id: 'ext-ktb', sku: 'KSN-KB-KTB-B1', name: 'Ketan Bumbu', posCat: 'Kue', unit: '1 pcs', hargaToko: 6000, hargaOnline: 9000 },
+  { id: 'ext-ktm', sku: 'INT-KB-KTM-B2K', name: 'Ketimus', posCat: 'Regular', unit: '1 mika (Isi 2)', hargaToko: 10000, hargaOnline: 12500 },
+  { id: 'ext-kpg', sku: 'INT-KB-KPG-B1', name: 'Kolak Pisang', posCat: 'Spesial', unit: '1 cup', hargaToko: 10000, hargaOnline: 12500 },
+  { id: 'ext-skb', sku: 'INT-KB-SKB-B1', name: 'Singkong Bangkok', posCat: 'Spesial', unit: '1 cup', hargaToko: 15000, hargaOnline: 18500 }
+];
+
+// Showcase informasi menu rekomendasi Snack Box (Pre-Order saja, TIDAK dijual harian di toko & TANPA harga)
+const SNACKBOX_SHOWCASE = [
+  { id: 'sb-risoles-1', name: 'Risoles Ragout Satuan', img: 'assets/img/Snack box/foto-produk-kue-kue-risoles-ety-kue-basah-bandung-sin-tradisional-261113-02.jpg', desc: 'Kemasan satuan plastik higienis lengkap dengan cabai rawit untuk isian snack box.' },
+  { id: 'sb-risoles-3', name: 'Risoles Segitiga', img: 'assets/img/Snack box/foto-produk-kue-kue-risoles-segitiga-kue-basah-bandung-sin-tradisional-261113-01.jpg', desc: 'Risoles lipat segitiga isi ragout gurih dengan cabai rawit segar.' },
+  { id: 'sb-lontong', name: 'Lontong Daging', img: 'assets/img/Snack box/foto-produk-kue-kue-lontong-daging-kue-basah-bandung-sin-tradisional-261113-01.jpg', desc: 'Lontong isi olahan daging berbumbu nikmat & mengenyangkan untuk rapat/acara.' },
+  { id: 'sb-pukis', name: 'Pukis Keju', img: 'assets/img/Snack box/foto-produk-kue-kue-pukis-kue-basah-bandung-sin-tradisional-261113-01.jpg', desc: 'Kue pukis empuk wangi vanila dengan potongan keju gurih.' },
+  { id: 'sb-sus', name: 'Kue Sus Vla', img: 'assets/img/Snack box/foto-produk-kue-basah-bandung-sin-tradisional-37.jpg', desc: 'Kue sus klasik kulit lembut berisi vla susu manis creamy.' },
+  { id: 'sb-pie-coklat', name: 'Pie Coklat', img: 'assets/img/Snack box/kue-kue-kue-basah-bandung-sin-tradisional-11.jpg', desc: 'Tartlet pie renyah dengan isian coklat lumer manis.' },
+  { id: 'sb-pie-keju', name: 'Pie Keju', img: 'assets/img/Snack box/kue-kue-kue-basah-bandung-sin-tradisional-12.jpg', desc: 'Tartlet pie renyah dengan vla susu & parutan keju gurih.' },
+  { id: 'sb-donat', name: 'Donat Coklat Meises', img: 'assets/img/Snack box/kue-kue-kue-basah-bandung-sin-tradisional-03.jpg', desc: 'Donat empuk bertabur coklat meises klasik favorit segala usia.' },
+  { id: 'sb-brownies', name: 'Brownies Coklat', img: 'assets/img/Snack box/kue-kue-kue-basah-bandung-sin-tradisional-01.jpg', desc: 'Brownies potong lembut beraroma coklat pekat.' },
+  { id: 'sb-brownies-kacang', name: 'Brownies Panggang Kacang', img: 'assets/img/Snack box/foto-produk-kue-basah-bandung-sin-tradisional-23.jpg', desc: 'Brownies panggang shiny crust dengan taburan kacang gurih.' },
+  { id: 'sb-combro', name: 'Combro Oncom', img: 'assets/img/Snack box/foto-produk-kue-kue-combro-kue-basah-bandung-sin-tradisional-261113-01.jpg', desc: 'Singkong goreng gurih berisi sambal oncom pedas khas Sunda.' },
+  { id: 'sb-bakwan', name: 'Bakwan Udang + Sambal', img: 'assets/img/Snack box/foto-produk-kue-kue-bakwan-goreng-kue-basah-bandung-sin-tradisional-261113-01.jpg', desc: 'Bakwan goreng garing dengan udang utuh & saus sambal kacang.' },
+  { id: 'sb-cilok', name: 'Cilok Bumbu Kacang', img: 'assets/img/Snack box/foto-produk-kue-kue-cilok-kue-basah-bandung-sin-tradisional-261113-01.jpg', desc: 'Cilok kenyal dalam plastik rapi bersiram saus kacang gurih pedas.' },
+  { id: 'sb-lumpia', name: 'Lumpia Goreng', img: 'assets/img/Snack box/foto-produk-kue-basah-bandung-sin-tradisional-18.jpg', desc: 'Lumpia goreng renyah lengkap dengan saus cocol.' },
+  { id: 'sb-kroket', name: 'Kroket Panir', img: 'assets/img/Snack box/foto-produk-kue-basah-bandung-sin-tradisional-36.jpg', desc: 'Kroket kentang berbumbu dibalut tepung panir garing.' },
+  { id: 'sb-clorot', name: 'Kue Clorot', img: 'assets/img/Snack box/foto-produk-kue-kue-clorot-kue-basah-bandung-sin-tradisional-261113-01.jpg', desc: 'Kue tradisional gula merah kenyal dalam lilitan janur kerucut unik.' },
+  { id: 'sb-cente-manis', name: 'Cente Manis Plastik', img: 'assets/img/Snack box/foto-produk-kue-kue-cente-manis-kue-basah-bandung-sin-tradisional-261113-03.jpg', desc: 'Hunkwe sagu mutiara dibungkus rapi satuan untuk snack box.' },
+  { id: 'sb-bolu-mekar', name: 'Bolu Kukus Mekar Coklat', img: 'assets/img/Snack box/foto-produk-kue-kue-kue-mangkok-coklat-kue-basah-bandung-sin-tradisional-261113-01.jpg', desc: 'Bolu kukus mekar lembut kombinasi warna putih dan coklat.' },
+  { id: 'sb-mangkok-gumer', name: 'Kue Mangkok Gula Merah', img: 'assets/img/Snack box/foto-produk-kue-kue-kue-mangkok-kue-basah-bandung-sin-tradisional-261113-01.jpg', desc: 'Kue mangkok mekar lembut manis legit gula aren.' },
+  { id: 'sb-talam-bunga', name: 'Talam Pandan Bunga', img: 'assets/img/Snack box/foto-produk-kue-kue-talam-pandan-bunga-kue-basah-bandung-sin-tradisional-261113-01.jpg', desc: 'Kue pandan santan cetak bunga cantik untuk suguhan eksklusif.' }
+];
+
 const CATEGORY_LABELS = {
-  all: "Semua Menu Kue Basah & Paket",
-  manis: "Kue Basah Tradisional (Manis)",
-  gurih: "Jajanan Pasar Gurih & Asin",
-  paket: "Paket Snack Box, Tampah & Hantaran",
-  keringan: "Keringan Kemasan Toples & Oleh-Oleh"
+  all: 'Semua Menu Harian & Paket Toko',
+  regular: 'Jajanan Pasar Regular',
+  spesial: 'Kue Cup Spesial',
+  kue: 'Aneka Kue & Gorengan Gurih',
+  paket: 'Paket Kue Tampah & Tray (Pre-Order)'
 };
 
-let currentFilter = "all";
-let currentSearch = "";
-let cart = {}; // { [id]: qty }
-let activeModalProductId = null;
-let modalTempQty = 1;
+const ELIGIBLE_DISCOUNT_CATS = new Set(['Regular', 'Spesial', 'Kue']);
 
-// 1. CEK STATUS JAM BUKA TOKO (06.30 - 17.00 WIB)
+let currentFilter = 'all';
+let searchQuery = '';
+let onlyReadyFilter = false;
+let cart = {}; // { itemId: qty }
+
+let liveStockStatus = 'loading'; // 'loading' | 'live' | 'fallback'
+let liveStockMeta = { tanggalStok: '', waktuStok: '', totalReady: 0 };
+let liveStockBySku = {}; // { [sku]: { stok, hargaToko, hargaOnline, nama, kategori } }
+
+let activeModalItemId = null;
+let activeModalVariantIdx = 0;
+let modalQty = 1;
+
+function imgUrl(path) {
+  return encodeURI(path);
+}
+
+function formatRp(num) {
+  const n = Math.round(Number(num) || 0);
+  return 'Rp ' + n.toLocaleString('id-ID');
+}
+
+function escapeHtml(str) {
+  return String(str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function getAllOrderableItems() {
+  return PRODUCTS.concat(EXTRA_STORE_ITEMS);
+}
+
+function findItemById(id) {
+  return getAllOrderableItems().find(function (item) {
+    return item.id === id;
+  }) || null;
+}
+
+function getEffectivePrices(item) {
+  if (item.isPreOrder) {
+    return { hargaToko: null, hargaOnline: null };
+  }
+  const live = item.sku ? liveStockBySku[item.sku] : null;
+  const hargaToko = (live && live.hargaToko > 0) ? live.hargaToko : item.hargaToko;
+  const hargaOnline = (live && live.hargaOnline > 0) ? live.hargaOnline : item.hargaOnline;
+  return { hargaToko: hargaToko, hargaOnline: hargaOnline };
+}
+
+function getLiveStockInfo(item) {
+  if (item.isPreOrder) {
+    return { state: 'po', qty: null, label: 'Pre-Order' };
+  }
+  if (liveStockStatus !== 'live' || !item.sku) {
+    return { state: 'check', qty: null, label: 'Stok Toko: Tanya Kasir' };
+  }
+  const live = liveStockBySku[item.sku];
+  const qty = live ? Math.max(0, Math.floor(Number(live.stok) || 0)) : 0;
+  if (qty <= 0) {
+    return { state: 'empty', qty: 0, label: 'Habis Hari Ini' };
+  }
+  if (qty <= 5) {
+    return { state: 'low', qty: qty, label: 'Sisa ' + qty + ' di Toko' };
+  }
+  return { state: 'ready', qty: qty, label: 'Ready: ' + qty + ' stok' };
+}
+
+function renderStockBadgeHtml(info) {
+  if (info.state === 'po') {
+    return '<span class="stock-pill stock-po">📋 Pre-Order</span>';
+  }
+  if (info.state === 'ready') {
+    return '<span class="stock-pill stock-ready">● ' + escapeHtml(info.label) + '</span>';
+  }
+  if (info.state === 'low') {
+    return '<span class="stock-pill stock-low">🔥 ' + escapeHtml(info.label) + '</span>';
+  }
+  if (info.state === 'empty') {
+    return '<span class="stock-pill stock-empty">Habis Hari Ini</span>';
+  }
+  return '<span class="stock-pill stock-check">● Stok Harian Toko</span>';
+}
+
+function renderPriceHtml(item) {
+  if (item.isPreOrder) {
+    return (
+      '<div class="price-box">' +
+        '<div class="price-po-text">Harga disesuaikan isi kue • Pre-Order via Manager PO</div>' +
+      '</div>'
+    );
+  }
+  const prices = getEffectivePrices(item);
+  if (!prices.hargaToko) return '';
+  const hasOnline = prices.hargaOnline && prices.hargaOnline > prices.hargaToko;
+  const diff = hasOnline ? (prices.hargaOnline - prices.hargaToko) : 0;
+  const pct = hasOnline ? Math.round((diff / prices.hargaOnline) * 100) : 0;
+
+  return (
+    '<div class="price-box">' +
+      '<div class="price-row">' +
+        (hasOnline ? '<s class="price-online-strike">' + formatRp(prices.hargaOnline) + '</s>' : '') +
+        '<strong class="price-toko-now">' + formatRp(prices.hargaToko) + '</strong>' +
+      '</div>' +
+      (diff > 0
+        ? '<span class="price-save-tag">Hemat ' + formatRp(diff) + ' (' + pct + '%)</span>'
+        : '<span class="price-save-tag">Harga Asli Toko</span>') +
+    '</div>'
+  );
+}
+
+// Periksa status buka toko (06:30 - 17:00 WIB)
 function updateStoreOpenBadge() {
-  const badge = document.getElementById("store-open-status");
+  const badge = document.getElementById('store-open-status');
   if (!badge) return;
   try {
-    const nowWIB = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Jakarta" }));
-    const mins = nowWIB.getHours() * 60 + nowWIB.getMinutes();
-    const openMins = 6 * 60 + 30;  // 06:30
-    const closeMins = 17 * 60;     // 17:00
-    if (mins >= openMins && mins < closeMins) {
-      badge.textContent = "🟢 Sedang Buka (06.30–17.00 WIB)";
-      badge.style.background = "#dcfce7";
-      badge.style.color = "#14532d";
+    const now = new Date();
+    const wibStr = now.toLocaleTimeString('en-GB', { timeZone: 'Asia/Jakarta', hour12: false });
+    const parts = wibStr.split(':');
+    const mins = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+    if (mins >= 390 && mins <= 1020) {
+      badge.textContent = '🟢 Toko Buka (06.30–17.00 WIB)';
     } else {
-      badge.textContent = "🕒 Buka Setiap Pagi (06.30–17.00 WIB)";
-      badge.style.background = "#fef9c3";
-      badge.style.color = "#854d0e";
+      badge.textContent = '🌙 Di Luar Jam Buka • Kasir Buka 06.30 WIB';
     }
   } catch (e) {
-    badge.textContent = "🟢 Buka Setiap Hari (06.30–17.00 WIB)";
+    badge.textContent = '🟢 Buka Setiap Hari 06.30–17.00 WIB';
   }
 }
 
-// 2. RENDER SEKSI SOROTAN "MENU ANDALAN & PAKET ACARA"
-function renderFeatured() {
-  const featuredContainer = document.getElementById("featured-grid");
-  if (!featuredContainer) return;
-  const featuredItems = PRODUCTS.filter(p => p.featured);
-  featuredContainer.innerHTML = featuredItems.map(item => `
-    <article class="featured-card">
-      <div class="featured-img-wrap" onclick="openProductModal('${item.id}')">
-        <img
-          src="assets/img/${item.img}"
-          alt="${item.name} - Sin Tradisional Bandung Jl. Situ No. 41"
-          loading="lazy"
-          onerror="this.onerror=null;this.src='assets/img/logo-sin-tradisional.png';"
-        >
-      </div>
-      <div class="featured-body">
-        <div>
-          <div class="featured-badges">
-            <span class="badge-hot">${item.hotBadge || "🔥 Terlaris"}</span>
-            <span class="badge-save">${item.badge}</span>
-          </div>
-          <h3 class="featured-title" onclick="openProductModal('${item.id}')">${item.name}</h3>
-          <p class="featured-desc">${item.desc}</p>
-        </div>
-        <button type="button" class="featured-cta-btn" onclick="changeQty('${item.id}', 1)">
-          + Pilih Paket Ini
-        </button>
-      </div>
-    </article>
-  `).join("");
+// Render Status Stok POS Panel
+function renderStockStatusBar() {
+  const dot = document.getElementById('stock-live-dot');
+  const title = document.getElementById('stock-status-title');
+  const sub = document.getElementById('stock-status-sub');
+  const refreshBtn = document.getElementById('btn-refresh-stock');
+  if (!dot || !title || !sub) return;
+
+  dot.className = 'stock-live-dot ' + liveStockStatus;
+  if (refreshBtn) refreshBtn.disabled = (liveStockStatus === 'loading');
+
+  if (liveStockStatus === 'loading') {
+    title.textContent = 'Menghubungkan ke stok kasir POS Toko...';
+    sub.textContent = 'Sinkronisasi langsung Jl. Situ No. 41, Bandung';
+    return;
+  }
+
+  if (liveStockStatus === 'live') {
+    const readyCount = Object.values(liveStockBySku).filter(function (v) { return (v.stok || 0) > 0; }).length;
+    title.textContent = 'Terhubung ke POS Kasir Toko • ' + readyCount + ' Menu Ready Saat Ini';
+    const waktuText = liveStockMeta.waktuStok
+      ? liveStockMeta.tanggalStok + ' pkl ' + liveStockMeta.waktuStok.slice(0, 5) + ' WIB'
+      : (liveStockMeta.tanggalStok || 'Hari Ini');
+    sub.textContent = 'Update terakhir dari kasir: ' + waktuText + ' (Klik "+ Pesan" lalu konfirmasi ke WA Kasir)';
+    return;
+  }
+
+  title.textContent = 'Katalog Harga Toko Resmi Aktif (Hemat s.d. 38% vs Ojol)';
+  sub.textContent = 'Stok live sedang menunggu sinkronisasi server POS — ketuk "Segarkan Stok" atau tanya langsung ke WA Kasir 0895-3300-12673';
 }
 
-// 3. RENDER KATALOG UTAMA (FILTER KATEGORI + PENCARIAN REAL-TIME)
+// Fetch live JSON stok dari POS_Sintra (tanpa data sensitif agen/reseller/HPP)
+async function fetchLivePosStock() {
+  liveStockStatus = 'loading';
+  renderStockStatusBar();
+
+  const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+  const timeoutId = controller ? setTimeout(function () { controller.abort(); }, 8000) : null;
+
+  try {
+    const url = POS_PUBLIC_STOK_URL + '&_t=' + Date.now();
+    const res = await fetch(url, {
+      method: 'GET',
+      redirect: 'follow',
+      signal: controller ? controller.signal : undefined
+    });
+    if (timeoutId) clearTimeout(timeoutId);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+
+    const contentType = (res.headers.get('content-type') || '').toLowerCase();
+    const text = await res.text();
+    if (contentType.indexOf('html') !== -1 || text.trim().charAt(0) === '<') {
+      throw new Error('Endpoint JSON POS belum di-deploy ke versi terbaru');
+    }
+
+    const data = JSON.parse(text);
+    if (!data || data.ok !== true || !Array.isArray(data.items)) {
+      throw new Error('Format respons POS tidak sesuai');
+    }
+
+    const nextMap = {};
+    const knownSkus = new Set();
+    getAllOrderableItems().forEach(function (it) {
+      if (it.sku) knownSkus.add(it.sku);
+    });
+
+    data.items.forEach(function (row) {
+      if (!row || !row.sku) return;
+      nextMap[row.sku] = {
+        sku: row.sku,
+        nama: row.nama,
+        kategori: row.kategori,
+        hargaToko: Number(row.hargaToko) || 0,
+        hargaOnline: Number(row.hargaOnline) || 0,
+        stok: Math.max(0, Math.floor(Number(row.stok) || 0))
+      };
+
+      // Tambahkan otomatis jika ada SKU baru di POS Master_Produk jalur Toko
+      if (!knownSkus.has(row.sku) && row.hargaToko > 0 && row.kategori !== 'Minuman' && row.kategori !== 'Dus') {
+        EXTRA_STORE_ITEMS.push({
+          id: 'dyn-' + row.sku.toLowerCase().replace(/[^a-z0-9]/g, ''),
+          sku: row.sku,
+          name: row.nama,
+          posCat: row.kategori || 'Kue',
+          unit: '1 porsi',
+          hargaToko: Number(row.hargaToko),
+          hargaOnline: Number(row.hargaOnline) || 0
+        });
+        knownSkus.add(row.sku);
+      }
+    });
+
+    liveStockBySku = nextMap;
+    liveStockMeta = {
+      tanggalStok: data.tanggalStok || '',
+      waktuStok: data.waktuStok || '',
+      totalReady: Object.values(nextMap).filter(function (v) { return v.stok > 0; }).length
+    };
+    liveStockStatus = 'live';
+  } catch (err) {
+    if (timeoutId) clearTimeout(timeoutId);
+    liveStockStatus = 'fallback';
+  }
+
+  renderStockStatusBar();
+  renderFeatured();
+  renderCatalog();
+  renderExtraStoreItems();
+  syncCartUI();
+}
+
+// Render 4 kartu sorotan menu hemat & andalan
+function renderFeatured() {
+  const container = document.getElementById('featured-grid');
+  if (!container) return;
+
+  const featuredProducts = PRODUCTS.filter(function (p) { return p.featured; });
+  container.innerHTML = featuredProducts.map(function (item) {
+    const qty = cart[item.id] || 0;
+    const stockInfo = getLiveStockInfo(item);
+    const prices = getEffectivePrices(item);
+
+    let ctaLabel = qty > 0 ? ('✓ ' + qty + ' di Keranjang') : '+ Pesan Harga Toko';
+    if (item.isPreOrder) {
+      ctaLabel = qty > 0 ? ('✓ ' + qty + ' Paket Dipilih') : '📋 Pilih Paket PO';
+    } else if (stockInfo.state === 'empty') {
+      ctaLabel = 'Habis • Tanya Kasir';
+    }
+
+    let priceText = 'Pre-Order • Konsultasi Manager';
+    if (!item.isPreOrder && prices.hargaToko) {
+      const onlinePart = prices.hargaOnline > prices.hargaToko ? ('<s class="inline-strike">' + formatRp(prices.hargaOnline) + '</s> ') : '';
+      priceText = onlinePart + '<strong>' + formatRp(prices.hargaToko) + '</strong>';
+    }
+
+    return (
+      '<article class="featured-card">' +
+        '<div class="featured-img-wrap" onclick="openProductModal(\'' + item.id + '\')">' +
+          '<img src="' + imgUrl(item.img) + '" alt="' + escapeHtml(item.name) + ' Sin Tradisional" loading="lazy">' +
+        '</div>' +
+        '<div class="featured-body">' +
+          '<div class="featured-badges">' +
+            '<span class="featured-tag">' + escapeHtml(item.posCat) + '</span>' +
+            renderStockBadgeHtml(stockInfo) +
+          '</div>' +
+          '<h3 class="featured-title" onclick="openProductModal(\'' + item.id + '\')">' + escapeHtml(item.name) + '</h3>' +
+          '<p class="featured-desc">' + priceText + '</p>' +
+          '<button type="button" class="featured-cta-btn" onclick="' +
+            (stockInfo.state === 'empty'
+              ? 'askKasirAboutProduct(\'' + item.id + '\')'
+              : 'changeQty(\'' + item.id + '\', 1)') + '">' +
+            ctaLabel +
+          '</button>' +
+        '</div>' +
+      '</article>'
+    );
+  }).join('');
+}
+
+// Render Grid Katalog Utama 2 Kolom
 function renderCatalog() {
-  const grid = document.getElementById("catalog-grid");
-  const heading = document.getElementById("catalog-heading");
-  const countEl = document.getElementById("catalog-count");
+  const grid = document.getElementById('catalog-grid');
+  const countLabel = document.getElementById('catalog-count');
+  const heading = document.getElementById('catalog-heading');
   if (!grid) return;
 
-  const q = currentSearch.trim().toLowerCase();
-  const filtered = PRODUCTS.filter(item => {
-    const matchCat = currentFilter === "all" || item.cat === currentFilter;
-    const matchSearch = !q || item.name.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q);
-    return matchCat && matchSearch;
+  const q = searchQuery.trim().toLowerCase();
+  const filtered = PRODUCTS.filter(function (p) {
+    const matchCat = currentFilter === 'all' || p.category === currentFilter;
+    const matchQuery = !q ||
+      p.name.toLowerCase().includes(q) ||
+      p.desc.toLowerCase().includes(q) ||
+      p.posCat.toLowerCase().includes(q);
+    let matchReady = true;
+    if (onlyReadyFilter && liveStockStatus === 'live') {
+      const stockInfo = getLiveStockInfo(p);
+      matchReady = stockInfo.state === 'ready' || stockInfo.state === 'low';
+    }
+    return matchCat && matchQuery && matchReady;
   });
 
   if (heading) {
     heading.textContent = q
-      ? `Hasil Pencarian: "${currentSearch}"`
-      : (CATEGORY_LABELS[currentFilter] || "Semua Menu");
+      ? 'Hasil Pencarian: "' + searchQuery.trim() + '"'
+      : (CATEGORY_LABELS[currentFilter] || 'Semua Menu Toko');
   }
-  if (countEl) {
-    countEl.textContent = `${filtered.length} Menu`;
+  if (countLabel) {
+    countLabel.textContent = filtered.length + ' menu ditampilkan';
   }
 
   if (filtered.length === 0) {
-    grid.innerHTML = `
-      <div style="grid-column: 1 / -1; background:#fff; padding:28px; border-radius:14px; text-align:center; border:1px solid #e7e5e4;">
-        <p style="font-size:1.05rem; font-weight:700; color:#14532d; margin-bottom:6px;">Menu "${currentSearch}" belum ditemukan di daftar ini.</p>
-        <p style="font-size:0.9rem; color:#57534e; margin-bottom:14px;">Silakan tanyakan langsung ketersediaan kue kepada Kasir Toko kami via WhatsApp:</p>
-        <button type="button" class="featured-cta-btn" onclick="resetSearchAndFilter()">Tampilkan Semua Menu</button>
-      </div>
-    `;
+    grid.innerHTML =
+      '<div class="empty-catalog-box">' +
+        '<p>Menu yang Anda cari belum cocok atau sedang tidak tersedia pada filter saat ini.</p>' +
+        '<button type="button" class="btn-reset-filter" onclick="resetCatalogFilters()">Tampilkan Semua Menu Toko</button>' +
+      '</div>';
     return;
   }
 
-  grid.innerHTML = filtered.map(item => {
-    const qty = cart[item.id] || 0;
-    const inCartClass = qty > 0 ? "in-cart" : "";
-    const actionHtml = qty > 0
-      ? `
-        <div class="card-stepper" aria-label="Pengatur jumlah ${item.name}">
-          <button type="button" class="step-btn" onclick="changeQty('${item.id}', -1)" aria-label="Kurangi ${item.name}">−</button>
-          <span class="step-qty">${qty} dipilih</span>
-          <button type="button" class="step-btn" onclick="changeQty('${item.id}', 1)" aria-label="Tambah ${item.name}">+</button>
-        </div>
-      `
-      : `
-        <button type="button" class="add-btn-plus" onclick="changeQty('${item.id}', 1)">
-          <span>+</span> Pesan
-        </button>
-      `;
+  grid.innerHTML = filtered.map(function (p) {
+    const qty = cart[p.id] || 0;
+    const stockInfo = getLiveStockInfo(p);
+    const isSoldOut = stockInfo.state === 'empty';
 
-    return `
-      <article class="card ${inCartClass}">
-        <div class="card-img-wrap" onclick="openProductModal('${item.id}')">
-          <img
-            src="assets/img/${item.img}"
-            alt="${item.name} - Kue Basah Sin Tradisional Bandung"
-            loading="lazy"
-            onerror="this.outerHTML='<div style=\\'padding:16px;text-align:center;color:#14532d;font-weight:700;\\'>🥮<br>${item.name}<br><small style=\\'font-weight:400;color:#57534e\\'>Sin Tradisional 1978</small></div>'"
-          >
-          <span class="card-badge-top">${item.badge || "Segar Setiap Hari"}</span>
-          <span class="card-zoom-hint">🔍 Detail</span>
-        </div>
-        <div class="card-body">
-          <div>
-            <h3 class="card-title" onclick="openProductModal('${item.id}')">${item.name}</h3>
-            <p class="card-desc">${item.desc}</p>
-          </div>
-          <div class="card-footer">
-            ${actionHtml}
-          </div>
-        </div>
-      </article>
-    `;
-  }).join("");
+    let actionControl = '';
+    if (qty > 0) {
+      actionControl =
+        '<div class="card-stepper">' +
+          '<button type="button" class="step-btn" onclick="changeQty(\'' + p.id + '\', -1)" aria-label="Kurangi ' + escapeHtml(p.name) + '">−</button>' +
+          '<span class="step-qty">' + qty + ' pcs</span>' +
+          '<button type="button" class="step-btn" onclick="changeQty(\'' + p.id + '\', 1)" aria-label="Tambah ' + escapeHtml(p.name) + '">+</button>' +
+        '</div>';
+    } else if (isSoldOut) {
+      actionControl =
+        '<button type="button" class="add-btn-plus add-btn-soldout" onclick="askKasirAboutProduct(\'' + p.id + '\')">' +
+          '💬 Habis • Tanya Kasir' +
+        '</button>';
+    } else if (p.isPreOrder) {
+      actionControl =
+        '<button type="button" class="add-btn-plus add-btn-po" onclick="changeQty(\'' + p.id + '\', 1)">' +
+          '📋 Pilih Paket PO' +
+        '</button>';
+    } else {
+      actionControl =
+        '<button type="button" class="add-btn-plus" onclick="changeQty(\'' + p.id + '\', 1)">' +
+          '+ Pesan' +
+        '</button>';
+    }
+
+    return (
+      '<article class="card' + (qty > 0 ? ' in-cart' : '') + (isSoldOut ? ' is-out-of-stock' : '') + '">' +
+        '<div class="card-img-wrap" onclick="openProductModal(\'' + p.id + '\')">' +
+          '<img src="' + imgUrl(p.img) + '" alt="' + escapeHtml(p.name) + ' - Sin Tradisional Bandung" loading="lazy">' +
+          '<span class="card-badge-top">' + escapeHtml(p.posCat) + '</span>' +
+          '<span class="card-zoom-hint">🔍 Detail</span>' +
+        '</div>' +
+        '<div class="card-body">' +
+          '<div class="card-meta-row">' +
+            renderStockBadgeHtml(stockInfo) +
+            '<span class="card-unit-note">' + escapeHtml(p.unit) + '</span>' +
+          '</div>' +
+          '<h3 class="card-title" onclick="openProductModal(\'' + p.id + '\')">' + escapeHtml(p.name) + '</h3>' +
+          '<p class="card-desc">' + escapeHtml(p.desc) + '</p>' +
+          renderPriceHtml(p) +
+          '<div class="card-footer">' + actionControl + '</div>' +
+        '</div>' +
+      '</article>'
+    );
+  }).join('');
 }
 
-function resetSearchAndFilter() {
-  currentSearch = "";
-  currentFilter = "all";
-  const searchInput = document.getElementById("search-input");
-  const clearBtn = document.getElementById("clear-search");
-  if (searchInput) searchInput.value = "";
+// Render Daftar Ringkas Keringan & Menu Toko Lainnya (tanpa foto baru)
+function renderExtraStoreItems() {
+  const container = document.getElementById('extra-stock-grid');
+  if (!container) return;
+
+  const q = searchQuery.trim().toLowerCase();
+  const visibleExtras = EXTRA_STORE_ITEMS.filter(function (item) {
+    const matchQuery = !q || item.name.toLowerCase().includes(q) || item.posCat.toLowerCase().includes(q);
+    if (!matchQuery) return false;
+    if (onlyReadyFilter && liveStockStatus === 'live') {
+      const info = getLiveStockInfo(item);
+      return info.state === 'ready' || info.state === 'low';
+    }
+    return true;
+  });
+
+  if (visibleExtras.length === 0) {
+    container.innerHTML = '<p style="grid-column:1/-1;color:var(--muted);font-size:0.88rem;">Tidak ada menu Keringan/lainnya yang cocok dengan filter saat ini.</p>';
+    return;
+  }
+
+  container.innerHTML = visibleExtras.map(function (item) {
+    const qty = cart[item.id] || 0;
+    const stockInfo = getLiveStockInfo(item);
+    const prices = getEffectivePrices(item);
+    const isSoldOut = stockInfo.state === 'empty';
+
+    let actionBtn = '';
+    if (qty > 0) {
+      actionBtn =
+        '<div class="card-stepper">' +
+          '<button type="button" class="step-btn" onclick="changeQty(\'' + item.id + '\', -1)">−</button>' +
+          '<span class="step-qty">' + qty + '</span>' +
+          '<button type="button" class="step-btn" onclick="changeQty(\'' + item.id + '\', 1)">+</button>' +
+        '</div>';
+    } else if (isSoldOut) {
+      actionBtn =
+        '<button type="button" class="add-btn-plus add-btn-soldout" onclick="askKasirAboutProduct(\'' + item.id + '\')">' +
+          '💬 Tanya Kasir' +
+        '</button>';
+    } else {
+      actionBtn =
+        '<button type="button" class="add-btn-plus" onclick="changeQty(\'' + item.id + '\', 1)">' +
+          '+ Pesan' +
+        '</button>';
+    }
+
+    const onlinePart = prices.hargaOnline > prices.hargaToko
+      ? '<s class="price-online-strike">' + formatRp(prices.hargaOnline) + '</s> '
+      : '';
+
+    return (
+      '<article class="extra-card' + (qty > 0 ? ' in-cart' : '') + '">' +
+        '<div class="extra-card-top">' +
+          '<div>' +
+            '<div class="extra-card-title">' + escapeHtml(item.name) + '</div>' +
+            '<div class="extra-card-cat">' + escapeHtml(item.posCat) + ' • ' + escapeHtml(item.unit) + '</div>' +
+          '</div>' +
+          renderStockBadgeHtml(stockInfo) +
+        '</div>' +
+        '<div class="extra-card-bottom">' +
+          '<div class="price-row">' + onlinePart + '<strong class="price-toko-now">' + formatRp(prices.hargaToko) + '</strong></div>' +
+          '<div class="extra-card-actions">' + actionBtn + '</div>' +
+        '</div>' +
+      '</article>'
+    );
+  }).join('');
+}
+
+// Render Showcase Informasi Snack Box (KHUSUS PRE-ORDER, TANPA HARGA)
+function renderSnackboxShowcase() {
+  const grid = document.getElementById('snackbox-grid');
+  if (!grid) return;
+
+  grid.innerHTML = SNACKBOX_SHOWCASE.map(function (item) {
+    return (
+      '<article class="snackbox-card" onclick="openSnackboxInfoModal(\'' + item.id + '\')">' +
+        '<div class="snackbox-img-wrap">' +
+          '<img src="' + imgUrl(item.img) + '" alt="Inspirasi Snack Box ' + escapeHtml(item.name) + ' - Sin Tradisional" loading="lazy">' +
+          '<span class="snackbox-po-badge">Pre-Order</span>' +
+        '</div>' +
+        '<div class="snackbox-card-body">' +
+          '<h3>' + escapeHtml(item.name) + '</h3>' +
+          '<span>Khusus Snack Box • Tanya via WA</span>' +
+        '</div>' +
+      '</article>'
+    );
+  }).join('');
+}
+
+function resetCatalogFilters() {
+  currentFilter = 'all';
+  searchQuery = '';
+  onlyReadyFilter = false;
+  const searchInput = document.getElementById('search-input');
+  const clearBtn = document.getElementById('clear-search');
+  const readyBtn = document.getElementById('btn-only-ready');
+  if (searchInput) searchInput.value = '';
   if (clearBtn) clearBtn.hidden = true;
-  document.querySelectorAll(".filter-btn").forEach(b => {
-    b.classList.toggle("active", b.dataset.filter === "all");
+  if (readyBtn) readyBtn.setAttribute('aria-pressed', 'false');
+  document.querySelectorAll('.filter-btn').forEach(function (b) {
+    b.classList.toggle('active', b.getAttribute('data-filter') === 'all');
   });
   renderCatalog();
+  renderExtraStoreItems();
 }
 
-// 4. MANAJEMEN KERANJANG PESANAN & SINKRONISASI FORM WA
-function changeQty(productId, delta) {
-  const current = cart[productId] || 0;
-  const next = current + delta;
+function changeQty(itemId, delta) {
+  const next = (cart[itemId] || 0) + delta;
   if (next <= 0) {
-    delete cart[productId];
+    delete cart[itemId];
   } else {
-    cart[productId] = next;
+    cart[itemId] = next;
   }
-  syncCartUI();
+  renderFeatured();
   renderCatalog();
+  renderExtraStoreItems();
+  syncCartUI();
 }
 
 function clearCart() {
   cart = {};
-  const notes = document.getElementById("order-notes");
-  if (notes) notes.value = "";
-  syncCartUI();
+  const notesEl = document.getElementById('order-notes');
+  if (notesEl) notesEl.value = '';
+  renderFeatured();
   renderCatalog();
+  renderExtraStoreItems();
+  syncCartUI();
+}
+
+function calculateCartMetrics() {
+  const entries = Object.entries(cart);
+  let totalItems = 0;
+  let subtotalToko = 0;
+  let subtotalOnline = 0;
+  let eligibleSubtotal = 0;
+  let hasCustomPo = false;
+
+  entries.forEach(function (pair) {
+    const id = pair[0];
+    const qty = pair[1];
+    const item = findItemById(id);
+    if (!item || qty <= 0) return;
+
+    totalItems += qty;
+    if (item.isPreOrder) {
+      hasCustomPo = true;
+      return;
+    }
+
+    const prices = getEffectivePrices(item);
+    const tok = (prices.hargaToko || 0) * qty;
+    const onl = (prices.hargaOnline && prices.hargaOnline > prices.hargaToko ? prices.hargaOnline : (prices.hargaToko || 0)) * qty;
+
+    subtotalToko += tok;
+    subtotalOnline += onl;
+    if (ELIGIBLE_DISCOUNT_CATS.has(item.posCat)) {
+      eligibleSubtotal += tok;
+    }
+  });
+
+  // Aturan diskon bertingkat POS_Sintra (hanya Regular, Spesial, Kue)
+  let discountPct = 0;
+  if (eligibleSubtotal >= 300000) discountPct = 10;
+  else if (eligibleSubtotal >= 250000) discountPct = 7.5;
+  else if (eligibleSubtotal >= 150000) discountPct = 5;
+
+  const discountAmount = Math.round((eligibleSubtotal * discountPct) / 100);
+  const grandTotal = subtotalToko - discountAmount;
+  const directOnlineSaving = Math.max(0, subtotalOnline - grandTotal);
+
+  return {
+    entries: entries,
+    totalItems: totalItems,
+    subtotalToko: subtotalToko,
+    subtotalOnline: subtotalOnline,
+    eligibleSubtotal: eligibleSubtotal,
+    discountPct: discountPct,
+    discountAmount: discountAmount,
+    grandTotal: grandTotal,
+    directOnlineSaving: directOnlineSaving,
+    hasCustomPo: hasCustomPo
+  };
 }
 
 function syncCartUI() {
-  const ids = Object.keys(cart);
-  const totalTypes = ids.length;
-  const totalPcs = ids.reduce((acc, id) => acc + cart[id], 0);
+  const m = calculateCartMetrics();
+  const stickyBar = document.getElementById('sticky-cart-bar');
+  const stickyBadge = document.getElementById('sticky-cart-badge');
+  const stickyTitle = document.getElementById('sticky-cart-title');
+  const summaryBox = document.getElementById('cart-summary-box');
+  const summaryCount = document.getElementById('cart-summary-count');
+  const summaryList = document.getElementById('cart-items-list');
+  const totalsBox = document.getElementById('cart-totals-box');
+  const notesEl = document.getElementById('order-notes');
+  const orderTypeSelect = document.getElementById('order-type');
 
-  // Update Sticky Bottom Cart Bar
-  const stickyBar = document.getElementById("sticky-cart-bar");
-  const stickyBadge = document.getElementById("sticky-cart-badge");
-  const stickyTitle = document.getElementById("sticky-cart-title");
-  if (stickyBar) {
-    if (totalTypes > 0) {
-      stickyBar.hidden = false;
-      if (stickyBadge) stickyBadge.textContent = `${totalPcs} Item`;
-      if (stickyTitle) stickyTitle.textContent = `${totalTypes} Jenis Kue Dipilih`;
+  if (m.entries.length === 0) {
+    if (stickyBar) stickyBar.hidden = true;
+    if (summaryBox) summaryBox.hidden = true;
+    return;
+  }
+
+  if (stickyBar) stickyBar.hidden = false;
+  if (stickyBadge) stickyBadge.textContent = m.totalItems + ' pcs';
+  if (stickyTitle) {
+    if (m.grandTotal > 0) {
+      stickyTitle.textContent =
+        formatRp(m.grandTotal) +
+        (m.directOnlineSaving > 0 ? ' (Hemat ' + formatRp(m.directOnlineSaving) + ')' : '');
     } else {
-      stickyBar.hidden = true;
+      stickyTitle.textContent = m.entries.length + ' Paket Pre-Order Dipilih';
     }
   }
 
-  // Update Ringkasan Keranjang di Seksi #pesan-wa
-  const summaryBox = document.getElementById("cart-summary-box");
-  const summaryCount = document.getElementById("cart-summary-count");
-  const itemsList = document.getElementById("cart-items-list");
-  if (summaryBox && itemsList) {
-    if (totalTypes > 0) {
-      summaryBox.hidden = false;
-      if (summaryCount) summaryCount.textContent = totalTypes;
-      itemsList.innerHTML = ids.map(id => {
-        const prod = PRODUCTS.find(p => p.id === id);
-        const name = prod ? prod.name : id;
-        const qty = cart[id];
-        return `
-          <div class="cart-row">
-            <span class="cart-row-name">${name}</span>
-            <div class="cart-row-controls">
-              <button type="button" class="step-btn" onclick="changeQty('${id}', -1)">−</button>
-              <span class="step-qty">${qty}</span>
-              <button type="button" class="step-btn" onclick="changeQty('${id}', 1)">+</button>
-            </div>
-          </div>
-        `;
-      }).join("");
-    } else {
-      summaryBox.hidden = true;
-      itemsList.innerHTML = "";
-    }
+  if (summaryBox && summaryList && summaryCount) {
+    summaryBox.hidden = false;
+    summaryCount.textContent = m.entries.length;
+    summaryList.innerHTML = m.entries.map(function (pair) {
+      const id = pair[0];
+      const qty = pair[1];
+      const item = findItemById(id);
+      if (!item) return '';
+      const prices = getEffectivePrices(item);
+      const lineTotal = item.isPreOrder ? 'Pre-Order' : formatRp((prices.hargaToko || 0) * qty);
+      return (
+        '<div class="cart-chip">' +
+          '<span>' + escapeHtml(item.name) + ' <strong>x' + qty + '</strong> (' + lineTotal + ')</span>' +
+          '<button type="button" onclick="changeQty(\'' + id + '\', -1)" aria-label="Kurangi ' + escapeHtml(item.name) + '">−</button>' +
+          '<button type="button" onclick="changeQty(\'' + id + '\', 1)" aria-label="Tambah ' + escapeHtml(item.name) + '">+</button>' +
+        '</div>'
+      );
+    }).join('');
   }
 
-  // Sinkronkan ke Textarea #order-notes
-  const notes = document.getElementById("order-notes");
-  if (notes) {
-    const lines = ids.map(id => {
-      const prod = PRODUCTS.find(p => p.id === id);
-      return `- ${prod ? prod.name : id}: ${cart[id]} pcs/paket`;
-    });
-    notes.value = lines.join("\n");
+  if (totalsBox) {
+    let rowsHtml = '';
+    if (m.subtotalToko > 0) {
+      rowsHtml += '<div class="cart-total-row"><span>Subtotal Harga Toko</span><span>' + formatRp(m.subtotalToko) + '</span></div>';
+      if (m.discountAmount > 0) {
+        rowsHtml +=
+          '<div class="cart-total-row" style="color:#166534;">' +
+            '<span>Diskon Otomatis (' + m.discountPct + '%)</span>' +
+            '<span>-' + formatRp(m.discountAmount) + '</span>' +
+          '</div>';
+      }
+      rowsHtml +=
+        '<div class="cart-total-row grand">' +
+          '<span>Estimasi Total Bayar Langsung</span>' +
+          '<span>' + formatRp(m.grandTotal) + (m.hasCustomPo ? ' + Paket PO' : '') + '</span>' +
+        '</div>';
+      if (m.directOnlineSaving > 0) {
+        rowsHtml +=
+          '<div class="cart-saving-highlight">' +
+            '🎉 Lebih hemat ' + formatRp(m.directOnlineSaving) + ' dibanding pesan lewat App Online (' + formatRp(m.subtotalOnline) + ')! (Walk-in 14.00–17.00 WIB dapat Happy Hour 15%)' +
+          '</div>';
+      }
+    } else if (m.hasCustomPo) {
+      rowsHtml += '<div class="cart-saving-highlight">📋 Paket Tampah / Tray diproses Pre-Order — kirim rincian ke WA Manager PO (0895-4122-28351).</div>';
+    }
+    totalsBox.innerHTML = rowsHtml;
+  }
+
+  if (orderTypeSelect && m.hasCustomPo) {
+    orderTypeSelect.value = 'Kue Tampah / Tray Syukuran (Pre-Order Manager)';
+  }
+
+  if (notesEl) {
+    const lines = m.entries.map(function (pair) {
+      const item = findItemById(pair[0]);
+      if (!item) return '';
+      const prices = getEffectivePrices(item);
+      if (item.isPreOrder) return '- ' + item.name + ' x' + pair[1] + ' (Pre-Order)';
+      return '- ' + item.name + ' x' + pair[1] + ' (' + formatRp((prices.hargaToko || 0) * pair[1]) + ')';
+    }).filter(Boolean);
+
+    if (m.grandTotal > 0) {
+      lines.push('---');
+      lines.push('Estimasi Total Harga Toko: ' + formatRp(m.grandTotal) + (m.discountAmount > 0 ? ' (Diskon ' + m.discountPct + '%)' : ''));
+    }
+    notesEl.value = lines.join('\n');
   }
 }
 
 function scrollToOrderForm() {
-  const el = document.getElementById("pesan-wa");
-  if (el) el.scrollIntoView({ behavior: "smooth" });
+  const el = document.getElementById('pesan-wa');
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// 5. MODAL DETAIL PRODUK (RAMAH USIA 40-60 TAHUN)
-function openProductModal(productId) {
-  const prod = PRODUCTS.find(p => p.id === productId);
-  if (!prod) return;
-  activeModalProductId = productId;
-  modalTempQty = cart[productId] || 1;
+// Modal Detail Produk Toko
+function openProductModal(itemId) {
+  const p = findItemById(itemId);
+  if (!p) return;
 
-  const modal = document.getElementById("product-modal");
-  const img = document.getElementById("modal-img");
-  const title = document.getElementById("modal-title");
-  const desc = document.getElementById("modal-desc");
-  const catBadge = document.getElementById("modal-cat-badge");
-  const qtyVal = document.getElementById("modal-qty-val");
-  const addBtn = document.getElementById("modal-add-btn");
+  activeModalItemId = itemId;
+  activeModalVariantIdx = 0;
+  modalQty = cart[itemId] || 1;
 
-  if (img) {
-    img.src = `assets/img/${prod.img}`;
-    img.alt = `${prod.name} - Sin Tradisional Bandung`;
-    img.onerror = function () {
-      this.src = "assets/img/logo-sin-tradisional.png";
+  const modal = document.getElementById('product-modal');
+  const modalImg = document.getElementById('modal-img');
+  const modalCat = document.getElementById('modal-cat-badge');
+  const modalStock = document.getElementById('modal-stock-badge');
+  const modalTitle = document.getElementById('modal-title');
+  const modalPriceBox = document.getElementById('modal-price-compare');
+  const modalVariants = document.getElementById('modal-variants');
+  const modalDesc = document.getElementById('modal-desc');
+  const modalNote = document.getElementById('modal-price-note');
+  const qtyControls = document.querySelector('.modal-qty-control');
+  const qtyVal = document.getElementById('modal-qty-val');
+  const addBtn = document.getElementById('modal-add-btn');
+
+  const stockInfo = getLiveStockInfo(p);
+  const prices = getEffectivePrices(p);
+  const initialImg = p.variants && p.variants.length ? p.variants[0].img : p.img;
+
+  if (modalImg) {
+    modalImg.src = imgUrl(initialImg);
+    modalImg.alt = p.name + ' Sin Tradisional Bandung';
+  }
+  if (modalCat) modalCat.textContent = p.posCat + ' • ' + p.unit;
+  if (modalStock) {
+    modalStock.className = 'modal-badge-stock stock-' + stockInfo.state;
+    modalStock.textContent = stockInfo.label;
+  }
+  if (modalTitle) modalTitle.textContent = p.name;
+  if (modalDesc) modalDesc.textContent = p.desc;
+
+  if (modalPriceBox) {
+    if (p.isPreOrder) {
+      modalPriceBox.innerHTML = '<strong>Pre-Order Paket Acara</strong> • Isi kue & harga disesuaikan kebutuhan via WhatsApp Manager PO.';
+    } else if (prices.hargaToko) {
+      const diff = prices.hargaOnline > prices.hargaToko ? (prices.hargaOnline - prices.hargaToko) : 0;
+      modalPriceBox.innerHTML =
+        (prices.hargaOnline > prices.hargaToko ? '<s class="price-online-strike">App Online: ' + formatRp(prices.hargaOnline) + '</s>' : '') +
+        '<strong class="price-toko-now">Harga Toko: ' + formatRp(prices.hargaToko) + '</strong>' +
+        (diff > 0 ? '<span class="price-save-tag">Hemat ' + formatRp(diff) + '</span>' : '');
+    } else {
+      modalPriceBox.innerHTML = '';
+    }
+  }
+
+  if (modalVariants) {
+    if (p.variants && p.variants.length > 0) {
+      modalVariants.hidden = false;
+      modalVariants.innerHTML = p.variants.map(function (v, idx) {
+        return '<button type="button" class="variant-chip' + (idx === 0 ? ' active' : '') + '" onclick="selectModalVariant(' + idx + ')">' + escapeHtml(v.label) + '</button>';
+      }).join('');
+    } else {
+      modalVariants.hidden = true;
+      modalVariants.innerHTML = '';
+    }
+  }
+
+  if (modalNote) {
+    modalNote.innerHTML =
+      '💡 <strong>Keuntungan Beli Langsung (Harga Toko):</strong> Jauh lebih hemat dibanding GoFood/GrabFood/ShopeeFood + berlaku diskon bertingkat hingga 10% (dan Happy Hour 15% walk-in pkl 14.00–17.00 WIB).';
+  }
+
+  if (qtyControls) qtyControls.hidden = false;
+  if (qtyVal) qtyVal.textContent = modalQty;
+
+  if (addBtn) {
+    if (stockInfo.state === 'empty') {
+      addBtn.textContent = '💬 Stok Habis — Cek Jam Restok via WA Kasir';
+      addBtn.onclick = function () {
+        closeProductModal();
+        askKasirAboutProduct(p.id);
+      };
+    } else if (p.isPreOrder) {
+      addBtn.textContent = '📋 Konsultasi Pre-Order via WA Manager';
+      addBtn.onclick = function () {
+        changeQty(p.id, modalQty - (cart[p.id] || 0));
+        closeProductModal();
+        scrollToOrderForm();
+      };
+    } else {
+      addBtn.textContent = '+ Masukkan ke Pesanan WA (' + formatRp((prices.hargaToko || 0) * modalQty) + ')';
+      addBtn.onclick = function () {
+        if (!activeModalItemId) return;
+        cart[activeModalItemId] = modalQty;
+        renderFeatured();
+        renderCatalog();
+        renderExtraStoreItems();
+        syncCartUI();
+        closeProductModal();
+      };
+    }
+  }
+
+  if (modal) {
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+// Modal Info Snack Box (TANPA HARGA, khusus tanya / Pre-Order Manager PO)
+function openSnackboxInfoModal(sbId) {
+  const sb = SNACKBOX_SHOWCASE.find(function (s) { return s.id === sbId; });
+  if (!sb) return;
+
+  activeModalItemId = null;
+  const modal = document.getElementById('product-modal');
+  const modalImg = document.getElementById('modal-img');
+  const modalCat = document.getElementById('modal-cat-badge');
+  const modalStock = document.getElementById('modal-stock-badge');
+  const modalTitle = document.getElementById('modal-title');
+  const modalPriceBox = document.getElementById('modal-price-compare');
+  const modalVariants = document.getElementById('modal-variants');
+  const modalDesc = document.getElementById('modal-desc');
+  const modalNote = document.getElementById('modal-price-note');
+  const qtyControls = document.querySelector('.modal-qty-control');
+  const addBtn = document.getElementById('modal-add-btn');
+
+  if (modalImg) {
+    modalImg.src = imgUrl(sb.img);
+    modalImg.alt = sb.name + ' - Inspirasi Snack Box Sin Tradisional';
+  }
+  if (modalCat) modalCat.textContent = 'Rekomendasi Snack Box';
+  if (modalStock) {
+    modalStock.className = 'modal-badge-stock stock-po';
+    modalStock.textContent = 'Pre-Order Saja';
+  }
+  if (modalTitle) modalTitle.textContent = sb.name;
+  if (modalPriceBox) {
+    modalPriceBox.innerHTML = '📋 <strong>Belum Dijual Harian di Toko</strong> — Hanya tersedia untuk pesanan Pre-Order Snack Box acara.';
+  }
+  if (modalVariants) {
+    modalVariants.hidden = true;
+    modalVariants.innerHTML = '';
+  }
+  if (modalDesc) modalDesc.textContent = sb.desc;
+  if (modalNote) {
+    modalNote.innerHTML = '💬 Ingin menanyakan pilihan kombinasi isi dus atau estimasi pesanan dengan menu <strong>' + escapeHtml(sb.name) + '</strong>? Silakan hubungi WhatsApp Manager PO.';
+  }
+  if (qtyControls) qtyControls.hidden = true;
+  if (addBtn) {
+    addBtn.textContent = '📋 Tanya Info / Pre-Order via WA Manager';
+    addBtn.onclick = function () {
+      const msg =
+        'Halo Manager Sin Tradisional (Jl. Situ No. 41),\n' +
+        'Saya melihat website dan ingin menanyakan informasi Pre-Order Snack Box (tertarik dengan menu tambahan: ' + sb.name + '). Terima kasih.';
+      window.open('https://wa.me/' + WA_MANAGER_PHONE + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
     };
   }
-  if (title) title.textContent = prod.name;
-  if (desc) desc.textContent = prod.desc;
-  if (catBadge) catBadge.textContent = prod.badge || "Menu Sin Tradisional";
-  if (qtyVal) qtyVal.textContent = modalTempQty;
-  if (addBtn) {
-    addBtn.textContent = cart[productId]
-      ? `Simpan Jumlah (${modalTempQty})`
-      : `+ Masukkan ke Pesanan WA (${modalTempQty})`;
-  }
 
-  if (modal) modal.hidden = false;
+  if (modal) {
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function selectModalVariant(idx) {
+  if (!activeModalItemId) return;
+  const p = findItemById(activeModalItemId);
+  if (!p || !p.variants || !p.variants[idx]) return;
+  activeModalVariantIdx = idx;
+  const modalImg = document.getElementById('modal-img');
+  if (modalImg) modalImg.src = imgUrl(p.variants[idx].img);
+  document.querySelectorAll('#modal-variants .variant-chip').forEach(function (btn, i) {
+    btn.classList.toggle('active', i === idx);
+  });
 }
 
 function closeProductModal() {
-  const modal = document.getElementById("product-modal");
+  const modal = document.getElementById('product-modal');
   if (modal) modal.hidden = true;
-  activeModalProductId = null;
+  document.body.style.overflow = '';
+  activeModalItemId = null;
 }
 
-// 6. KIRIM KE WHATSAPP (ADMIN 2 KASIR FAST RESPON vs ADMIN 1 MANAGER PO)
+function askKasirAboutProduct(itemId) {
+  const item = findItemById(itemId);
+  const itemName = item ? item.name : 'kue basah';
+  const msg =
+    'Halo Kasir Sin Tradisional (Jl. Situ No. 41),\n' +
+    'Saya cek di website stok "' + itemName + '" sedang habis / belum ter-update. Apakah masih ada atau kapan ready lagi hari ini? Terima kasih.';
+  window.open('https://wa.me/' + WA_KASIR_PHONE + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+}
+
+// Kirim pesan WhatsApp terformat ke Admin 2 (Kasir) atau Admin 1 (Manager PO)
 function sendWhatsApp(phone, roleLabel) {
-  const name = (document.getElementById("cust-name").value || "").trim() || "Pelanggan Sin Tradisional";
-  const type = document.getElementById("order-type").value;
-  const notes = (document.getElementById("order-notes").value || "").trim() || "- Mohon info menu kue basah yang tersedia hari ini";
+  const name = (document.getElementById('cust-name')?.value || '').trim();
+  const orderType = document.getElementById('order-type')?.value || 'Ambil Sendiri di Toko';
+  const notes = (document.getElementById('order-notes')?.value || '').trim();
 
-  const greeting = roleLabel === "Kasir"
-    ? "Halo Kasir Toko Sin Tradisional (Jl. Situ No. 41),"
-    : "Halo Manager Pre-Order Sin Tradisional (Jl. Situ No. 41),";
+  const lines = [
+    'Halo ' + (roleLabel === 'Kasir' ? 'Kasir Toko' : 'Manager PO') + ' Sin Tradisional (Jl. Situ No. 41 Bandung),',
+    'Saya ingin cek stok / memesan kue lewat website sintradisional.com (Harga Toko):',
+    ''
+  ];
 
-  const text = `${greeting}\n\nNama Pemesan: ${name}\nJenis Pesanan: ${type}\n\nDaftar Kue & Jumlah:\n${notes}\n\nMohon info ketersediaan & total Harga Toko-nya. Terima kasih!`;
-  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, "_blank");
+  if (name) lines.push('*Nama Pemesan:* ' + name);
+  lines.push('*Jenis Pesanan:* ' + orderType);
+
+  if (notes) {
+    lines.push('*Rincian Pesanan:*');
+    lines.push(notes);
+  } else {
+    lines.push('*Rincian:* Mohon informasi stok kue basah yang ready hari ini di toko.');
+  }
+
+  lines.push('');
+  lines.push('Terima kasih.');
+
+  window.open('https://wa.me/' + phone + '?text=' + encodeURIComponent(lines.join('\n')), '_blank', 'noopener');
 }
 
-// 7. EVENT LISTENERS (FILTER, SEARCH, MODAL)
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', function () {
   updateStoreOpenBadge();
+  renderStockStatusBar();
   renderFeatured();
   renderCatalog();
+  renderExtraStoreItems();
+  renderSnackboxShowcase();
+  fetchLivePosStock();
 
-  // Filter Kategori
-  document.querySelectorAll(".filter-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      currentFilter = btn.dataset.filter;
-      renderCatalog();
-    });
-  });
-
-  // Pencarian Instan Real-Time
-  const searchInput = document.getElementById("search-input");
-  const clearBtn = document.getElementById("clear-search");
-  if (searchInput) {
-    searchInput.addEventListener("input", e => {
-      currentSearch = e.target.value;
-      if (clearBtn) clearBtn.hidden = !currentSearch;
+  // Filter Tabs
+  const filterBar = document.getElementById('filter-bar');
+  if (filterBar) {
+    filterBar.addEventListener('click', function (e) {
+      const btn = e.target.closest('.filter-btn');
+      if (!btn) return;
+      document.querySelectorAll('.filter-btn').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentFilter = btn.getAttribute('data-filter') || 'all';
       renderCatalog();
     });
   }
-  if (clearBtn) {
-    clearBtn.addEventListener("click", () => {
-      currentSearch = "";
-      if (searchInput) {
-        searchInput.value = "";
-        searchInput.focus();
-      }
+
+  // Pencarian Real-Time
+  const searchInput = document.getElementById('search-input');
+  const clearBtn = document.getElementById('clear-search');
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      searchQuery = searchInput.value;
+      if (clearBtn) clearBtn.hidden = searchQuery.length === 0;
+      renderCatalog();
+      renderExtraStoreItems();
+    });
+  }
+  if (clearBtn && searchInput) {
+    clearBtn.addEventListener('click', function () {
+      searchInput.value = '';
+      searchQuery = '';
       clearBtn.hidden = true;
       renderCatalog();
+      renderExtraStoreItems();
+      searchInput.focus();
     });
   }
 
-  // Modal Stepper & Add Button
-  const minusBtn = document.getElementById("modal-minus-btn");
-  const plusBtn = document.getElementById("modal-plus-btn");
-  const qtyVal = document.getElementById("modal-qty-val");
-  const modalAddBtn = document.getElementById("modal-add-btn");
-  const modalBackdrop = document.getElementById("product-modal");
+  // Toggle "Ready Hari Ini Saja"
+  const readyBtn = document.getElementById('btn-only-ready');
+  if (readyBtn) {
+    readyBtn.addEventListener('click', function () {
+      onlyReadyFilter = !onlyReadyFilter;
+      readyBtn.setAttribute('aria-pressed', onlyReadyFilter ? 'true' : 'false');
+      renderCatalog();
+      renderExtraStoreItems();
+    });
+  }
 
-  if (minusBtn) {
-    minusBtn.addEventListener("click", () => {
-      if (modalTempQty > 1) {
-        modalTempQty--;
-        if (qtyVal) qtyVal.textContent = modalTempQty;
-        if (modalAddBtn) modalAddBtn.textContent = `+ Masukkan ke Pesanan WA (${modalTempQty})`;
+  // Tombol Segarkan Stok Live
+  const refreshBtn = document.getElementById('btn-refresh-stock');
+  if (refreshBtn) {
+    refreshBtn.addEventListener('click', function () {
+      fetchLivePosStock();
+    });
+  }
+
+  // Tombol + / - di dalam Modal Produk
+  const modalMinus = document.getElementById('modal-minus-btn');
+  const modalPlus = document.getElementById('modal-plus-btn');
+  const qtyVal = document.getElementById('modal-qty-val');
+
+  function updateModalButtonPrice() {
+    if (!activeModalItemId) return;
+    const item = findItemById(activeModalItemId);
+    const addBtn = document.getElementById('modal-add-btn');
+    if (!item || !addBtn || item.isPreOrder) return;
+    const stockInfo = getLiveStockInfo(item);
+    if (stockInfo.state === 'empty') return;
+    const prices = getEffectivePrices(item);
+    addBtn.textContent = '+ Masukkan ke Pesanan WA (' + formatRp((prices.hargaToko || 0) * modalQty) + ')';
+  }
+
+  if (modalMinus && qtyVal) {
+    modalMinus.addEventListener('click', function () {
+      if (modalQty > 1) {
+        modalQty--;
+        qtyVal.textContent = modalQty;
+        updateModalButtonPrice();
       }
     });
   }
-  if (plusBtn) {
-    plusBtn.addEventListener("click", () => {
-      modalTempQty++;
-      if (qtyVal) qtyVal.textContent = modalTempQty;
-      if (modalAddBtn) modalAddBtn.textContent = `+ Masukkan ke Pesanan WA (${modalTempQty})`;
+  if (modalPlus && qtyVal) {
+    modalPlus.addEventListener('click', function () {
+      modalQty++;
+      qtyVal.textContent = modalQty;
+      updateModalButtonPrice();
     });
   }
-  if (modalAddBtn) {
-    modalAddBtn.addEventListener("click", () => {
-      if (activeModalProductId) {
-        cart[activeModalProductId] = modalTempQty;
-        syncCartUI();
-        renderCatalog();
-      }
-      closeProductModal();
-    });
-  }
+
+  const modalBackdrop = document.getElementById('product-modal');
   if (modalBackdrop) {
-    modalBackdrop.addEventListener("click", e => {
+    modalBackdrop.addEventListener('click', function (e) {
       if (e.target === modalBackdrop) closeProductModal();
     });
   }
-  document.addEventListener("keydown", e => {
-    if (e.key === "Escape") closeProductModal();
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeProductModal();
   });
 });

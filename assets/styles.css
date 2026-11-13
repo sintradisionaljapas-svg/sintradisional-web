@@ -1464,3 +1464,611 @@ body {
   white-space: nowrap;
   flex-shrink: 0;
 }
+
+/* ==========================================================================
+   8. PEMBANDING HARGA TOKO VS ONLINE, STOK LIVE POS, KERINGAN & SNACK BOX PO
+   ========================================================================== */
+.compare-banner {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 720px) {
+  .compare-banner {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+.compare-item {
+  background: var(--card);
+  border: 1.5px solid #bbf7d0;
+  border-left: 5px solid var(--green-main);
+  border-radius: 12px;
+  padding: 11px 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: var(--shadow-sm);
+}
+
+.compare-name {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.compare-prices {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.compare-online {
+  font-size: 0.88rem;
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
+.compare-toko {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: var(--green-main);
+}
+
+.compare-save {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #854d0e;
+  background: var(--gold-light);
+  padding: 2px 8px;
+  border-radius: 6px;
+  align-self: flex-start;
+}
+
+/* Live POS Stock Status Panel */
+.stock-status-bar {
+  background: var(--card);
+  border: 1.5px solid #bbf7d0;
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  box-shadow: var(--shadow-sm);
+}
+
+.stock-status-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.stock-live-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #f59e0b;
+}
+
+.stock-live-dot.loading {
+  background: #f59e0b;
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.22);
+}
+
+.stock-live-dot.live {
+  background: #16a34a;
+  box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.22);
+}
+
+.stock-live-dot.fallback {
+  background: #0284c7;
+  box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.16);
+}
+
+.stock-status-texts {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.stock-status-texts strong {
+  font-size: 0.94rem;
+  color: var(--green-dark);
+}
+
+.stock-status-texts span {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.stock-status-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.stock-toggle-btn,
+.stock-refresh-btn {
+  padding: 8px 12px;
+  border-radius: 9px;
+  font-size: 0.84rem;
+  font-weight: 800;
+  cursor: pointer;
+  border: 1.5px solid var(--border);
+  background: #fff;
+  color: var(--text);
+}
+
+.stock-toggle-btn[aria-pressed="true"] {
+  background: var(--green-dark);
+  color: #fff;
+  border-color: var(--green-dark);
+}
+
+.stock-refresh-btn {
+  background: var(--green-soft);
+  color: var(--green-dark);
+  border-color: #bbf7d0;
+}
+
+.stock-refresh-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* Badges Stok & Harga Coret per Kartu */
+.inline-strike {
+  color: #9ca3af;
+}
+
+.card-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 5px;
+}
+
+.stock-pill {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 99px;
+  line-height: 1.3;
+}
+
+.stock-ready {
+  background: #dcfce7;
+  color: #14532d;
+  border: 1px solid #86efac;
+}
+
+.stock-low {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fcd34d;
+}
+
+.stock-empty {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fca5a5;
+}
+
+.stock-po {
+  background: #fef9c3;
+  color: #854d0e;
+  border: 1px solid #fde047;
+}
+
+.stock-check {
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+.card-unit-note {
+  font-size: 0.73rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.card.is-out-of-stock .card-img-wrap img {
+  filter: grayscale(35%) opacity(0.84);
+}
+
+.price-box {
+  margin-top: auto;
+  margin-bottom: 8px;
+  padding: 7px 8px;
+  background: #fafaf9;
+  border: 1px solid #eceae7;
+  border-radius: 9px;
+}
+
+.price-row {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.price-online-strike {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
+.price-toko-now {
+  font-size: 1.08rem;
+  font-weight: 900;
+  color: var(--green-main);
+}
+
+.price-save-tag {
+  display: inline-block;
+  margin-top: 2px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #854d0e;
+  background: var(--gold-light);
+  padding: 1px 6px;
+  border-radius: 5px;
+}
+
+.price-po-text {
+  font-size: 0.86rem;
+  font-weight: 800;
+  color: #854d0e;
+}
+
+.add-btn-po {
+  background: #b45309;
+  box-shadow: 0 2px 6px rgba(180, 83, 9, 0.25);
+}
+
+.add-btn-po:hover {
+  background: #92400e;
+}
+
+.add-btn-soldout {
+  background: #e7e5e4;
+  color: #57534e;
+  box-shadow: none;
+}
+
+.add-btn-soldout:hover {
+  background: #d6d3d1;
+}
+
+.empty-catalog-box {
+  grid-column: 1 / -1;
+  background: var(--card);
+  border: 1.5px dashed var(--border);
+  border-radius: 14px;
+  padding: 26px 16px;
+  text-align: center;
+}
+
+.empty-catalog-box p {
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.btn-reset-filter {
+  background: var(--green-dark);
+  color: #fff;
+  border: none;
+  padding: 9px 16px;
+  border-radius: 9px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* Seksi Keringan & Menu Toko Lainnya */
+.extra-stock-panel {
+  margin-top: 22px;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.extra-stock-head h3 {
+  font-size: 1.08rem;
+  font-weight: 800;
+  color: var(--green-dark);
+  margin-bottom: 2px;
+}
+
+.extra-stock-head p {
+  font-size: 0.84rem;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.extra-stock-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+@media (max-width: 900px) {
+  .extra-stock-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .extra-stock-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.extra-card {
+  border: 1.5px solid #eceae7;
+  border-radius: 11px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+  background: #fafaf9;
+}
+
+.extra-card.in-cart {
+  border-color: var(--green-bright);
+  background: var(--green-soft);
+}
+
+.extra-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.extra-card-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.extra-card-cat {
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+
+.extra-card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.extra-card-actions {
+  min-width: 110px;
+}
+
+/* Seksi Informasi Snack Box (Pre-Order Showcase) */
+.snackbox-info-section {
+  margin: 28px 0;
+  background: linear-gradient(180deg, #fffbeb 0%, #ffffff 100%);
+  border: 2px solid #fde68a;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: var(--shadow-sm);
+}
+
+.snackbox-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.snackbox-pill {
+  display: inline-block;
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fcd34d;
+  font-size: 0.76rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 99px;
+  margin-bottom: 6px;
+}
+
+.snackbox-head h2 {
+  font-size: 1.32rem;
+  font-weight: 900;
+  color: var(--green-dark);
+  margin-bottom: 4px;
+}
+
+.snackbox-head p {
+  font-size: 0.92rem;
+  color: var(--text);
+  max-width: 720px;
+}
+
+.btn-snackbox-wa {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #b45309;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 0.92rem;
+  padding: 12px 16px;
+  border-radius: 11px;
+  box-shadow: 0 3px 10px rgba(180, 83, 9, 0.25);
+  white-space: nowrap;
+}
+
+.btn-snackbox-wa:hover {
+  background: #92400e;
+}
+
+.snackbox-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+@media (max-width: 820px) {
+  .snackbox-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.snackbox-card {
+  background: #fff;
+  border: 1px solid #fde68a;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.snackbox-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.snackbox-img-wrap {
+  aspect-ratio: 4 / 3;
+  background: #fafaf9;
+  overflow: hidden;
+  position: relative;
+}
+
+.snackbox-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.snackbox-po-badge {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  background: rgba(146, 64, 14, 0.9);
+  color: #fef3c7;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 6px;
+}
+
+.snackbox-card-body {
+  padding: 8px 10px 10px;
+}
+
+.snackbox-card-body h3 {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.snackbox-card-body span {
+  font-size: 0.76rem;
+  color: #92400e;
+  font-weight: 600;
+}
+
+/* Modal Price Compare & Variant Selector */
+.modal-badge-stock {
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 99px;
+}
+
+.modal-price-compare {
+  background: var(--green-soft);
+  border: 1.5px solid #bbf7d0;
+  border-radius: 11px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.modal-variants {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.variant-chip {
+  padding: 6px 11px;
+  border-radius: 99px;
+  border: 1.5px solid var(--border);
+  background: #fff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.variant-chip.active {
+  background: var(--green-dark);
+  color: #fff;
+  border-color: var(--green-dark);
+}
+
+/* Ringkasan Total & Penghematan di Keranjang WA */
+.cart-totals-box {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1.5px dashed #bbf7d0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cart-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.cart-total-row.grand {
+  font-size: 1.06rem;
+  font-weight: 900;
+  color: var(--green-dark);
+  margin-top: 3px;
+}
+
+.cart-saving-highlight {
+  margin-top: 4px;
+  background: var(--gold-light);
+  border: 1px solid #fde047;
+  color: #854d0e;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 0.84rem;
+  font-weight: 800;
+}

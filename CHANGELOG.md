@@ -4,6 +4,25 @@ Dokumen ini merangkum seluruh riwayat pembaruan, arsitektur teknis, kurasi aset 
 
 ---
 
+## [v3.0.0] — 2026-11-13
+### Reorganisasi Katalog Foto Baru, Harga Toko vs Harga Online, & Integrasi Stok Live POS
+- **Reorganisasi Kategori Foto & Optimasi Aset Web (`assets/img/`):**
+  - Menggunakan 1 foto hero utama (`assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg`) dengan fallback valid ke `assets/img/paket/foto-produk-tampah-kue-basah-bandung-sin-tradisional-261113-01.jpg`.
+  - Memisahkan katalog jual harian & paket dari 4 folder aktif: `regular/` (17 menu + 3 varian warna Putu Mayang), `Spesial/` (6 menu cup), `kue kue/` (8 menu kue & gurih), dan `paket/` (Kue Tampah & Kue Tray Pre-Order).
+  - Mengompres 50 file foto besar hingga `<= 239 KB/foto` (total folder `assets/img` turun dari `193 MB` menjadi `7,1 MB`) dengan tetap menjaga penuh metadata EXIF GPS Jl. Situ No. 41 Bandung dan IPTC/XMP GEO.
+  - **Perlindungan Privasi Foto Paket:** Membersihkan kartu nama lama bertuliskan `Jl. Aksan no. 60` pada `paket/foto-produk-tampah-kue-basah-bandung-sin-tradisional-261113-01.jpg` dan `paket/foto-produk-tray-kue-basah-bandung-sin-tradisional-261113-01.jpg` sambil tetap mempertahankan kartu merek hijau Sin Tradisional.
+- **Harga Asli Toko vs Harga Aplikasi Online (Fokus Pembeli Akhir / End-User):**
+  - Menampilkan perbandingan **Harga Aplikasi Online (GoFood/GrabFood/ShopeeFood) coret** terhadap **Harga Asli Toko** beserta nominal & persentase penghematan (`Master_Produk`, sinkron 44 SKU).
+  - Mengecualikan sepenuhnya harga agen, harga reseller, harga modal, maupun daftar harga snack box dari website dan API publik.
+  - Menghitung otomatis subtotal Harga Toko, penghematan dibanding aplikasi online, dan diskon bertingkat toko (`>= Rp 150.000` 5%, `>= Rp 250.000` 7,5%, `>= Rp 300.000` 10%) khusus kategori `Regular`, `Spesial`, dan `Kue` (mengecualikan `Keringan`, disertai keterangan Happy Hour 15% walk-in `14.00–17.00 WIB`).
+- **Integrasi Stok Toko Real-Time (`POS_Sintra` v2.5.0 <-> `sintradisional.com`):**
+  - Menambahkan endpoint JSON publik read-only `?action=public_stok` pada `POS_Sintra/01_Config.gs` dan `getPublicStokTokoPayload()` di `02_Database.gs` (plus timestamp `WAKTU_STOK_TOKO_V2` & invalidasi cache 30 detik di `saveStokTokoHarian`) dengan whitelist ketat Jalur Toko.
+  - Menambahkan panel status stok POS, toggle filter **"Ready Hari Ini Saja"**, tombol **"Segarkan Stok"**, badge status per produk (`Ready` / `Sisa X` / `Habis Hari Ini`), panel ringkas **Stok Keringan & Menu Toko Lainnya** untuk item Toko tanpa foto baru, serta fallback tenang mengarah ke WA Kasir Toko (`0895-3300-12673`).
+- **Seksi Informasi Menu Tambahan Snack Box (`#snack-box`):**
+  - Menampilkan 20 foto pilihan dari `assets/img/Snack box/` sebagai galeri inspirasi Pre-Order acara (tanpa harga dan tidak masuk keranjang kasir harian), terhubung 1 klik ke WhatsApp Admin 1 Manager PO (`0895-4122-28351`).
+
+---
+
 ## [v2.0.0] — 2026-11-12
 ### Perombakan Tampilan Mobile-First Ala Aplikasi Kuliner (ShopeeFood / GrabFood)
 
