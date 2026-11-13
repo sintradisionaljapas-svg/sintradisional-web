@@ -11,6 +11,60 @@ const POS_PUBLIC_STOK_URL =
 const WA_KASIR_PHONE = '62895330012673';
 const WA_MANAGER_PHONE = '62895412228351';
 
+const UTM_SOURCE_STORAGE_KEY = 'sintra_utm_source';
+const UTM_SOURCE_LABELS = {
+  ojol: 'Kartu Sisipan Ojol',
+  toko: 'Stiker Kemasan Toko'
+};
+
+function captureUtmSource() {
+  try {
+    const search = (window.location && window.location.search) || '';
+    let utm = '';
+    if (typeof URLSearchParams !== 'undefined') {
+      utm = (new URLSearchParams(search).get('utm_source') || '').trim().toLowerCase();
+    } else {
+      const m = search.match(/[?&]utm_source=([^&]+)/i);
+      utm = m ? decodeURIComponent(m[1]).trim().toLowerCase() : '';
+    }
+    if (utm) {
+      sessionStorage.setItem(UTM_SOURCE_STORAGE_KEY, utm);
+    }
+  } catch (e) {
+    // Abaikan jika sessionStorage tidak tersedia
+  }
+}
+
+function getUtmSourceLabel() {
+  try {
+    const saved = (sessionStorage.getItem(UTM_SOURCE_STORAGE_KEY) || '').trim().toLowerCase();
+    return UTM_SOURCE_LABELS[saved] || '';
+  } catch (e) {
+    return '';
+  }
+}
+
+function appendUtmSourceNote(message) {
+  const label = getUtmSourceLabel();
+  if (!label) return message;
+  return message + '\n\nSumber Katalog: ' + label;
+}
+
+function decorateWaLinksWithUtm() {
+  const utmLabel = getUtmSourceLabel();
+  if (!utmLabel) return;
+  document.querySelectorAll('a[href^="https://wa.me/"]').forEach(function (link) {
+    try {
+      const url = new URL(link.href);
+      const baseText = url.searchParams.get('text') || 'Halo Sin Tradisional (Jl. Situ No. 41),';
+      if (baseText.indexOf('Sumber Katalog:') === -1) {
+        url.searchParams.set('text', baseText + '\n\nSumber Katalog: ' + utmLabel);
+        link.href = url.toString();
+      }
+    } catch (e) {}
+  });
+}
+
 // Katalog visual harian & paket acara dari 4 folder aktif (regular, kue kue, Spesial, paket)
 const PRODUCTS = [
   // ==================== KATEGORI REGULAR ====================
@@ -1305,9 +1359,10 @@ function openSnackboxInfoModal(sbId) {
   if (addBtn) {
     addBtn.textContent = '📋 Tanya Info / Pre-Order via WA Manager';
     addBtn.onclick = function () {
-      const msg =
+      const msg = appendUtmSourceNote(
         'Halo Manager Sin Tradisional (Jl. Situ No. 41),\n' +
-        'Saya melihat website dan ingin menanyakan informasi Pre-Order Snack Box (tertarik dengan menu tambahan: ' + sb.name + '). Terima kasih.';
+        'Saya melihat website dan ingin menanyakan informasi Pre-Order Snack Box (tertarik dengan menu tambahan: ' + sb.name + '). Terima kasih.'
+      );
       window.open('https://wa.me/' + WA_MANAGER_PHONE + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
     };
   }
@@ -1340,9 +1395,10 @@ function closeProductModal() {
 function askKasirAboutProduct(itemId) {
   const item = findItemById(itemId);
   const itemName = item ? item.name : 'kue basah';
-  const msg =
+  const msg = appendUtmSourceNote(
     'Halo Kasir Sin Tradisional (Jl. Situ No. 41),\n' +
-    'Saya cek di website stok "' + itemName + '" sedang habis / belum ter-update. Apakah masih ada atau kapan ready lagi hari ini? Terima kasih.';
+    'Saya cek di website stok "' + itemName + '" sedang habis / belum ter-update. Apakah masih ada atau kapan ready lagi hari ini? Terima kasih.'
+  );
   window.open('https://wa.me/' + WA_KASIR_PHONE + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
 }
 
@@ -1371,10 +1427,13 @@ function sendWhatsApp(phone, roleLabel) {
   lines.push('');
   lines.push('Terima kasih.');
 
-  window.open('https://wa.me/' + phone + '?text=' + encodeURIComponent(lines.join('\n')), '_blank', 'noopener');
+  const finalMessage = appendUtmSourceNote(lines.join('\n'));
+  window.open('https://wa.me/' + phone + '?text=' + encodeURIComponent(finalMessage), '_blank', 'noopener');
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+  captureUtmSource();
+  decorateWaLinksWithUtm();
   updateStoreOpenBadge();
   renderStockStatusBar();
   renderFeatured();

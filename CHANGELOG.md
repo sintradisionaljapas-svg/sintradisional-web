@@ -4,6 +4,13 @@ Dokumen ini merangkum seluruh riwayat pembaruan, arsitektur teknis, kurasi aset 
 
 ---
 
+## [v3.0.4] — 2026-11-13
+### Deteksi Parameter UTM Otomatis pada Alur Pemesanan WhatsApp
+- **Pelacakan `utm_source` (`assets/app.js`):** Menambahkan `captureUtmSource()` yang membaca parameter URL `utm_source` (`ojol` / `toko`) saat halaman dibuka dan menyimpannya ke `sessionStorage` (`sintra_utm_source`).
+- **Penyisipan Otomatis Keterangan Sumber Katalog:** Memperbarui `sendWhatsApp()`, `askKasirAboutProduct()`, `openSnackboxInfoModal()`, serta `decorateWaLinksWithUtm()` untuk menambahkan baris `Sumber Katalog: Kartu Sisipan Ojol` (jika `utm_source=ojol`) atau `Sumber Katalog: Stiker Kemasan Toko` (jika `utm_source=toko`) pada seluruh CTA WhatsApp tanpa mengubah format pesan standar untuk pengunjung langsung.
+
+---
+
 ## [v3.0.3] — 2026-11-13
 ### FAQ Transaksional, Optimasi Core Web Vitals & Infrastruktur Indexing
 - **Konten Transaksional (`#faq-pemesanan`):** Menambahkan section **Informasi Pemesanan & FAQ** di `index.html` dan `assets/styles.css` dengan kontras hijau tua `#14532d`, font ramah usia 40–60 tahun, mencakup aturan pemesanan H-1 Snack Box & Kue Tampah (100% tanpa pengawet), layanan grosir B2B Agen Gang Luna, serta Harga Asli Toko (0% komisi aplikasi) via WA Admin 1 & 2.
