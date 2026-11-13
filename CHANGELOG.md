@@ -4,6 +4,14 @@ Dokumen ini merangkum seluruh riwayat pembaruan, arsitektur teknis, kurasi aset 
 
 ---
 
+## [v3.0.2] — 2026-11-13
+### Optimasi SEO Teknis, JSON-LD Bakery & GEO (`bio2`)
+- **Meta Tags High-Intent (`index.html`):** Memperbarui `<title>` menjadi `Sin Tradisional - Kue Basah, Snack Box & Kue Tampah Bandung Tanpa Pengawet` serta `<meta name="description">` yang menonjolkan jajanan pasar segar tanpa pengawet kimia sejak 1978 di Jl. Situ No. 41.
+- **JSON-LD Schema (`@type: "Bakery"`):** Menyelaraskan `image` ke `https://www.sintradisional.com/assets/img/logo-sin-tradisional.png`, `telephone` ke `+62895412228351`, serta menambahkan `servesCuisine: "Kue Basah Tradisional Indonesia"` bersama `streetAddress`, `addressLocality`, dan koordinat `geo`.
+- **Audit Atribut `alt` Katalog & Privasi Lokasi:** Memperkaya atribut `alt` seluruh gambar katalog produk, sorotan, dan showcase Snack Box di `assets/app.js` dengan kata kunci deskriptif tanpa pengawet, memastikan seluruh aset dimuat lokal dari `assets/img/`, serta memvalidasi hanya alamat komersial `Jl. Situ No. 41` yang tercantum di HTML/CSS/JS.
+
+---
+
 ## [v3.0.1] — 2026-11-13
 ### Perbaikan UI/UX Mobile, Tabel Komparasi Harga Kompak & Kartu Katalog
 - **Tata Letak Kartu Profil Utama:** Memisahkan baris logo + badge status (`Toko Buka (06.30–17.00 WIB)`) di atas, serta memperlebar judul, deskripsi, dan tautan `Jl. Situ No. 41, Bandung` menjadi full-width sambil menghapus baris jam buka yang redundan.

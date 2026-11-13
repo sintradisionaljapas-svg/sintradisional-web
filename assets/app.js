@@ -24,6 +24,7 @@ const PRODUCTS = [
     hargaToko: 5000,
     hargaOnline: 6500,
     img: 'assets/img/regular/foto-produk-bugis-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    alt: 'Kue Bugis bungkus daun pisang tanpa pengawet Sin Tradisional Bandung',
     desc: 'Kue ketan hitam/hijau kenyal dengan isian unti kelapa gula aren asli, dibungkus daun pisang segar.',
     featured: true
   },
@@ -753,7 +754,7 @@ function renderFeatured() {
     return (
       '<article class="featured-card">' +
         '<div class="featured-img-wrap" onclick="openProductModal(\'' + item.id + '\')">' +
-          '<img src="' + imgUrl(item.img) + '" alt="' + escapeHtml(item.name) + ' Sin Tradisional" loading="lazy">' +
+          '<img src="' + imgUrl(item.img) + '" alt="' + escapeHtml(item.alt || (item.name + ' kue basah tradisional tanpa pengawet Sin Tradisional Bandung')) + '" loading="lazy">' +
         '</div>' +
         '<div class="featured-body">' +
           '<div class="featured-badges">' +
@@ -847,7 +848,7 @@ function renderCatalog() {
     return (
       '<article class="card' + (qty > 0 ? ' in-cart' : '') + (isSoldOut ? ' is-out-of-stock' : '') + '">' +
         '<div class="card-img-wrap" onclick="openProductModal(\'' + p.id + '\')">' +
-          '<img src="' + imgUrl(p.img) + '" alt="' + escapeHtml(p.name) + ' ' + escapeHtml(p.unit) + ' - Kue Basah Sin Tradisional Bandung" loading="lazy" onerror="this.onerror=null;this.src=\'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg\';">' +
+          '<img src="' + imgUrl(p.img) + '" alt="' + escapeHtml(p.alt || (p.name + ' (' + p.unit + ') kue basah tradisional tanpa pengawet Sin Tradisional Bandung')) + '" loading="lazy" onerror="this.onerror=null;this.src=\'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg\';">' +
           '<span class="card-badge-top">' + escapeHtml(p.badgeLabel || p.posCat) + '</span>' +
           '<span class="card-zoom-hint"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Detail</span>' +
         '</div>' +
@@ -944,7 +945,7 @@ function renderSnackboxShowcase() {
     return (
       '<article class="snackbox-card" onclick="openSnackboxInfoModal(\'' + item.id + '\')">' +
         '<div class="snackbox-img-wrap">' +
-          '<img src="' + imgUrl(item.img) + '" alt="Inspirasi Snack Box ' + escapeHtml(item.name) + ' - Sin Tradisional" loading="lazy">' +
+          '<img src="' + imgUrl(item.img) + '" alt="Inspirasi Snack Box ' + escapeHtml(item.name) + ' tanpa pengawet Sin Tradisional Bandung" loading="lazy">' +
           '<span class="snackbox-po-badge">Pre-Order</span>' +
         '</div>' +
         '<div class="snackbox-card-body">' +
@@ -1183,7 +1184,7 @@ function openProductModal(itemId) {
 
   if (modalImg) {
     modalImg.src = imgUrl(initialImg);
-    modalImg.alt = p.name + ' Sin Tradisional Bandung';
+    modalImg.alt = p.alt || (p.name + ' kue basah tradisional tanpa pengawet Sin Tradisional Bandung');
   }
   if (modalCat) modalCat.textContent = p.posCat + ' • ' + p.unit;
   if (modalStock) {
@@ -1281,7 +1282,7 @@ function openSnackboxInfoModal(sbId) {
 
   if (modalImg) {
     modalImg.src = imgUrl(sb.img);
-    modalImg.alt = sb.name + ' - Inspirasi Snack Box Sin Tradisional';
+    modalImg.alt = sb.name + ' - Inspirasi Snack Box tanpa pengawet Sin Tradisional Bandung';
   }
   if (modalCat) modalCat.textContent = 'Rekomendasi Snack Box';
   if (modalStock) {
