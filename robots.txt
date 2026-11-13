@@ -23,4 +23,4 @@ Allow: /
 User-agent: Meta-ExternalAgent
 Allow: /
 
-Sitemap: https://sintradisional.com/sitemap.xml
+Sitemap: https://www.sintradisional.com/sitemap.xml

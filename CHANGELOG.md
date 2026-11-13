@@ -4,6 +4,14 @@ Dokumen ini merangkum seluruh riwayat pembaruan, arsitektur teknis, kurasi aset 
 
 ---
 
+## [v3.0.3] — 2026-11-13
+### FAQ Transaksional, Optimasi Core Web Vitals & Infrastruktur Indexing
+- **Konten Transaksional (`#faq-pemesanan`):** Menambahkan section **Informasi Pemesanan & FAQ** di `index.html` dan `assets/styles.css` dengan kontras hijau tua `#14532d`, font ramah usia 40–60 tahun, mencakup aturan pemesanan H-1 Snack Box & Kue Tampah (100% tanpa pengawet), layanan grosir B2B Agen Gang Luna, serta Harga Asli Toko (0% komisi aplikasi) via WA Admin 1 & 2.
+- **Core Web Vitals (`loading="lazy"` & CLS):** Menambahkan `fetchpriority="high"` pada foto Hero Banner agar termuat langsung, serta atribut `width` dan `height` eksplisit bersama `loading="lazy"` dan CSS `aspect-ratio: 4 / 5` pada gambar katalog di `assets/app.js` untuk mencegah layout shift.
+- **Infrastruktur Pengindeksan:** Menyelaraskan `sitemap.xml` ke `<loc>https://www.sintradisional.com/</loc>` dengan `<lastmod>2026-11-13</lastmod>` serta `robots.txt` dengan `Sitemap: https://www.sintradisional.com/sitemap.xml`.
+
+---
+
 ## [v3.0.2] — 2026-11-13
 ### Optimasi SEO Teknis, JSON-LD Bakery & GEO (`bio2`)
 - **Meta Tags High-Intent (`index.html`):** Memperbarui `<title>` menjadi `Sin Tradisional - Kue Basah, Snack Box & Kue Tampah Bandung Tanpa Pengawet` serta `<meta name="description">` yang menonjolkan jajanan pasar segar tanpa pengawet kimia sejak 1978 di Jl. Situ No. 41.
