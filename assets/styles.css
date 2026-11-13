@@ -125,15 +125,16 @@ body {
   }
 }
 
-.store-card-main {
+.store-card-top {
   display: flex;
-  align-items: flex-start;
-  gap: 14px;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
 }
 
 .store-logo {
-  width: 72px;
-  height: 72px;
+  width: 68px;
+  height: 68px;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid var(--gold);
@@ -144,21 +145,21 @@ body {
 
 @media (min-width: 769px) {
   .store-logo {
-    width: 86px;
-    height: 86px;
+    width: 82px;
+    height: 82px;
   }
 }
 
-.store-info {
-  flex: 1;
-  min-width: 0;
+.store-info-full {
+  width: 100%;
 }
 
 .store-badges {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: 6px;
 }
 
 .badge-heritage {
@@ -356,13 +357,18 @@ body {
 .btn-ojol {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 7px 13px;
+  gap: 6px;
+  padding: 8px 13px;
   border-radius: 8px;
-  font-weight: 700;
-  font-size: 0.85rem;
+  font-weight: 800;
+  font-size: 0.88rem;
   text-decoration: none;
   color: #fff;
+  letter-spacing: 0.01em;
+}
+
+.btn-ojol svg {
+  flex-shrink: 0;
 }
 
 .btn-gofood { background: #dc2626; }
@@ -799,6 +805,7 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  height: 100%;
   box-shadow: var(--shadow-sm);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
@@ -820,12 +827,6 @@ body {
   cursor: pointer;
 }
 
-@media (max-width: 768px) {
-  .card-img-wrap {
-    aspect-ratio: 4 / 3;
-  }
-}
-
 .card-img-wrap img {
   width: 100%;
   height: 100%;
@@ -842,11 +843,11 @@ body {
   position: absolute;
   top: 8px;
   left: 8px;
-  background: rgba(20, 83, 45, 0.9);
+  background: rgba(20, 83, 45, 0.92);
   color: #fff;
-  font-size: 0.7rem;
-  font-weight: 700;
-  padding: 2px 8px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 3px 9px;
   border-radius: 99px;
 }
 
@@ -854,11 +855,14 @@ body {
   position: absolute;
   bottom: 6px;
   right: 6px;
-  background: rgba(0, 0, 0, 0.58);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.66);
   color: #fff;
-  font-size: 0.68rem;
-  font-weight: 600;
-  padding: 2px 7px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 8px;
   border-radius: 6px;
 }
 
@@ -867,7 +871,6 @@ body {
   display: flex;
   flex-direction: column;
   flex: 1;
-  justify-content: space-between;
 }
 
 .card-title {
@@ -891,7 +894,7 @@ body {
 }
 
 .card-footer {
-  margin-top: auto;
+  margin-top: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1468,64 +1471,78 @@ body {
 /* ==========================================================================
    8. PEMBANDING HARGA TOKO VS ONLINE, STOK LIVE POS, KERINGAN & SNACK BOX PO
    ========================================================================== */
-.compare-banner {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom: 16px;
-}
-
-@media (max-width: 720px) {
-  .compare-banner {
-    grid-template-columns: 1fr;
-    gap: 8px;
-  }
-}
-
-.compare-item {
+.compare-card {
   background: var(--card);
   border: 1.5px solid #bbf7d0;
-  border-left: 5px solid var(--green-main);
-  border-radius: 12px;
-  padding: 11px 13px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  border-radius: 14px;
+  overflow: hidden;
   box-shadow: var(--shadow-sm);
 }
 
-.compare-name {
-  font-size: 0.9rem;
-  font-weight: 800;
-  color: var(--text);
+.compare-grid-compact {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.compare-prices {
+.compare-col {
+  padding: 11px 8px;
   display: flex;
-  align-items: baseline;
-  gap: 8px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 3px;
+  border-right: 1px solid #e7e5e4;
+}
+
+.compare-col:last-child {
+  border-right: none;
+}
+
+.compare-name {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.25;
 }
 
 .compare-online {
-  font-size: 0.88rem;
+  font-size: 0.76rem;
   color: #9ca3af;
   text-decoration: line-through;
 }
 
 .compare-toko {
-  font-size: 1.15rem;
+  font-size: 1rem;
   font-weight: 900;
   color: var(--green-main);
+  line-height: 1.15;
 }
 
 .compare-save {
-  font-size: 0.78rem;
-  font-weight: 700;
+  font-size: 0.7rem;
+  font-weight: 800;
   color: #854d0e;
   background: var(--gold-light);
-  padding: 2px 8px;
+  padding: 2px 6px;
   border-radius: 6px;
-  align-self: flex-start;
+}
+
+@media (min-width: 720px) {
+  .compare-col {
+    padding: 14px 12px;
+  }
+  .compare-name {
+    font-size: 0.92rem;
+  }
+  .compare-online {
+    font-size: 0.86rem;
+  }
+  .compare-toko {
+    font-size: 1.18rem;
+  }
+  .compare-save {
+    font-size: 0.76rem;
+  }
 }
 
 /* Live POS Stock Status Panel */
@@ -1590,21 +1607,32 @@ body {
 }
 
 .stock-status-actions {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 8px;
+  width: 100%;
+}
+
+@media (min-width: 720px) {
+  .stock-status-actions {
+    display: flex;
+    flex-wrap: nowrap;
+    width: auto;
+  }
 }
 
 .stock-toggle-btn,
 .stock-refresh-btn {
-  padding: 8px 12px;
+  padding: 8px 10px;
   border-radius: 9px;
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   font-weight: 800;
   cursor: pointer;
   border: 1.5px solid var(--border);
   background: #fff;
   color: var(--text);
+  text-align: center;
+  white-space: nowrap;
 }
 
 .stock-toggle-btn[aria-pressed="true"] {

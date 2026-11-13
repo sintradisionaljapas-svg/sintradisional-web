@@ -4,6 +4,15 @@ Dokumen ini merangkum seluruh riwayat pembaruan, arsitektur teknis, kurasi aset 
 
 ---
 
+## [v3.0.1] — 2026-11-13
+### Perbaikan UI/UX Mobile, Tabel Komparasi Harga Kompak & Kartu Katalog
+- **Tata Letak Kartu Profil Utama:** Memisahkan baris logo + badge status (`Toko Buka (06.30–17.00 WIB)`) di atas, serta memperlebar judul, deskripsi, dan tautan `Jl. Situ No. 41, Bandung` menjadi full-width sambil menghapus baris jam buka yang redundan.
+- **Copywriting & Tombol Kanal Pemesanan:** Mengubah label `(Slow Respon)` pada WA Admin 1 Manager PO menjadi `(Layanan Pesanan Besar & H-1)`, serta mengganti ikon bulatan tombol `GoFood`/`GrabFood`/`ShopeeFood` dengan ikon SVG tas belanja putih kontras tinggi.
+- **Pemangkasan Scroll Fatigue:** Meringkas perbandingan 3 item (`Kue Regular`, `Risoles`, `Otak-Otak`) menjadi 1 kartu horizontal kompak 3 kolom (`.compare-card`) dan menghapus slider produk duplikat di bawahnya.
+- **Panel POS & Kartu Katalog:** Menjajarkan tombol `✓ Ready Hari Ini Saja` dan `↻ Segarkan Stok` berdampingan, menyeragamkan rasio foto katalog `4:5` di semua ukuran layar lengkap dengan fallback `onerror`, mengganti titik putih `Detail` menjadi ikon SVG kaca pembesar, menyesuaikan badge kategori `Gurih` pada `Otak-Otak`, `Risoles Ragout`, dan `Lemper Ayam`, serta menghapus pengulangan `(Isi X)` pada judul produk yang sudah tertulis di subjudul.
+
+---
+
 ## [v3.0.0] — 2026-11-13
 ### Reorganisasi Katalog Foto Baru, Harga Toko vs Harga Online, & Integrasi Stok Live POS
 - **Reorganisasi Kategori Foto & Optimasi Aset Web (`assets/img/`):**

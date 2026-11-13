@@ -54,7 +54,7 @@ const PRODUCTS = [
   {
     id: 'dadar-gulung',
     sku: 'KSN-KB-DDG-B2',
-    name: 'Dadar Gulung (Isi 2)',
+    name: 'Dadar Gulung',
     category: 'regular',
     posCat: 'Regular',
     unit: '1 mika (Isi 2)',
@@ -230,7 +230,7 @@ const PRODUCTS = [
   {
     id: 'bugis-mandi-4',
     sku: 'INT-KB-BGM-B4',
-    name: 'Bugis Mandi (Isi 4)',
+    name: 'Bugis Mandi',
     category: 'spesial',
     posCat: 'Spesial',
     unit: '1 cup (Isi 4)',
@@ -243,7 +243,7 @@ const PRODUCTS = [
   {
     id: 'bugis-mandi-6',
     sku: 'INT-KB-BGM-B6',
-    name: 'Bugis Mandi (Isi 6)',
+    name: 'Bugis Mandi',
     category: 'spesial',
     posCat: 'Spesial',
     unit: '1 cup (Isi 6)',
@@ -305,9 +305,10 @@ const PRODUCTS = [
   {
     id: 'otak-otak',
     sku: 'KSN-KB-OTK-B5',
-    name: 'Otak-Otak (Isi 5)',
+    name: 'Otak-Otak',
     category: 'kue',
     posCat: 'Kue',
+    badgeLabel: 'Gurih',
     unit: '1 bungkus (Isi 5)',
     hargaToko: 20000,
     hargaOnline: 30000,
@@ -318,14 +319,15 @@ const PRODUCTS = [
   {
     id: 'risoles-ragout',
     sku: 'KSN-KB-RSR-B2',
-    name: 'Risoles Ragout (Isi 2)',
+    name: 'Risoles Ragout',
     category: 'kue',
     posCat: 'Kue',
+    badgeLabel: 'Gurih',
     unit: '1 mika (Isi 2)',
     hargaToko: 11000,
     hargaOnline: 16500,
     img: 'assets/img/kue kue/foto-produk-kue-kue-risoles-ety-kue-basah-bandung-sin-tradisional-261113-01.jpg',
-    desc: 'Risoles goreng renyah isi ragout ayam & sayuran creamy plus cabai rawit. Kemasan mika isi 2 pcs.',
+    desc: 'Risoles goreng renyah isi ragout ayam & sayuran creamy plus cabai rawit.',
     featured: true
   },
   {
@@ -334,6 +336,7 @@ const PRODUCTS = [
     name: 'Lemper Ayam',
     category: 'kue',
     posCat: 'Kue',
+    badgeLabel: 'Gurih',
     unit: '1 pcs',
     hargaToko: 5000,
     hargaOnline: 6500,
@@ -343,7 +346,7 @@ const PRODUCTS = [
   {
     id: 'soes-mini',
     sku: 'PTS-KB-SOS-B3',
-    name: 'Soes Mini (Isi 3)',
+    name: 'Soes Mini',
     category: 'kue',
     posCat: 'Kue',
     unit: '1 mika (Isi 3)',
@@ -844,9 +847,9 @@ function renderCatalog() {
     return (
       '<article class="card' + (qty > 0 ? ' in-cart' : '') + (isSoldOut ? ' is-out-of-stock' : '') + '">' +
         '<div class="card-img-wrap" onclick="openProductModal(\'' + p.id + '\')">' +
-          '<img src="' + imgUrl(p.img) + '" alt="' + escapeHtml(p.name) + ' - Sin Tradisional Bandung" loading="lazy">' +
-          '<span class="card-badge-top">' + escapeHtml(p.posCat) + '</span>' +
-          '<span class="card-zoom-hint">🔍 Detail</span>' +
+          '<img src="' + imgUrl(p.img) + '" alt="' + escapeHtml(p.name) + ' ' + escapeHtml(p.unit) + ' - Kue Basah Sin Tradisional Bandung" loading="lazy" onerror="this.onerror=null;this.src=\'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg\';">' +
+          '<span class="card-badge-top">' + escapeHtml(p.badgeLabel || p.posCat) + '</span>' +
+          '<span class="card-zoom-hint"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Detail</span>' +
         '</div>' +
         '<div class="card-body">' +
           '<div class="card-meta-row">' +
