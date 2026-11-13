@@ -4,6 +4,17 @@ Dokumen ini merangkum seluruh riwayat pembaruan, arsitektur teknis, kurasi aset 
 
 ---
 
+## [v3.0.5] — 2026-11-13
+### Sinkronisasi Penuh Kategori Keringan, Produk Toko POS & Tier Kemitraan Grosir
+- **Kategori `Keringan` & Promosi 13 Produk ke Katalog Utama (`index.html`, `assets/app.js`):**
+  - Menambahkan tombol filter **`Keringan`** pada `#filter-bar` di `index.html` serta label kategori `keringan` di `CATEGORY_LABELS` (`assets/app.js`).
+  - Memindahkan seluruh 13 item yang sebelumnya di `EXTRA_STORE_ITEMS` ke dalam `PRODUCTS` sesuai kategori POS (`Regular`: Ketimus; `Spesial`: Kolak Pisang, Singkong Bangkok; `Kue`: Baso Goreng, Siomay Goreng, Ketan Bumbu; `Keringan`: Peyek Kacang, Peyek Teri, Gabus Keju, Sale Pisang, Samosa Kering, Spring Roll Kering, Popcorn Caramel).
+  - Menyembunyikan panel `#stok-lainnya` secara otomatis ketika tidak ada item dinamis tambahan dari API POS.
+- **Informasi Tier Layanan Grosir B2B (`index.html`):**
+  - Memperbarui FAQ kemitraan grosir pada `#faq-pemesanan` agar menjelaskan 2 tingkatan layanan grosir Agen Gang Luna: **Tier 1 (Agen)** dan **Tier 2 (Reseller)** tanpa menampilkan harga agen/reseller ke publik.
+
+---
+
 ## [v3.0.4] — 2026-11-13
 ### Deteksi Parameter UTM Otomatis pada Alur Pemesanan WhatsApp
 - **Pelacakan `utm_source` (`assets/app.js`):** Menambahkan `captureUtmSource()` yang membaca parameter URL `utm_source` (`ojol` / `toko`) saat halaman dibuka dan menyimpannya ke `sessionStorage` (`sintra_utm_source`).

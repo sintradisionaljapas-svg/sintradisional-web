@@ -280,6 +280,18 @@ const PRODUCTS = [
     img: 'assets/img/regular/foto-produk-cantik-manis-kue-basah-bandung-sin-tradisional-16.jpeg',
     desc: 'Hunkwe lembut manis gurih dengan taburan sagu mutiara warna-warni.'
   },
+  {
+    id: 'ketimus',
+    sku: 'INT-KB-KTM-B2K',
+    name: 'Ketimus',
+    category: 'regular',
+    posCat: 'Regular',
+    unit: '1 mika (Isi 2)',
+    hargaToko: 10000,
+    hargaOnline: 12500,
+    img: 'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg',
+    desc: 'Olahan singkong parut manis gula aren dan kelapa muda, dibungkus daun pisang kukus.'
+  },
 
   // ==================== KATEGORI SPESIAL ====================
   {
@@ -354,6 +366,30 @@ const PRODUCTS = [
     hargaOnline: 12500,
     img: 'assets/img/Spesial/foto-produk-pelita-kue-basah-bandung-sin-tradisional-261113-01.jpg',
     desc: 'Lapisan santan putih lembut di atas sari pandan gula merah yang manis wangi.'
+  },
+  {
+    id: 'kolak-pisang',
+    sku: 'INT-KB-KPG-B1',
+    name: 'Kolak Pisang',
+    category: 'spesial',
+    posCat: 'Spesial',
+    unit: '1 cup',
+    hargaToko: 10000,
+    hargaOnline: 12500,
+    img: 'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg',
+    desc: 'Pisang manis legit dengan kuah santan gula merah harum pandan dalam kemasan cup.'
+  },
+  {
+    id: 'singkong-bangkok',
+    sku: 'INT-KB-SKB-B1',
+    name: 'Singkong Bangkok',
+    category: 'spesial',
+    posCat: 'Spesial',
+    unit: '1 cup',
+    hargaToko: 15000,
+    hargaOnline: 18500,
+    img: 'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg',
+    desc: 'Singkong empuk legit bersiram saus santan kental gurih dalam kemasan cup siap santap.'
   },
 
   // ==================== KATEGORI KUE & GURIH (kue kue) ====================
@@ -458,6 +494,131 @@ const PRODUCTS = [
     img: 'assets/img/kue kue/foto-produk-kue-kue-lapis-cianjur-kue-basah-bandung-sin-tradisional-261113-01.jpg',
     desc: 'Kue lapis tradisional kenyal manis khas rumahan, tersedia varian lapis warna & pepe coklat.'
   },
+  {
+    id: 'baso-goreng',
+    sku: 'KSN-KB-BSG-B1',
+    name: 'Baso Goreng',
+    category: 'kue',
+    posCat: 'Kue',
+    badgeLabel: 'Gurih',
+    unit: '1 porsi',
+    hargaToko: 8000,
+    hargaOnline: 13000,
+    img: 'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg',
+    desc: 'Baso goreng renyah gurih siap santap untuk camilan harian di toko.'
+  },
+  {
+    id: 'siomay-goreng',
+    sku: 'KSN-KB-SMG-B2',
+    name: 'Siomay Goreng',
+    category: 'kue',
+    posCat: 'Kue',
+    badgeLabel: 'Gurih',
+    unit: '1 mika (Isi 2)',
+    hargaToko: 12000,
+    hargaOnline: 20000,
+    img: 'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg',
+    desc: 'Siomay goreng renyah gurih kemasan mika isi 2 pcs.'
+  },
+  {
+    id: 'ketan-bumbu',
+    sku: 'KSN-KB-KTB-B1',
+    name: 'Ketan Bumbu',
+    category: 'kue',
+    posCat: 'Kue',
+    badgeLabel: 'Gurih',
+    unit: '1 pcs',
+    hargaToko: 6000,
+    hargaOnline: 9000,
+    img: 'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg',
+    desc: 'Ketan pulen gurih dengan taburan serundeng bumbu khas tradisional.'
+  },
+
+  // ==================== KATEGORI KERINGAN ====================
+  {
+    id: 'peyek-kacang',
+    sku: 'PTS-SN-PYK-B1',
+    name: 'Peyek Kacang',
+    category: 'keringan',
+    posCat: 'Keringan',
+    unit: '1 toples/bungkus',
+    hargaToko: 22000,
+    hargaOnline: 27000,
+    img: 'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg',
+    desc: 'Rempeyek kacang tanah renyah gurih berbumbu daun jeruk.'
+  },
+  {
+    id: 'peyek-teri',
+    sku: 'PTS-SN-PYT-B1',
+    name: 'Peyek Teri',
+    category: 'keringan',
+    posCat: 'Keringan',
+    unit: '1 toples/bungkus',
+    hargaToko: 22000,
+    hargaOnline: 28000,
+    img: 'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg',
+    desc: 'Rempeyek ikan teri gurih renyah, cocok sebagai lauk maupun camilan.'
+  },
+  {
+    id: 'gabus-keju',
+    sku: 'PTS-SN-GBK-B1',
+    name: 'Gabus Keju',
+    category: 'keringan',
+    posCat: 'Keringan',
+    unit: '1 bungkus',
+    hargaToko: 18000,
+    hargaOnline: 22000,
+    img: 'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg',
+    desc: 'Stik gabus keju renyah gurih dengan rasa keju yang terasa.'
+  },
+  {
+    id: 'sale-pisang',
+    sku: 'PTS-SN-SLP-B1',
+    name: 'Sale Pisang',
+    category: 'keringan',
+    posCat: 'Keringan',
+    unit: '1 bungkus',
+    hargaToko: 13000,
+    hargaOnline: 16000,
+    img: 'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg',
+    desc: 'Sale pisang manis alami renyah khas jajanan tradisional.'
+  },
+  {
+    id: 'samosa-kering',
+    sku: 'PTS-SN-SMS-B1',
+    name: 'Samosa Kering',
+    category: 'keringan',
+    posCat: 'Keringan',
+    unit: '1 toples/bungkus',
+    hargaToko: 20000,
+    hargaOnline: 25000,
+    img: 'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg',
+    desc: 'Samosa mini kering renyah gurih dalam kemasan toples/bungkus praktis.'
+  },
+  {
+    id: 'spring-roll-kering',
+    sku: 'PTS-SN-SPR-B1',
+    name: 'Spring Roll Kering',
+    category: 'keringan',
+    posCat: 'Keringan',
+    unit: '1 toples/bungkus',
+    hargaToko: 20000,
+    hargaOnline: 25000,
+    img: 'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg',
+    desc: 'Lumpia mini kering renyah gurih siap santap untuk camilan keluarga.'
+  },
+  {
+    id: 'popcorn-caramel',
+    sku: 'PTS-SN-PPC-B1',
+    name: 'Popcorn Caramel',
+    category: 'keringan',
+    posCat: 'Keringan',
+    unit: '1 bungkus',
+    hargaToko: 20000,
+    hargaOnline: 25000,
+    img: 'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg',
+    desc: 'Popcorn renyah berbalut karamel manis gurih.'
+  },
 
   // ==================== KATEGORI PAKET ACARA (PRE-ORDER) ====================
   {
@@ -489,22 +650,8 @@ const PRODUCTS = [
   }
 ];
 
-// Item Jalur Toko di Master_Produk yang belum punya foto baru (ditampilkan ringkas & tersinkron live POS)
-const EXTRA_STORE_ITEMS = [
-  { id: 'ext-pyk', sku: 'PTS-SN-PYK-B1', name: 'Peyek Kacang', posCat: 'Keringan', unit: '1 toples/bungkus', hargaToko: 22000, hargaOnline: 27000 },
-  { id: 'ext-pyt', sku: 'PTS-SN-PYT-B1', name: 'Peyek Teri', posCat: 'Keringan', unit: '1 toples/bungkus', hargaToko: 22000, hargaOnline: 28000 },
-  { id: 'ext-gbk', sku: 'PTS-SN-GBK-B1', name: 'Gabus Keju', posCat: 'Keringan', unit: '1 bungkus', hargaToko: 18000, hargaOnline: 22000 },
-  { id: 'ext-slp', sku: 'PTS-SN-SLP-B1', name: 'Sale Pisang', posCat: 'Keringan', unit: '1 bungkus', hargaToko: 13000, hargaOnline: 16000 },
-  { id: 'ext-sms', sku: 'PTS-SN-SMS-B1', name: 'Samosa Kering', posCat: 'Keringan', unit: '1 toples/bungkus', hargaToko: 20000, hargaOnline: 25000 },
-  { id: 'ext-spr', sku: 'PTS-SN-SPR-B1', name: 'Spring Roll Kering', posCat: 'Keringan', unit: '1 toples/bungkus', hargaToko: 20000, hargaOnline: 25000 },
-  { id: 'ext-ppc', sku: 'PTS-SN-PPC-B1', name: 'Popcorn Caramel', posCat: 'Keringan', unit: '1 bungkus', hargaToko: 20000, hargaOnline: 25000 },
-  { id: 'ext-bsg', sku: 'KSN-KB-BSG-B1', name: 'Baso Goreng', posCat: 'Kue', unit: '1 porsi', hargaToko: 8000, hargaOnline: 13000 },
-  { id: 'ext-smg', sku: 'KSN-KB-SMG-B2', name: 'Siomay Goreng', posCat: 'Kue', unit: '1 mika (Isi 2)', hargaToko: 12000, hargaOnline: 20000 },
-  { id: 'ext-ktb', sku: 'KSN-KB-KTB-B1', name: 'Ketan Bumbu', posCat: 'Kue', unit: '1 pcs', hargaToko: 6000, hargaOnline: 9000 },
-  { id: 'ext-ktm', sku: 'INT-KB-KTM-B2K', name: 'Ketimus', posCat: 'Regular', unit: '1 mika (Isi 2)', hargaToko: 10000, hargaOnline: 12500 },
-  { id: 'ext-kpg', sku: 'INT-KB-KPG-B1', name: 'Kolak Pisang', posCat: 'Spesial', unit: '1 cup', hargaToko: 10000, hargaOnline: 12500 },
-  { id: 'ext-skb', sku: 'INT-KB-SKB-B1', name: 'Singkong Bangkok', posCat: 'Spesial', unit: '1 cup', hargaToko: 15000, hargaOnline: 18500 }
-];
+// Penampung dinamis jika ada SKU baru dari API POS (?action=public_stok) yang belum masuk ke PRODUCTS
+const EXTRA_STORE_ITEMS = [];
 
 // Showcase informasi menu rekomendasi Snack Box (Pre-Order saja, TIDAK dijual harian di toko & TANPA harga)
 const SNACKBOX_SHOWCASE = [
@@ -535,6 +682,7 @@ const CATEGORY_LABELS = {
   regular: 'Jajanan Pasar Regular',
   spesial: 'Kue Cup Spesial',
   kue: 'Aneka Kue & Gorengan Gurih',
+  keringan: 'Keringan Toples & Camilan Renyah',
   paket: 'Paket Kue Tampah & Tray (Pre-Order)'
 };
 
@@ -921,10 +1069,18 @@ function renderCatalog() {
   }).join('');
 }
 
-// Render Daftar Ringkas Keringan & Menu Toko Lainnya (tanpa foto baru)
+// Render Daftar Ringkas Dinamis (hanya muncul jika ada SKU baru dari API POS yang belum di PRODUCTS)
 function renderExtraStoreItems() {
+  const panel = document.getElementById('stok-lainnya');
   const container = document.getElementById('extra-stock-grid');
   if (!container) return;
+
+  if (EXTRA_STORE_ITEMS.length === 0) {
+    if (panel) panel.hidden = true;
+    container.innerHTML = '';
+    return;
+  }
+  if (panel) panel.hidden = false;
 
   const q = searchQuery.trim().toLowerCase();
   const visibleExtras = EXTRA_STORE_ITEMS.filter(function (item) {
