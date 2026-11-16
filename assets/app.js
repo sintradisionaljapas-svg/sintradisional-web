@@ -165,7 +165,7 @@ const PRODUCTS = [
     hargaToko: 5000,
     hargaOnline: 6500,
     img: 'assets/img/regular/foto-produk-lupis-kue-basah-bandung-sin-tradisional-261113-01.jpg',
-    desc: 'Lupis ketan berbentuk persegi (bukan segitiga) yang kenyal dengan kelapa parut gurih dan siraman kinca gula aren.'
+    desc: 'Lupis ketan berbentuk persegi yang kenyal dengan kelapa parut gurih dan siraman kinca gula aren.'
   },
   {
     id: 'putri-noong',
