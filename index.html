@@ -93,6 +93,23 @@
           >
           <div class="store-badges">
             <span class="badge-heritage">🏅 Warisan Keluarga 1978 • 🌿 100% Tanpa Pengawet</span>
+            <button
+              type="button"
+              class="badge-halal-btn"
+              id="btn-halal-cert"
+              onclick="openHalalModal()"
+              aria-label="Lihat informasi Sertifikat Halal BPJPH resmi Sin Tradisional"
+              title="Lihat Informasi Sertifikat Halal Resmi BPJPH"
+            >
+              <img
+                src="assets/img/logo-halal-indonesia-sin-tradisional.jpg"
+                alt="Logo Halal Indonesia Resmi BPJPH Sin Tradisional"
+                width="24"
+                height="30"
+                class="halal-badge-img"
+              >
+              <span>Halal BPJPH</span>
+            </button>
             <span class="badge-open" id="store-open-status">🟢 Toko Buka (06.30–17.00 WIB)</span>
           </div>
         </div>
@@ -524,6 +541,60 @@
           <button type="button" class="btn-modal-add" id="modal-add-btn">
             + Masukkan ke Pesanan WA
           </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL SERTIFIKAT HALAL BPJPH RESMI -->
+  <div id="halal-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="halal-modal-title" hidden>
+    <div class="modal-dialog halal-modal-dialog">
+      <button type="button" class="modal-close-btn" onclick="closeHalalModal()" aria-label="Tutup info sertifikat halal">✕ Tutup</button>
+      <div class="modal-body halal-modal-body">
+        <div class="halal-modal-head">
+          <img
+            src="assets/img/logo-halal-indonesia-sin-tradisional.jpg"
+            alt="Logo Halal Indonesia BPJPH"
+            width="64"
+            height="79"
+            class="halal-modal-logo"
+          >
+          <div>
+            <span class="modal-badge">Sertifikasi Halal Resmi BPJPH RI</span>
+            <h3 id="halal-modal-title" class="modal-title">Info Sertifikat Halal Sin Tradisional</h3>
+            <p class="halal-modal-sub">Gerai Resmi: <strong>Jl. Situ No. 41, Bandung</strong> • Pelaku Usaha: <strong>Hans (Sin Tradisional)</strong></p>
+          </div>
+        </div>
+
+        <div class="halal-cert-list">
+          <article class="halal-cert-card">
+            <div class="halal-cert-top">
+              <strong>1. Sertifikat Halal Kue Basah (Produk Bakeri)</strong>
+              <span class="halal-cert-date">Terbit: 1 Agustus 2024</span>
+            </div>
+            <div class="halal-cert-no">No. Sertifikat: <code>ID32110018971160724</code></div>
+            <p class="halal-cert-meta">SK Fatwa: KF-SD-202408002415 • Produk Terdaftar: Talam Ubi, Talam Srikaya, dan Kue Bugis Sin Tradisional.</p>
+          </article>
+
+          <article class="halal-cert-card">
+            <div class="halal-cert-top">
+              <strong>2. Sertifikat Halal Sari Daun Suji (Minuman Pengolahan)</strong>
+              <span class="halal-cert-date">Terbit: 10 Juli 2024</span>
+            </div>
+            <div class="halal-cert-no">No. Sertifikat: <code>ID32110018360180724</code></div>
+            <p class="halal-cert-meta">SK Fatwa: KF-SD-202407008383 • Produk Terdaftar: Sari Daun Suji Sin Tradisional.</p>
+          </article>
+        </div>
+
+        <div class="modal-price-note">
+          ℹ️ Seluruh produk diproduksi segar setiap hari <strong>100% tanpa bahan pengawet kimia</strong>. Anda dapat mengecek keabsahan nomor sertifikat di portal resmi BPJPH.
+        </div>
+
+        <div class="halal-modal-actions">
+          <a href="https://halal.go.id" target="_blank" rel="noopener" class="btn-modal-add halal-verify-link">
+            Cek Keaslian di Portal BPJPH (halal.go.id) ↗
+          </a>
+          <button type="button" class="btn-halal-close" onclick="closeHalalModal()">Tutup</button>
         </div>
       </div>
     </div>

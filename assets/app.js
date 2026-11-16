@@ -107,18 +107,6 @@ const PRODUCTS = [
     desc: 'Bubur sumsum gurih berpadu kinca gula merah legit, lembut dibungkus daun pisang.'
   },
   {
-    id: 'dadar-gulung',
-    sku: 'KSN-KB-DDG-B2',
-    name: 'Dadar Gulung',
-    category: 'regular',
-    posCat: 'Regular',
-    unit: '1 mika (Isi 2)',
-    hargaToko: 10000,
-    hargaOnline: 12500,
-    img: 'assets/img/regular/foto-produk-dadar-gulung-kue-basah-bandung-sin-tradisional-261113-01.jpg',
-    desc: 'Kulit dadar pandan berpori halus berisi kelapa parut manis gula merah. Kemasan mika isi 2 pcs.'
-  },
-  {
     id: 'talam-pandan',
     sku: 'INT-KB-TLP-B1K',
     name: 'Talam Pandan',
@@ -128,7 +116,7 @@ const PRODUCTS = [
     hargaToko: 5000,
     hargaOnline: 6500,
     img: 'assets/img/regular/foto-produk-talam-pandan-kue-basah-bandung-sin-tradisional-261113-01.jpg',
-    desc: 'Perpaduan lapisan pandan hijau harum dan santan putih gurih yang lembut lumer.'
+    desc: 'Kue kukus 2 lapis berbahan tepung beras, tepung sagu, santan kental segar, dan sari daun pandan suji asli. Lapisan bawahnya manis wangi pandan, lapisan atasnya santan putih gurih lembut.'
   },
   {
     id: 'talam-ubi',
@@ -140,7 +128,7 @@ const PRODUCTS = [
     hargaToko: 5000,
     hargaOnline: 6500,
     img: 'assets/img/regular/foto-produk-talam-ubi-kue-basah-bandung-sin-tradisional-261113-01.jpg',
-    desc: 'Kue talam berbahan ubi pilihan yang legit dan gurih, 100% tanpa pengawet.'
+    desc: 'Kue talam kukus dari ubi kuning kukus halus, tepung sagu, gula merah/pasir, dan lapisan atas santan kental gurih. Teksturnya lembut legit dan 100% tanpa pengawet.'
   },
   {
     id: 'talam-pisang',
@@ -152,7 +140,7 @@ const PRODUCTS = [
     hargaToko: 5000,
     hargaOnline: 6500,
     img: 'assets/img/regular/foto-produk-talam-pisang-kue-basah-bandung-sin-tradisional-261113-01.jpg',
-    desc: 'Kue talam manis dengan irisan pisang raja wangi, tekstur kenyal dan lembut.'
+    desc: 'Kue talam berbahan tepung beras, santan segar, dan potongan pisang raja manis wangi di bagian dalam dengan lapisan santan gurih di atasnya.'
   },
   {
     id: 'talam-ebi',
@@ -164,7 +152,7 @@ const PRODUCTS = [
     hargaToko: 5000,
     hargaOnline: 6500,
     img: 'assets/img/regular/foto-produk-talam-asin-kue-basah-bandung-sin-tradisional-261113-01.jpg',
-    desc: 'Talam gurih klasik dengan taburan tumisan ebi wangi & bawang goreng renyah.',
+    desc: 'Kue talam gurih asin dari adonan tepung beras dan santan kental lembut dengan topping tumisan ebi (udang kering) sangrai wangi & bawang goreng renyah.',
     featured: true
   },
   {
@@ -177,7 +165,7 @@ const PRODUCTS = [
     hargaToko: 5000,
     hargaOnline: 6500,
     img: 'assets/img/regular/foto-produk-lupis-kue-basah-bandung-sin-tradisional-261113-01.jpg',
-    desc: 'Lupis ketan segitiga kenyal dengan kelapa parut gurih dan siraman kinca gula aren.'
+    desc: 'Lupis ketan berbentuk persegi (bukan segitiga) yang kenyal dengan kelapa parut gurih dan siraman kinca gula aren.'
   },
   {
     id: 'putri-noong',
@@ -206,7 +194,7 @@ const PRODUCTS = [
       { label: 'Merah Muda', img: 'assets/img/regular/foto-produk-putu-mayang-pink-kue-basah-bandung-sin-tradisional-261113-01.jpg' },
       { label: 'Putih Ori', img: 'assets/img/regular/foto-produk-putu-mayang-putih-kue-basah-bandung-sin-tradisional-261113-01.jpg' }
     ],
-    desc: 'Putu mayang tradisional tersedia pilihan warna hijau pandan, pink, dan putih, lengkap dengan kuah kinca santan gula merah.'
+    desc: 'Untaian mi/serat lembut berbahan tepung beras dan santan, tersedia pilihan warna hijau pandan, merah muda, dan putih, disajikan lengkap dengan kuah kinca santan gula merah aren.'
   },
   {
     id: 'serabi-kinca',
@@ -265,20 +253,9 @@ const PRODUCTS = [
     unit: '1 pcs',
     hargaToko: 5000,
     hargaOnline: 6500,
-    img: 'assets/img/regular/foto-produk-kue-basah-bandung-sin-tradisional-05.jpg',
+    img: 'assets/img/regular/foto-produk-kue-ijo-kue-basah-bandung-sin-tradisional-261116-01.jpg',
+    alt: 'Kue Ijo legit tabur kelapa parut tanpa pengawet Sin Tradisional Bandung',
     desc: 'Kue basah panggang/kukus aroma pandan wangi beralas daun pisang segar.'
-  },
-  {
-    id: 'cantik-manis',
-    sku: 'KSN-KB-CTM-B1',
-    name: 'Cantik Manis',
-    category: 'regular',
-    posCat: 'Regular',
-    unit: '1 pcs',
-    hargaToko: 5000,
-    hargaOnline: 6500,
-    img: 'assets/img/regular/foto-produk-cantik-manis-kue-basah-bandung-sin-tradisional-16.jpeg',
-    desc: 'Hunkwe lembut manis gurih dengan taburan sagu mutiara warna-warni.'
   },
   {
     id: 'ketimus',
@@ -390,6 +367,30 @@ const PRODUCTS = [
     hargaOnline: 18500,
     img: 'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg',
     desc: 'Singkong empuk legit bersiram saus santan kental gurih dalam kemasan cup siap santap.'
+  },
+  {
+    id: 'dadar-gulung',
+    sku: 'KSN-KB-DDG-B2',
+    name: 'Dadar Gulung',
+    category: 'spesial',
+    posCat: 'Spesial',
+    unit: '1 mika (Isi 2)',
+    hargaToko: 10000,
+    hargaOnline: 12500,
+    img: 'assets/img/regular/foto-produk-dadar-gulung-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    desc: 'Kulit dadar pandan berpori halus berisi kelapa parut manis gula merah. Kemasan mika isi 2 pcs.'
+  },
+  {
+    id: 'cantik-manis',
+    sku: 'KSN-KB-CTM-B1',
+    name: 'Cantik Manis',
+    category: 'spesial',
+    posCat: 'Spesial',
+    unit: '1 pcs',
+    hargaToko: 5000,
+    hargaOnline: 6500,
+    img: 'assets/img/regular/foto-produk-cantik-manis-kue-basah-bandung-sin-tradisional-16.jpeg',
+    desc: 'Hunkwe lembut manis gurih dengan taburan sagu mutiara warna-warni.'
   },
 
   // ==================== KATEGORI KUE & GURIH (kue kue) ====================
@@ -1548,6 +1549,22 @@ function closeProductModal() {
   activeModalItemId = null;
 }
 
+function openHalalModal() {
+  const modal = document.getElementById('halal-modal');
+  if (!modal) return;
+  modal.hidden = false;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeHalalModal() {
+  const modal = document.getElementById('halal-modal');
+  if (modal) modal.hidden = true;
+  const prodModal = document.getElementById('product-modal');
+  if (!prodModal || prodModal.hidden) {
+    document.body.style.overflow = '';
+  }
+}
+
 function askKasirAboutProduct(itemId) {
   const item = findItemById(itemId);
   const itemName = item ? item.name : 'kue basah';
@@ -1691,7 +1708,16 @@ document.addEventListener('DOMContentLoaded', function () {
       if (e.target === modalBackdrop) closeProductModal();
     });
   }
+  const halalBackdrop = document.getElementById('halal-modal');
+  if (halalBackdrop) {
+    halalBackdrop.addEventListener('click', function (e) {
+      if (e.target === halalBackdrop) closeHalalModal();
+    });
+  }
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeProductModal();
+    if (e.key === 'Escape') {
+      closeProductModal();
+      closeHalalModal();
+    }
   });
 });

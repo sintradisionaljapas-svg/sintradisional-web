@@ -4,6 +4,21 @@ Dokumen ini merangkum seluruh riwayat pembaruan, arsitektur teknis, kurasi aset 
 
 ---
 
+## [v3.0.6] — 2026-11-16
+### Integrasi Info Sertifikat Halal BPJPH, Koreksi Foto Kue Ijo, Kategori Spesial & Update Deskripsi Lupis
+- **Integrasi Halal Indonesia BPJPH Tanpa Ekspos Alamat Pribadi (`index.html`, `assets/styles.css`, `assets/app.js`, `assets/img/logo-halal-indonesia-sin-tradisional.jpg`):**
+  - Menambahkan aset logo `assets/img/logo-halal-indonesia-sin-tradisional.jpg` (38 KB, EXIF GPS Jl. Situ No. 41) pada baris badge kartu toko (`.store-card-top`) bersebelahan dengan badge `Warisan Keluarga 1978`.
+  - Menambahkan modal informasi sertifikat Halal resmi BPJPH (`#halal-modal`) yang menampilkan nomor sertifikat resmi Kue Basah (`ID32110018971160724`) dan Sari Daun Suji (`ID32110018360180724`) beserta tautan verifikasi ke `https://halal.go.id`, tanpa mempublikasikan file PDF yang memuat alamat rumah pribadi (`Jl. Aksan No. 60`).
+- **Koreksi Foto Kue Ijo (`assets/app.js`, `assets/img/regular/foto-produk-kue-ijo-kue-basah-bandung-sin-tradisional-261116-01.jpg`):**
+  - Mengganti foto `Kue Ijo` yang sebelumnya tertukar dengan foto Talam Pandan (`foto-produk-kue-basah-bandung-sin-tradisional-05.jpg`) menggunakan foto Kue Ijo terkompresi (206 KB, EXIF GPS Jl. Situ No. 41) sambil mempertahankan rasio `aspect-ratio: 4 / 5` dan fallback `onerror`.
+- **Kategori Spesial & Deskripsi Kue Lupis (`assets/app.js`):**
+  - Memindahkan `Dadar Gulung` (`KSN-KB-DDG-B2`) dan `Cantik Manis` (`KSN-KB-CTM-B1`) ke `category: 'spesial'` dan `posCat: 'Spesial'` agar tampil pada filter tab `Spesial` sambil tetap masuk kategori eligibel diskon toko.
+  - Memperbarui deskripsi `Kue Lupis` (`INT-KB-LPS-B1`) agar menegaskan bentuk lupis Sin Tradisional adalah **persegi**, bukan segitiga.
+- **Pembaruan SEO & Pemulihan Skill (`sitemap.xml`, `.agents/skills/web-sintra-cloudflare/SKILL.md`):**
+  - Memulihkan file skill lokal `.agents/skills/web-sintra-cloudflare/SKILL.md` dan memperbarui `<lastmod>` pada `sitemap.xml` menjadi `2026-11-16`.
+
+---
+
 ## [v3.0.5] — 2026-11-13
 ### Sinkronisasi Penuh Kategori Keringan, Produk Toko POS & Tier Kemitraan Grosir
 - **Kategori `Keringan` & Promosi 13 Produk ke Katalog Utama (`index.html`, `assets/app.js`):**

@@ -159,6 +159,7 @@ body {
   min-width: 0;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 6px;
 }
 
@@ -171,6 +172,35 @@ body {
   border-radius: 99px;
   font-size: 0.78rem;
   font-weight: 700;
+}
+
+.badge-halal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #ffffff;
+  color: #581c87;
+  border: 1.5px solid #d8b4fe;
+  padding: 2px 10px 2px 6px;
+  border-radius: 99px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+  line-height: 1.2;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.badge-halal-btn:hover {
+  background: #faf5ff;
+  border-color: #9333ea;
+}
+
+.halal-badge-img {
+  width: 20px;
+  height: 25px;
+  object-fit: contain;
+  display: block;
+  border-radius: 3px;
 }
 
 .badge-open {
@@ -1498,6 +1528,124 @@ body {
   border-radius: 10px;
   font-weight: 800;
   font-size: 0.96rem;
+  cursor: pointer;
+}
+
+.halal-modal-dialog {
+  max-width: 520px;
+}
+
+.halal-modal-body {
+  padding-top: 22px;
+}
+
+.halal-modal-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 14px;
+  padding-right: 48px;
+}
+
+.halal-modal-logo {
+  width: 60px;
+  height: 74px;
+  object-fit: contain;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+.halal-modal-head .modal-title {
+  margin-top: 6px;
+  margin-bottom: 4px;
+  font-size: 1.25rem;
+}
+
+.halal-modal-sub {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.halal-cert-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.halal-cert-card {
+  background: #faf5ff;
+  border: 1.5px solid #e9d5ff;
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.halal-cert-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px 10px;
+  margin-bottom: 4px;
+  color: #4c1d95;
+  font-size: 0.95rem;
+}
+
+.halal-cert-date {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #6b21a8;
+  background: #f3e8ff;
+  padding: 2px 8px;
+  border-radius: 99px;
+}
+
+.halal-cert-no {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.halal-cert-no code {
+  background: #ffffff;
+  border: 1px solid #d8b4fe;
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-size: 0.94rem;
+  color: #581c87;
+  font-weight: 800;
+}
+
+.halal-cert-meta {
+  font-size: 0.84rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.halal-modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.halal-verify-link {
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn-halal-close {
+  background: #e7e5e4;
+  color: var(--text);
+  border: none;
+  padding: 13px 18px;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 0.95rem;
   cursor: pointer;
 }
 
