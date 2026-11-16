@@ -4,6 +4,13 @@ Dokumen ini merangkum seluruh riwayat pembaruan, arsitektur teknis, kurasi aset 
 
 ---
 
+## [v3.0.7] — 2026-11-16
+### Penjelasan Bahan Kue Ijo, Talam, Putu Mayang & Pelita
+- **Penyempurnaan Deskripsi Produk (`assets/app.js`):**
+  - Melengkapi penjelasan bahan utama, tekstur, dan cara penyajian untuk **`Kue Ijo`** (tepung beras, tapioka, sari pandan suji, tekstur kenyal legit + taburan kelapa parut gurih), seluruh varian **`Talam`** (Pandan, Ubi, Pisang, Ebi), **`Putu Mayang`** (untaian tepung beras + kuah kinca santan gula merah), dan **`Kue Pelita`** (tekstur lembut seperti puding dari tepung beras, santan kental, sari pandan & gula merah).
+
+---
+
 ## [v3.0.6] — 2026-11-16
 ### Integrasi Info Sertifikat Halal BPJPH, Koreksi Foto Kue Ijo, Kategori Spesial & Update Deskripsi Lupis
 - **Integrasi Halal Indonesia BPJPH Tanpa Ekspos Alamat Pribadi (`index.html`, `assets/styles.css`, `assets/app.js`, `assets/img/logo-halal-indonesia-sin-tradisional.jpg`):**

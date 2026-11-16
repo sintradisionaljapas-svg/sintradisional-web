@@ -255,7 +255,7 @@ const PRODUCTS = [
     hargaOnline: 6500,
     img: 'assets/img/regular/foto-produk-kue-ijo-kue-basah-bandung-sin-tradisional-261116-01.jpg',
     alt: 'Kue Ijo legit tabur kelapa parut tanpa pengawet Sin Tradisional Bandung',
-    desc: 'Kue basah panggang/kukus aroma pandan wangi beralas daun pisang segar.'
+    desc: 'Kue lumpang / kue ijo khas jajanan pasar berbahan tepung beras, tapioka, sari daun pandan suji asli, dan gula. Teksturnya kenyal legit dengan taburan kelapa parut kukus yang gurih.'
   },
   {
     id: 'ketimus',
@@ -342,7 +342,7 @@ const PRODUCTS = [
     hargaToko: 10000,
     hargaOnline: 12500,
     img: 'assets/img/Spesial/foto-produk-pelita-kue-basah-bandung-sin-tradisional-261113-01.jpg',
-    desc: 'Lapisan santan putih lembut di atas sari pandan gula merah yang manis wangi.'
+    desc: 'Kue kukus lembut lumer seperti puding berbahan tepung beras, santan kental gurih di lapisan atas, serta sari pandan wangi dan lelehan gula merah manis di lapisan bawah.'
   },
   {
     id: 'kolak-pisang',
