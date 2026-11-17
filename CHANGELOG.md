@@ -4,6 +4,13 @@ Dokumen ini merangkum seluruh riwayat pembaruan, arsitektur teknis, kurasi aset 
 
 ---
 
+## [v3.0.10] — 2026-11-17
+### Pembaruan Tautan Universal ShopeeFood
+- **Tautan ShopeeFood (`index.html`):**
+  - Memperbarui tautan ShopeeFood pada JSON-LD `sameAs` dan tombol kanal order menjadi `https://shopee.co.id/universal-link/now-food/shop/21756149?deep_and_deferred=1` (tanpa parameter `shareChannel`) agar langsung membuka toko Sin Tradisional di aplikasi Shopee maupun browser.
+
+---
+
 ## [v3.0.9] — 2026-11-17
 ### Penambahan Promo Subsidi Ongkir (`PRM-06`) & Perbaikan Overflow UI Desktop/Mobile
 - **Promo Subsidi Ongkir Kurir Lokal (`index.html`, `assets/styles.css`):**
