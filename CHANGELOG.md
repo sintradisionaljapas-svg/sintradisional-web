@@ -4,6 +4,13 @@ Dokumen ini merangkum seluruh riwayat pembaruan, arsitektur teknis, kurasi aset 
 
 ---
 
+## [v3.0.8] — 2026-11-17
+### Pembaruan Tautan Verifikasi Halal BPJPH
+- **Tautan Portal Resmi BPJPH (`index.html`):**
+  - Memperbarui tautan verifikasi sertifikat Halal di modal `#halal-modal` dari `https://halal.go.id` menjadi `https://bpjph.halal.go.id/` beserta label tombol `(bpjph.halal.go.id)`.
+
+---
+
 ## [v3.0.7] — 2026-11-16
 ### Penjelasan Bahan Kue Ijo, Talam, Putu Mayang & Pelita
 - **Penyempurnaan Deskripsi Produk (`assets/app.js`):**
