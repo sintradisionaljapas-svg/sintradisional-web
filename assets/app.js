@@ -633,7 +633,8 @@ const PRODUCTS = [
     hargaToko: null,
     hargaOnline: null,
     img: 'assets/img/paket/foto-produk-tampah-kue-basah-bandung-sin-tradisional-261113-01.jpg',
-    desc: 'Nampan tampah bambu hias daun pisang isi aneka jajanan pasar pilihan. Cocok untuk syukuran, lamaran & acara kantor (Pre-Order WA Manager PO).',
+    alt: 'Kue Tampah Bandung tradisional isi aneka jajanan pasar tanpa pengawet Sin Tradisional',
+    desc: 'Nampan tampah bambu hias daun pisang isi aneka jajanan pasar pilihan untuk syukuran, lamaran, dan kue tampah Bandung acara kantor (Pre-Order WA Manager PO).',
     featured: true
   },
   {
@@ -647,7 +648,8 @@ const PRODUCTS = [
     hargaToko: null,
     hargaOnline: null,
     img: 'assets/img/paket/foto-produk-tray-kue-basah-bandung-sin-tradisional-261113-01.jpg',
-    desc: 'Sajian kue basah tertata rapi di tray praktis tutup transparan untuk suguhan rapat & hantaran keluarga (Pre-Order WA Manager PO).'
+    alt: 'Kue Tray Hantaran dan paket snack box kantor Bandung tanpa pengawet Sin Tradisional',
+    desc: 'Sajian kue basah tertata rapi di tray praktis tutup transparan untuk suguhan rapat kantor, snack box Bandung & hantaran keluarga (Pre-Order WA Manager PO).'
   }
 ];
 
@@ -924,58 +926,9 @@ async function fetchLivePosStock() {
   }
 
   renderStockStatusBar();
-  renderFeatured();
   renderCatalog();
   renderExtraStoreItems();
   syncCartUI();
-}
-
-// Render 4 kartu sorotan menu hemat & andalan
-function renderFeatured() {
-  const container = document.getElementById('featured-grid');
-  if (!container) return;
-
-  const featuredProducts = PRODUCTS.filter(function (p) { return p.featured; });
-  container.innerHTML = featuredProducts.map(function (item) {
-    const qty = cart[item.id] || 0;
-    const stockInfo = getLiveStockInfo(item);
-    const prices = getEffectivePrices(item);
-
-    let ctaLabel = qty > 0 ? ('✓ ' + qty + ' di Keranjang') : '+ Pesan Harga Toko';
-    if (item.isPreOrder) {
-      ctaLabel = qty > 0 ? ('✓ ' + qty + ' Paket Dipilih') : '📋 Pilih Paket PO';
-    } else if (stockInfo.state === 'empty') {
-      ctaLabel = 'Habis • Tanya Kasir';
-    }
-
-    let priceText = 'Pre-Order • Konsultasi Manager';
-    if (!item.isPreOrder && prices.hargaToko) {
-      const onlinePart = prices.hargaOnline > prices.hargaToko ? ('<s class="inline-strike">' + formatRp(prices.hargaOnline) + '</s> ') : '';
-      priceText = onlinePart + '<strong>' + formatRp(prices.hargaToko) + '</strong>';
-    }
-
-    return (
-      '<article class="featured-card">' +
-        '<div class="featured-img-wrap" onclick="openProductModal(\'' + item.id + '\')">' +
-          '<img src="' + imgUrl(item.img) + '" width="400" height="500" alt="' + escapeHtml(item.alt || (item.name + ' kue basah tradisional tanpa pengawet Sin Tradisional Bandung')) + '" loading="lazy">' +
-        '</div>' +
-        '<div class="featured-body">' +
-          '<div class="featured-badges">' +
-            '<span class="featured-tag">' + escapeHtml(item.posCat) + '</span>' +
-            renderStockBadgeHtml(stockInfo) +
-          '</div>' +
-          '<h3 class="featured-title" onclick="openProductModal(\'' + item.id + '\')">' + escapeHtml(item.name) + '</h3>' +
-          '<p class="featured-desc">' + priceText + '</p>' +
-          '<button type="button" class="featured-cta-btn" onclick="' +
-            (stockInfo.state === 'empty'
-              ? 'askKasirAboutProduct(\'' + item.id + '\')'
-              : 'changeQty(\'' + item.id + '\', 1)') + '">' +
-            ctaLabel +
-          '</button>' +
-        '</div>' +
-      '</article>'
-    );
-  }).join('');
 }
 
 // Render Grid Katalog Utama 2 Kolom
@@ -1192,7 +1145,6 @@ function changeQty(itemId, delta) {
   } else {
     cart[itemId] = next;
   }
-  renderFeatured();
   renderCatalog();
   renderExtraStoreItems();
   syncCartUI();
@@ -1202,7 +1154,6 @@ function clearCart() {
   cart = {};
   const notesEl = document.getElementById('order-notes');
   if (notesEl) notesEl.value = '';
-  renderFeatured();
   renderCatalog();
   renderExtraStoreItems();
   syncCartUI();
@@ -1335,6 +1286,25 @@ function syncCartUI() {
             '🎉 Lebih hemat ' + formatRp(m.directOnlineSaving) + ' dibanding pesan lewat App Online (' + formatRp(m.subtotalOnline) + ')! (Walk-in 14.00–17.00 WIB dapat Happy Hour 15%)' +
           '</div>';
       }
+      if (m.subtotalToko >= 100000) {
+        rowsHtml +=
+          '<div class="cart-saving-highlight" style="margin-top:6px;background:#e0f2fe;border-color:#7dd3fc;color:#0c4a6e;">' +
+            '🚚 <strong>Memenuhi Syarat Subsidi Ongkir Kurir Lokal s/d Rp 15.000</strong> (Min. belanja Rp 100.000 via Web &amp; WA).' +
+          '</div>';
+      } else {
+        rowsHtml +=
+          '<div class="cart-saving-highlight" style="margin-top:6px;background:#f8fafc;border-color:#cbd5e1;color:#334155;">' +
+            '🚚 Tambah <strong>' + formatRp(100000 - m.subtotalToko) + '</strong> lagi untuk dapat <strong>Subsidi Ongkir s/d Rp 15.000</strong>.' +
+          '</div>';
+      }
+      if (getUtmSourceLabel() === 'Kartu Sisipan Ojol') {
+        rowsHtml +=
+          '<div class="cart-saving-highlight" style="margin-top:6px;background:#fef3c7;border-color:#fcd34d;color:#78350f;">' +
+            (m.subtotalToko >= 75000
+              ? '🎁 <strong>Promo Flyer Pelanggan Ojol (PRM-07):</strong> Memenuhi syarat Gratis Ongkir / Bonus Kue (min. Rp 75.000)!'
+              : '🎁 <strong>Promo Flyer Pelanggan Ojol (PRM-07):</strong> Tambah <strong>' + formatRp(75000 - m.subtotalToko) + '</strong> lagi untuk Gratis Ongkir / Bonus Kue.') +
+          '</div>';
+      }
     } else if (m.hasCustomPo) {
       rowsHtml += '<div class="cart-saving-highlight">📋 Paket Tampah / Tray diproses Pre-Order — kirim rincian ke WA Manager PO (0895-4122-28351).</div>';
     }
@@ -1357,6 +1327,12 @@ function syncCartUI() {
     if (m.grandTotal > 0) {
       lines.push('---');
       lines.push('Estimasi Total Harga Toko: ' + formatRp(m.grandTotal) + (m.discountAmount > 0 ? ' (Diskon ' + m.discountPct + '%)' : ''));
+      if (m.subtotalToko >= 100000) {
+        lines.push('Promo: Memenuhi syarat Subsidi Ongkir Kurir Lokal s/d Rp 15.000 (PRM-06)');
+      }
+      if (getUtmSourceLabel() === 'Kartu Sisipan Ojol' && m.subtotalToko >= 75000) {
+        lines.push('Promo: Voucher Flyer Pelanggan Baru Ojol (PRM-07)');
+      }
     }
     notesEl.value = lines.join('\n');
   }
@@ -1458,7 +1434,6 @@ function openProductModal(itemId) {
       addBtn.onclick = function () {
         if (!activeModalItemId) return;
         cart[activeModalItemId] = modalQty;
-        renderFeatured();
         renderCatalog();
         renderExtraStoreItems();
         syncCartUI();
@@ -1609,7 +1584,6 @@ document.addEventListener('DOMContentLoaded', function () {
   decorateWaLinksWithUtm();
   updateStoreOpenBadge();
   renderStockStatusBar();
-  renderFeatured();
   renderCatalog();
   renderExtraStoreItems();
   renderSnackboxShowcase();

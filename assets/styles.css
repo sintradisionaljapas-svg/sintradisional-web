@@ -782,6 +782,7 @@ body {
 .filter-btn {
   flex: 0 0 auto;
   padding: 9px 15px;
+  min-height: 44px;
   border-radius: 99px;
   border: 1.5px solid var(--border);
   background: #fff;
@@ -966,6 +967,7 @@ body {
 
 .add-btn-plus {
   width: 100%;
+  min-height: 44px;
   background: var(--green-bright);
   color: #fff;
   border: none;
