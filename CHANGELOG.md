@@ -4,6 +4,17 @@ Dokumen ini merangkum seluruh riwayat pembaruan, arsitektur teknis, kurasi aset 
 
 ---
 
+## [v3.0.9] — 2026-11-17
+### Penambahan Promo Subsidi Ongkir (`PRM-06`) & Perbaikan Overflow UI Desktop/Mobile
+- **Promo Subsidi Ongkir Kurir Lokal (`index.html`, `assets/styles.css`):**
+  - Menambahkan kartu voucher **`PRM-06` (Subsidi Ongkir s/d Rp 15.000)** untuk minimum belanja Rp 100.000 via Website & WhatsApp Resmi pada `.voucher-strip`, serta memperjelas syarat pada `.promo-terms`.
+- **Perbaikan Layout Responsive (`assets/styles.css`, `index.html`):**
+  - Mengubah `.voucher-strip` pada viewport desktop (`min-width: 769px`) menjadi CSS Grid (`repeat(auto-fit, minmax(270px, 1fr))`) agar seluruh kartu promo tampil utuh tanpa terpotong horizontal di sisi kanan.
+  - Menghapus `white-space: nowrap` pada `.btn-snackbox-wa` dan menambahkan `width: 100%` di mobile (`max-width: 640px`) agar tombol CTA Snack Box tidak melampaui batas kanan kartu di layar HP.
+  - Mempersingkat placeholder `#search-input` menjadi `"Cari kue... (Bugis, Talam, Risoles)"` agar tidak terpotong di layar mobile 390px.
+
+---
+
 ## [v3.0.8] — 2026-11-17
 ### Pembaruan Tautan Verifikasi Halal BPJPH
 - **Tautan Portal Resmi BPJPH (`index.html`):**
