@@ -4,6 +4,40 @@ Dokumen ini merangkum seluruh riwayat pembaruan, arsitektur teknis, kurasi aset 
 
 ---
 
+## 📋 Backlog Perbaikan Berikutnya (Audit Website, SEO/GEO & Ekosistem — 2026-11-17)
+
+Daftar prioritas pekerjaan lanjutan untuk sesi berikutnya (disusun berdasarkan hasil audit kode repo, live site, dan sinkronisasi Google Sheets):
+
+### 1. Aset Visual & Katalog Produk (`assets/app.js`, `assets/img/`)
+- [ ] **Lengkapi 13 Foto Produk yang Masih Pakai Placeholder (`kombinasi-...-09.jpg`):**
+  - Regular (1): `Ketimus` (`INT-KB-KTM-B2K`)
+  - Spesial (2): `Kolak Pisang` (`INT-KB-KPG-B1`), `Singkong Bangkok` (`INT-KB-SKB-B1`)
+  - Kue (3): `Baso Goreng` (`KSN-KB-BSG-B1`), `Siomay Goreng` (`KSN-KB-SMG-B2`), `Ketan Bumbu` (`KSN-KB-KTB-B1`)
+  - Keringan (7): `Peyek Kacang`, `Peyek Teri`, `Gabus Keju`, `Sale Pisang`, `Samosa Kering`, `Spring Roll Kering`, `Popcorn Caramel`
+- [ ] **Seragamkan Foto Gaya Lama:** Perbarui foto `Cantik Manis` (`KSN-KB-CTM-B1`) yang masih memakai `...16.jpeg` ke seri pemotretan terbaru (EXIF GPS Jl. Situ No. 41).
+- [ ] **Kurasi 15 Foto Belum Terpakai di `assets/img/Snack box/`:** Tampilkan ke `SNACKBOX_SHOWCASE` jika relevan, atau hapus file duplikat agar ukuran repo tetap ringkas.
+- [ ] **Lengkapi Atribut `alt` Unik Per Produk:** Baru 2 dari 46 produk (`Kue Bugis`, `Kue Ijo`) yang memiliki `alt` khusus; sisanya masih memakai template fallback di `renderCatalog()`.
+
+### 2. UI/UX, Keranjang & Fitur Transaksional (`index.html`, `assets/app.js`, `assets/styles.css`)
+- [ ] **Kalkulasi Otomatis Subsidi Ongkir (`PRM-06`) & Promo Flyer Ojol (`PRM-07`) di Keranjang:** Tampilkan status otomatis di `syncCartUI()` saat subtotal mencapai `>= Rp 100.000` (memenuhi syarat subsidi ongkir s/d Rp 15.000) dan info promo pelanggan baru Ojol (`?utm_source=ojol`, min. Rp 75.000).
+- [ ] **Perbesar Touch Target Mobile (`44px`):** Tingkatkan padding/tinggi minimum tombol `+ Pesan` (`~34px`) dan tab `.filter-btn` (`~36px`) di layar HP agar lebih nyaman untuk pengguna usia 40–60 tahun.
+- [ ] **Rapikan Dead Code & File Sampah Git:** Hapus fungsi/panggilan `renderFeatured()` di `assets/app.js` (karena `#featured-grid` sudah dihapus sejak `v3.0.1`), serta tambahkan `.DS_Store` ke `.gitignore` dan keluarkan dari tracking git.
+- [ ] **Integrasi Webhook `DB_Pesanan_Website_WA` (Opsional):** Hubungkan form `#pesan-wa` agar otomatis mencatat pesanan website ke tab `DB_Pesanan_Website_WA` pada `04_DB_Master_Promo_Sin_Tradisional_2026` (saat ini masih berisi 5 data sampel Feb 2026).
+
+### 3. SEO Teknis, Schema Markup & GEO (`index.html`, `sitemap.xml`, `robots.txt`)
+- [ ] **Seragamkan Domain Kanonikal (`non-www` vs `www`):** Saat ini `canonical`, `og:url`, dan JSON-LD `url` memakai `https://sintradisional.com/`, sedangkan JSON-LD `image`/`logo`, `sitemap.xml`, dan `robots.txt` memakai `https://www.sintradisional.com/`. Seragamkan ke satu URL kanonikal utama.
+- [ ] **Perbarui `<lastmod>` pada `sitemap.xml`:** Saat ini masih tertanggal `2026-11-16`, ubah ke tanggal deploy terbaru setiap kali ada pembaruan konten utama.
+- [ ] **Tambah JSON-LD `FAQPage` & Lengkapi Properti `Bakery` + Meta Sosial:** Bungkus 4 FAQ di `#faq-pemesanan` ke dalam schema `FAQPage`, tambahkan `"hasMap"` & `"areaServed": "Bandung"` pada schema `Bakery`, serta tambahkan `og:locale`, `og:site_name`, dan `twitter:card`.
+- [ ] **Perkuat Kata Kunci Belum Tersitasi AI (`Riset_Keyword_GEO_Bandung`):** Fokuskan optimasi frasa **`kue tampah bandung` (`KW_003`)** dan **`snack box kantor bandung` (`KW_006`)** pada deskripsi katalog, `alt` gambar Tampah/Snack Box, dan FAQ.
+- [ ] **Ganti Tautan Panjang Google Maps (`&authuser=0`):** Ubah tautan Google Search/GBP panjang pada tombol peta dan JSON-LD `sameAs` menjadi tautan pendek resmi Google Maps (`https://maps.app.goo.gl/...` atau `?cid=...`) yang bersih tanpa parameter sesi.
+
+### 4. Ekosistem Luar Website (GBP, Search Console & Skill)
+- [ ] **Ganti Referensi URL Lama `sintradisional.carrd.co`:** Perbarui link website pada Google Business Profile, Bio Instagram, dan tab `Checklist_Profil_100Pct` / `Kalender_Konten_SEO` (`04_DB_GBP_Auto_Review_Sin_Tradisional_2026`) ke `https://sintradisional.com/`.
+- [ ] **Tutup Gap 30% Kelengkapan Profil GBP (`Checklist_Profil_100Pct`):** Lengkapi 6 item profil GBP (foto menu berkala, atribut layanan, jam subuh 04.30 WIB & hari libur, integrasi tautan web/ojol, deskripsi bisnis 750 karakter entity SEO, dan 6 produk di tab *Products* GBP) serta kejar target 20 ulasan organik.
+- [ ] **Re-Submit `sitemap.xml` di Google Search Console & Sync Skill:** Setelah domain kanonikal rapi, kirim ulang sitemap di GSC dan perbarui URL ShopeeFood universal terbaru di skill `web-sintra-cloudflare`.
+
+---
+
 ## [v3.0.10] — 2026-11-17
 ### Pembaruan Tautan Universal ShopeeFood
 - **Tautan ShopeeFood (`index.html`):**
