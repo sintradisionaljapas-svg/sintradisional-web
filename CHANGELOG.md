@@ -38,6 +38,12 @@ Daftar prioritas pekerjaan lanjutan untuk sesi berikutnya (disusun berdasarkan h
 
 ---
 
+## [v3.0.13] — 2026-11-19
+### Penyeragaman 8 Foto Produk Tambahan Seri `261119` (`Raw Foto` -> `produk-toko` -> Website)
+- **Aset Visual Baru (`assets/img/regular/`, `assets/img/Spesial/`, `assets/img/kue kue/`):**
+  - Mengidentifikasi 9 foto baru dari `Raw Foto`, menyuntikkan metadata EXIF/IPTC/XMP & GPS **Jl. Situ No. 41, Bandung** (`-6.9214986, 107.5834971`), me-rename ke format SEO standar, dan mengompresi (`900px`, JPEG kualitas `70%`, ~264–287 KB/file) ke `/Users/hanshans/SinTradisional-HQ/produk-toko` serta repo website.
+  - Memperbarui `assets/app.js` untuk **7 produk (8 slot foto)** dari seri `261113` ke seri `261119` berlatar seragam: `Talam Ubi`, `Talam Ebi (Asin)`, `Kue Lupis`, `Putu Mayang` (foto utama, varian `Hijau Pandan`, dan varian `Merah Muda`), `Serabi Oncom`, `Bugis Mandi` (isi 4), dan `Lemper Ayam`. (Foto `Putih Ori` pada `Putu Mayang` tetap dipertahankan memakai seri `261113` sambil menunggu foto seri baru).
+
 ## [v3.0.12] — 2026-11-19
 ### Penyeragaman 26 Foto Produk Seri `produk-toko` (SEO + EXIF Geo-Tagging + Kompresi Web)
 - **Aset Visual Baru (`assets/img/keringan/`, `assets/img/regular/`, `assets/img/Spesial/`, `assets/img/kue kue/`):**

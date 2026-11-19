@@ -127,7 +127,7 @@ const PRODUCTS = [
     unit: '1 pcs',
     hargaToko: 5000,
     hargaOnline: 6500,
-    img: 'assets/img/regular/foto-produk-talam-ubi-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    img: 'assets/img/regular/foto-produk-talam-ubi-kue-basah-bandung-sin-tradisional-261119-01.jpg',
     desc: 'Kue talam kukus dari ubi kuning kukus halus, tepung sagu, gula merah/pasir, dan lapisan atas santan kental gurih. Teksturnya lembut legit dan 100% tanpa pengawet.'
   },
   {
@@ -151,7 +151,7 @@ const PRODUCTS = [
     unit: '1 pcs',
     hargaToko: 5000,
     hargaOnline: 6500,
-    img: 'assets/img/regular/foto-produk-talam-asin-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    img: 'assets/img/regular/foto-produk-talam-asin-kue-basah-bandung-sin-tradisional-261119-01.jpg',
     desc: 'Kue talam gurih asin dari adonan tepung beras dan santan kental lembut dengan topping tumisan ebi (udang kering) sangrai wangi & bawang goreng renyah.',
     featured: true
   },
@@ -164,7 +164,7 @@ const PRODUCTS = [
     unit: '1 porsi + gula merah',
     hargaToko: 5000,
     hargaOnline: 6500,
-    img: 'assets/img/regular/foto-produk-lupis-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    img: 'assets/img/regular/foto-produk-lupis-kue-basah-bandung-sin-tradisional-261119-01.jpg',
     desc: 'Lupis ketan berbentuk persegi yang kenyal dengan kelapa parut gurih dan siraman kinca gula aren.'
   },
   {
@@ -188,10 +188,10 @@ const PRODUCTS = [
     unit: '1 mika + kinca',
     hargaToko: 5000,
     hargaOnline: 6500,
-    img: 'assets/img/regular/foto-produk-putu-mayang-hijau-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    img: 'assets/img/regular/foto-produk-putu-mayang-hijau-kue-basah-bandung-sin-tradisional-261119-01.jpg',
     variants: [
-      { label: 'Hijau Pandan', img: 'assets/img/regular/foto-produk-putu-mayang-hijau-kue-basah-bandung-sin-tradisional-261113-01.jpg' },
-      { label: 'Merah Muda', img: 'assets/img/regular/foto-produk-putu-mayang-pink-kue-basah-bandung-sin-tradisional-261113-01.jpg' },
+      { label: 'Hijau Pandan', img: 'assets/img/regular/foto-produk-putu-mayang-hijau-kue-basah-bandung-sin-tradisional-261119-01.jpg' },
+      { label: 'Merah Muda', img: 'assets/img/regular/foto-produk-putu-mayang-pink-kue-basah-bandung-sin-tradisional-261119-01.jpg' },
       { label: 'Putih Ori', img: 'assets/img/regular/foto-produk-putu-mayang-putih-kue-basah-bandung-sin-tradisional-261113-01.jpg' }
     ],
     desc: 'Untaian mi/serat lembut berbahan tepung beras dan santan, tersedia pilihan warna hijau pandan, merah muda, dan putih, disajikan lengkap dengan kuah kinca santan gula merah aren.'
@@ -217,7 +217,7 @@ const PRODUCTS = [
     unit: '1 pcs',
     hargaToko: 5000,
     hargaOnline: 6500,
-    img: 'assets/img/regular/foto-produk-serabi-oncom-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    img: 'assets/img/regular/foto-produk-serabi-oncom-kue-basah-bandung-sin-tradisional-261119-01.jpg',
     desc: 'Serabi gurih khas Bandung dengan topping tumisan oncom berbumbu pedas gurih sedap.'
   },
   {
@@ -280,7 +280,7 @@ const PRODUCTS = [
     unit: '1 cup (Isi 4)',
     hargaToko: 10000,
     hargaOnline: 12500,
-    img: 'assets/img/Spesial/foto-produk-bugis-mandi-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    img: 'assets/img/Spesial/foto-produk-bugis-mandi-isi-4-kue-basah-bandung-sin-tradisional-261119-01.jpg',
     desc: 'Kue Bugis lembut disiram vla santan putih kental gurih dalam kemasan cup praktis isi 4 pcs.',
     featured: true
   },
@@ -432,7 +432,7 @@ const PRODUCTS = [
     unit: '1 pcs',
     hargaToko: 5000,
     hargaOnline: 6500,
-    img: 'assets/img/kue kue/foto-produk-lemper-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    img: 'assets/img/kue kue/foto-produk-lemper-kue-basah-bandung-sin-tradisional-261119-01.jpg',
     desc: 'Ketan pulen gurih berisi suwiran daging ayam berbumbu rempah tradisional.'
   },
   {
