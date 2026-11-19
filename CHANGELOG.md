@@ -9,12 +9,12 @@ Dokumen ini merangkum seluruh riwayat pembaruan, arsitektur teknis, kurasi aset 
 Daftar prioritas pekerjaan lanjutan untuk sesi berikutnya (disusun berdasarkan hasil audit kode repo, live site, dan sinkronisasi Google Sheets):
 
 ### 1. Aset Visual & Katalog Produk (`assets/app.js`, `assets/img/`)
-- [ ] **Lengkapi 13 Foto Produk yang Masih Pakai Placeholder (`kombinasi-...-09.jpg`):**
+- [ ] **Lengkapi 5 Foto Produk yang Masih Pakai Placeholder (`kombinasi-...-09.jpg`):**
   - Regular (1): `Ketimus` (`INT-KB-KTM-B2K`)
-  - Spesial (2): `Kolak Pisang` (`INT-KB-KPG-B1`), `Singkong Bangkok` (`INT-KB-SKB-B1`)
+  - Spesial (1): `Kolak Pisang` (`INT-KB-KPG-B1`)
   - Kue (3): `Baso Goreng` (`KSN-KB-BSG-B1`), `Siomay Goreng` (`KSN-KB-SMG-B2`), `Ketan Bumbu` (`KSN-KB-KTB-B1`)
-  - Keringan (7): `Peyek Kacang`, `Peyek Teri`, `Gabus Keju`, `Sale Pisang`, `Samosa Kering`, `Spring Roll Kering`, `Popcorn Caramel`
-- [ ] **Seragamkan Foto Gaya Lama:** Perbarui foto `Cantik Manis` (`KSN-KB-CTM-B1`) yang masih memakai `...16.jpeg` ke seri pemotretan terbaru (EXIF GPS Jl. Situ No. 41).
+- [x] **Lengkapi Foto Keringan (7) & Singkong Bangkok:** Seluruh 7 produk `Keringan` dan `Singkong Bangkok` kini memakai foto produk resmi seri `produk-toko` (`261117`/`261119`, terkompresi ~215–262 KB, EXIF GPS Jl. Situ No. 41).
+- [x] **Seragamkan Foto Gaya Lama:** Perbarui foto `Cantik Manis` (`KSN-KB-CTM-B1`) dan 17 produk lainnya ke seri pemotretan terbaru (`produk-toko`, EXIF GPS Jl. Situ No. 41).
 - [ ] **Kurasi 15 Foto Belum Terpakai di `assets/img/Snack box/`:** Tampilkan ke `SNACKBOX_SHOWCASE` jika relevan, atau hapus file duplikat agar ukuran repo tetap ringkas.
 - [ ] **Lengkapi Atribut `alt` Unik Per Produk:** Baru 2 dari 46 produk (`Kue Bugis`, `Kue Ijo`) yang memiliki `alt` khusus; sisanya masih memakai template fallback di `renderCatalog()`.
 
@@ -35,6 +35,15 @@ Daftar prioritas pekerjaan lanjutan untuk sesi berikutnya (disusun berdasarkan h
 - [ ] **Ganti Referensi URL Lama `sintradisional.carrd.co`:** Perbarui link website pada Google Business Profile, Bio Instagram, dan tab `Checklist_Profil_100Pct` / `Kalender_Konten_SEO` (`04_DB_GBP_Auto_Review_Sin_Tradisional_2026`) ke `https://sintradisional.com/`.
 - [ ] **Tutup Gap 30% Kelengkapan Profil GBP (`Checklist_Profil_100Pct`):** Lengkapi 6 item profil GBP (foto menu berkala, atribut layanan, jam subuh 04.30 WIB & hari libur, integrasi tautan web/ojol, deskripsi bisnis 750 karakter entity SEO, dan 6 produk di tab *Products* GBP) serta kejar target 20 ulasan organik.
 - [ ] **Re-Submit `sitemap.xml` di Google Search Console & Sync Skill:** Setelah domain kanonikal rapi, kirim ulang sitemap di GSC dan perbarui URL ShopeeFood universal terbaru di skill `web-sintra-cloudflare`.
+
+---
+
+## [v3.0.12] — 2026-11-19
+### Penyeragaman 26 Foto Produk Seri `produk-toko` (SEO + EXIF Geo-Tagging + Kompresi Web)
+- **Aset Visual Baru (`assets/img/keringan/`, `assets/img/regular/`, `assets/img/Spesial/`, `assets/img/kue kue/`):**
+  - Mengompresi (`900px`, JPEG kualitas `70%`, ~176–262 KB/file) serta menyuntikkan metadata EXIF/IPTC/XMP & GPS **Jl. Situ No. 41, Bandung** (`-6.9214986, 107.5834971`) pada seluruh foto seri `produk-toko`.
+  - Mengganti placeholder pada **7 produk Keringan** (`Peyek Kacang`, `Peyek Teri`, `Gabus Keju`, `Sale Pisang`, `Samosa Kering`, `Spring Roll Kering`, `Popcorn Caramel`) dan **`Singkong Bangkok`**, serta menyeragamkan **`Cantik Manis`** dari `.jpeg` lama ke seri terbaru.
+  - Memperbarui **17 foto produk eksisting** (`Kue Bugis`, `Nagasari`, `Bubur Lolos`, `Talam Pandan`, `Putri Noong`, `Serabi Kinca`, `Kelepon`, `Ongol-Ongol`, `Kue Ijo`, `Bugis Mandi Isi 6`, `Lapis Hijau`, `Kue Pelita`, `Risoles Ragout`, `Soes Mini`, `Mochi Pandan Kacang`, `Bolu Pisang`, `Lapis Cianjur`) agar tampilan katalog seragam dengan foto untuk GoFood, GrabFood, ShopeeFood, dan POS Kasir.
 
 ---
 

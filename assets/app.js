@@ -77,7 +77,7 @@ const PRODUCTS = [
     unit: '1 pcs',
     hargaToko: 5000,
     hargaOnline: 6500,
-    img: 'assets/img/regular/foto-produk-bugis-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    img: 'assets/img/regular/foto-produk-bugis-kue-basah-bandung-sin-tradisional-261119-01.jpg',
     alt: 'Kue Bugis bungkus daun pisang tanpa pengawet Sin Tradisional Bandung',
     desc: 'Kue ketan hitam/hijau kenyal dengan isian unti kelapa gula aren asli, dibungkus daun pisang segar.',
     featured: true
@@ -91,7 +91,7 @@ const PRODUCTS = [
     unit: '1 pcs',
     hargaToko: 5000,
     hargaOnline: 6500,
-    img: 'assets/img/regular/foto-produk-nagasari-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    img: 'assets/img/regular/foto-produk-nagasari-kue-basah-bandung-sin-tradisional-261119-01.jpg',
     desc: 'Kue pisang lembut berbalut tepung beras santan wangi pandan dan daun pisang kukus.'
   },
   {
@@ -103,7 +103,7 @@ const PRODUCTS = [
     unit: '1 pcs',
     hargaToko: 5000,
     hargaOnline: 6500,
-    img: 'assets/img/regular/foto-produk-bubur-lolos-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    img: 'assets/img/regular/foto-produk-bubur-lolos-kue-basah-bandung-sin-tradisional-261117-01.jpg',
     desc: 'Bubur sumsum gurih berpadu kinca gula merah legit, lembut dibungkus daun pisang.'
   },
   {
@@ -115,7 +115,7 @@ const PRODUCTS = [
     unit: '1 pcs',
     hargaToko: 5000,
     hargaOnline: 6500,
-    img: 'assets/img/regular/foto-produk-talam-pandan-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    img: 'assets/img/regular/foto-produk-talam-pandan-kue-basah-bandung-sin-tradisional-261119-01.jpg',
     desc: 'Kue kukus 2 lapis berbahan tepung beras, tepung sagu, santan kental segar, dan sari daun pandan suji asli. Lapisan bawahnya manis wangi pandan, lapisan atasnya santan putih gurih lembut.'
   },
   {
@@ -176,7 +176,7 @@ const PRODUCTS = [
     unit: '1 mika',
     hargaToko: 5000,
     hargaOnline: 6000,
-    img: 'assets/img/regular/foto-produk-putri-noong-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    img: 'assets/img/regular/foto-produk-putri-noong-kue-basah-bandung-sin-tradisional-261117-01.jpg',
     desc: 'Kue tradisional singkong parut balut pisang manis di tengahnya dengan taburan kelapa segar.'
   },
   {
@@ -205,7 +205,7 @@ const PRODUCTS = [
     unit: '1 mika + kinca',
     hargaToko: 5000,
     hargaOnline: 6500,
-    img: 'assets/img/regular/foto-produk-serabi-kinca-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    img: 'assets/img/regular/foto-produk-serabi-kinca-kue-basah-bandung-sin-tradisional-261119-01.jpg',
     desc: 'Serabi pandan empuk khas Bandung disajikan dengan kuah kinca gula merah santan gurih.'
   },
   {
@@ -229,7 +229,7 @@ const PRODUCTS = [
     unit: '1 mika',
     hargaToko: 5000,
     hargaOnline: 6000,
-    img: 'assets/img/regular/foto-produk-kelepon-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    img: 'assets/img/regular/foto-produk-kelepon-kue-basah-bandung-sin-tradisional-261117-01.jpg',
     desc: 'Bola ketan kenyal isi gula merah lumer saat digigit, dibalut parutan kelapa muda.'
   },
   {
@@ -241,7 +241,7 @@ const PRODUCTS = [
     unit: '1 mika (Isi 2)',
     hargaToko: 5000,
     hargaOnline: 6000,
-    img: 'assets/img/regular/foto-produk-ongol-ongol-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    img: 'assets/img/regular/foto-produk-ongol-ongol-kue-basah-bandung-sin-tradisional-261117-01.jpg',
     desc: 'Kue sagu gula merah kenyal manis dengan baluran kelapa parut kukus.'
   },
   {
@@ -253,7 +253,7 @@ const PRODUCTS = [
     unit: '1 pcs',
     hargaToko: 5000,
     hargaOnline: 6500,
-    img: 'assets/img/regular/foto-produk-kue-ijo-kue-basah-bandung-sin-tradisional-261116-01.jpg',
+    img: 'assets/img/regular/foto-produk-kue-ijo-kue-basah-bandung-sin-tradisional-261117-01.jpg',
     alt: 'Kue Ijo legit tabur kelapa parut tanpa pengawet Sin Tradisional Bandung',
     desc: 'Kue lumpang / kue ijo khas jajanan pasar berbahan tepung beras, tapioka, sari daun pandan suji asli, dan gula. Teksturnya kenyal legit dengan taburan kelapa parut kukus yang gurih.'
   },
@@ -293,7 +293,7 @@ const PRODUCTS = [
     unit: '1 cup (Isi 6)',
     hargaToko: 15000,
     hargaOnline: 18500,
-    img: 'assets/img/Spesial/foto-produk-bugis-mandi-kue-basah-bandung-sin-tradisional-261113-02.jpg',
+    img: 'assets/img/Spesial/foto-produk-bugis-mandi-kue-basah-bandung-sin-tradisional-261119-01.jpg',
     desc: 'Porsi keluarga isi 6 pcs Kue Bugis lembut dengan siraman vla santan kental gurih nikmat.'
   },
   {
@@ -329,7 +329,7 @@ const PRODUCTS = [
     unit: '1 cup',
     hargaToko: 10000,
     hargaOnline: 12500,
-    img: 'assets/img/Spesial/foto-produk-lapis-hijau-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    img: 'assets/img/Spesial/foto-produk-lapis-hijau-kue-basah-bandung-sin-tradisional-261119-01.jpg',
     desc: 'Kue lapis pandan hijau berlapis rapi, wangi pandan asli dan kenyal lembut.'
   },
   {
@@ -341,7 +341,7 @@ const PRODUCTS = [
     unit: '1 cup',
     hargaToko: 10000,
     hargaOnline: 12500,
-    img: 'assets/img/Spesial/foto-produk-pelita-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    img: 'assets/img/Spesial/foto-produk-pelita-kue-basah-bandung-sin-tradisional-261119-01.jpg',
     desc: 'Kue kukus lembut lumer seperti puding berbahan tepung beras, santan kental gurih di lapisan atas, serta sari pandan wangi dan lelehan gula merah manis di lapisan bawah.'
   },
   {
@@ -365,7 +365,7 @@ const PRODUCTS = [
     unit: '1 cup',
     hargaToko: 15000,
     hargaOnline: 18500,
-    img: 'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg',
+    img: 'assets/img/Spesial/foto-produk-singkong-bangkok-kue-basah-bandung-sin-tradisional-261119-01.jpg',
     desc: 'Singkong empuk legit bersiram saus santan kental gurih dalam kemasan cup siap santap.'
   },
   {
@@ -389,7 +389,7 @@ const PRODUCTS = [
     unit: '1 pcs',
     hargaToko: 5000,
     hargaOnline: 6500,
-    img: 'assets/img/regular/foto-produk-cantik-manis-kue-basah-bandung-sin-tradisional-16.jpeg',
+    img: 'assets/img/Spesial/foto-produk-cantik-manis-kue-basah-bandung-sin-tradisional-261119-01.jpg',
     desc: 'Hunkwe lembut manis gurih dengan taburan sagu mutiara warna-warni.'
   },
 
@@ -418,7 +418,7 @@ const PRODUCTS = [
     unit: '1 mika (Isi 2)',
     hargaToko: 11000,
     hargaOnline: 16500,
-    img: 'assets/img/kue kue/foto-produk-kue-kue-risoles-ety-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    img: 'assets/img/kue kue/foto-produk-risoles-ragout-kue-basah-bandung-sin-tradisional-261119-01.jpg',
     desc: 'Risoles goreng renyah isi ragout ayam & sayuran creamy plus cabai rawit.',
     featured: true
   },
@@ -444,7 +444,7 @@ const PRODUCTS = [
     unit: '1 mika (Isi 3)',
     hargaToko: 5000,
     hargaOnline: 6500,
-    img: 'assets/img/kue kue/foto-produk-soes-mini-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    img: 'assets/img/kue kue/foto-produk-soes-mini-kue-basah-bandung-sin-tradisional-261119-01.jpg',
     desc: 'Kue sus mini lembut berisi vla vanila manis creamy, praktis isi 3 pcs per mika.'
   },
   {
@@ -456,7 +456,7 @@ const PRODUCTS = [
     unit: '1 mika',
     hargaToko: 8000,
     hargaOnline: 13000,
-    img: 'assets/img/kue kue/foto-produk-kue-kue-mochi-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    img: 'assets/img/kue kue/foto-produk-mochi-pandan-kacang-kue-basah-bandung-sin-tradisional-261119-01.jpg',
     desc: 'Mochi kenyal lembut isi kacang tanah manis gurih.'
   },
   {
@@ -468,7 +468,7 @@ const PRODUCTS = [
     unit: '1 pcs',
     hargaToko: 5000,
     hargaOnline: 7000,
-    img: 'assets/img/kue kue/foto-produk-kue-kue-bolu-pisang-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    img: 'assets/img/kue kue/foto-produk-bolu-pisang-kue-basah-bandung-sin-tradisional-261119-03.jpg',
     desc: 'Bolu pisang panggang empuk dan harum aroma pisang matang.'
   },
   {
@@ -492,7 +492,7 @@ const PRODUCTS = [
     unit: '1 pcs',
     hargaToko: 5000,
     hargaOnline: 7000,
-    img: 'assets/img/kue kue/foto-produk-kue-kue-lapis-cianjur-kue-basah-bandung-sin-tradisional-261113-01.jpg',
+    img: 'assets/img/kue kue/foto-produk-lapis-cianjur-kue-basah-bandung-sin-tradisional-261119-01.jpg',
     desc: 'Kue lapis tradisional kenyal manis khas rumahan, tersedia varian lapis warna & pepe coklat.'
   },
   {
@@ -545,7 +545,7 @@ const PRODUCTS = [
     unit: '1 toples/bungkus',
     hargaToko: 22000,
     hargaOnline: 27000,
-    img: 'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg',
+    img: 'assets/img/keringan/foto-produk-peyek-kacang-kue-basah-bandung-sin-tradisional-261117-01.jpg',
     desc: 'Rempeyek kacang tanah renyah gurih berbumbu daun jeruk.'
   },
   {
@@ -557,7 +557,7 @@ const PRODUCTS = [
     unit: '1 toples/bungkus',
     hargaToko: 22000,
     hargaOnline: 28000,
-    img: 'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg',
+    img: 'assets/img/keringan/foto-produk-peyek-teri-kue-basah-bandung-sin-tradisional-261117-01.jpg',
     desc: 'Rempeyek ikan teri gurih renyah, cocok sebagai lauk maupun camilan.'
   },
   {
@@ -569,7 +569,7 @@ const PRODUCTS = [
     unit: '1 bungkus',
     hargaToko: 18000,
     hargaOnline: 22000,
-    img: 'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg',
+    img: 'assets/img/keringan/foto-produk-gabus-keju-kue-basah-bandung-sin-tradisional-261117-01.jpg',
     desc: 'Stik gabus keju renyah gurih dengan rasa keju yang terasa.'
   },
   {
@@ -581,7 +581,7 @@ const PRODUCTS = [
     unit: '1 bungkus',
     hargaToko: 13000,
     hargaOnline: 16000,
-    img: 'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg',
+    img: 'assets/img/keringan/foto-produk-sale-pisang-kue-basah-bandung-sin-tradisional-261117-01.jpg',
     desc: 'Sale pisang manis alami renyah khas jajanan tradisional.'
   },
   {
@@ -593,7 +593,7 @@ const PRODUCTS = [
     unit: '1 toples/bungkus',
     hargaToko: 20000,
     hargaOnline: 25000,
-    img: 'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg',
+    img: 'assets/img/keringan/foto-produk-samosa-kering-kue-basah-bandung-sin-tradisional-261117-01.jpg',
     desc: 'Samosa mini kering renyah gurih dalam kemasan toples/bungkus praktis.'
   },
   {
@@ -605,7 +605,7 @@ const PRODUCTS = [
     unit: '1 toples/bungkus',
     hargaToko: 20000,
     hargaOnline: 25000,
-    img: 'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg',
+    img: 'assets/img/keringan/foto-produk-spring-roll-kering-kue-basah-bandung-sin-tradisional-261117-01.jpg',
     desc: 'Lumpia mini kering renyah gurih siap santap untuk camilan keluarga.'
   },
   {
@@ -617,7 +617,7 @@ const PRODUCTS = [
     unit: '1 bungkus',
     hargaToko: 20000,
     hargaOnline: 25000,
-    img: 'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg',
+    img: 'assets/img/keringan/foto-produk-popcorn-caramel-kue-basah-bandung-sin-tradisional-261117-01.jpg',
     desc: 'Popcorn renyah berbalut karamel manis gurih.'
   },
 
