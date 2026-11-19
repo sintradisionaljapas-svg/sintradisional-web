@@ -38,6 +38,12 @@ Daftar prioritas pekerjaan lanjutan untuk sesi berikutnya (disusun berdasarkan h
 
 ---
 
+## [v3.0.14] — 2026-11-19
+### Koreksi Foto `Ketimus` vs `Lemper Ayam`
+- Memindahkan `foto-produk-ketimus-kue-basah-bandung-sin-tradisional-261119-01.jpg` ke `assets/img/regular/` (sebelumnya keliru diidentifikasi sebagai `Lemper Ayam`), serta menyelaraskan nama file di Google Drive `Raw Foto` dan `/Users/hanshans/SinTradisional-HQ/produk-toko`.
+- Memperbarui [assets/app.js](assets/app.js) sehingga `Ketimus` (`ketimus`) kini memakai foto baru seri `261119`, dan `Lemper Ayam` (`lemper-ayam`) dikembalikan ke foto Lemper asli (`261113-01.jpg`).
+- Memperbarui *cache-buster* pada [index.html](index.html) menjadi `assets/app.js?v=3.0.14`.
+
 ## [v3.0.13] — 2026-11-19
 ### Penyeragaman 8 Foto Produk Tambahan Seri `261119` (`Raw Foto` -> `produk-toko` -> Website)
 - **Aset Visual Baru (`assets/img/regular/`, `assets/img/Spesial/`, `assets/img/kue kue/`):**

@@ -266,7 +266,7 @@ const PRODUCTS = [
     unit: '1 mika (Isi 2)',
     hargaToko: 10000,
     hargaOnline: 12500,
-    img: 'assets/img/kombinasi-kue-basah-bandung-sin-tradisional-09.jpg',
+    img: 'assets/img/regular/foto-produk-ketimus-kue-basah-bandung-sin-tradisional-261119-01.jpg',
     desc: 'Olahan singkong parut manis gula aren dan kelapa muda, dibungkus daun pisang kukus.'
   },
 
@@ -432,7 +432,7 @@ const PRODUCTS = [
     unit: '1 pcs',
     hargaToko: 5000,
     hargaOnline: 6500,
-    img: 'assets/img/kue kue/foto-produk-lemper-kue-basah-bandung-sin-tradisional-261119-01.jpg',
+    img: 'assets/img/kue kue/foto-produk-lemper-kue-basah-bandung-sin-tradisional-261113-01.jpg',
     desc: 'Ketan pulen gurih berisi suwiran daging ayam berbumbu rempah tradisional.'
   },
   {
