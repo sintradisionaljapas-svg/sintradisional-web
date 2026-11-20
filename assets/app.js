@@ -1862,6 +1862,42 @@ function updateLiveChatStatusBadge(mode, handledBy) {
   }
 }
 
+function getActiveWaAdminByWib(customDate) {
+  const now = customDate instanceof Date ? customDate : new Date();
+  let jamWib = 12;
+  try {
+    const hourStr = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'Asia/Jakarta',
+      hour: 'numeric',
+      hour12: false
+    }).format(now);
+    const parsedHour = parseInt(hourStr, 10);
+    jamWib = isNaN(parsedHour) ? 12 : (parsedHour === 24 ? 0 : parsedHour);
+  } catch (_) {
+    const utcHours = now.getUTCHours();
+    jamWib = (utcHours + 7) % 24;
+  }
+
+  const isKasirHours = jamWib >= 6 && jamWib < 14;
+  return {
+    jamWib: jamWib,
+    isKasirHours: isKasirHours,
+    phone: isKasirHours ? WA_KASIR_PHONE : WA_MANAGER_PHONE,
+    displayPhone: isKasirHours ? '0895-3300-12673' : '0895-4122-28351',
+    label: isKasirHours ? 'Admin 2 • Kasir Toko' : 'Admin 1 • Manager PO'
+  };
+}
+
+function formatChatMessageHtml(rawText) {
+  let html = escapeHtml(String(rawText || ''));
+  html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, function (_, label, url) {
+    return '<a href="' + url + '" target="_blank" rel="noopener noreferrer" style="color:#14532d;font-weight:700;text-decoration:underline;">' + label + '</a>';
+  });
+  html = html.replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, '$1<em>$2</em>');
+  return html;
+}
+
 function renderLiveChatMessages() {
   const container = document.getElementById('livechat-messages');
   if (!container) return;
@@ -1890,7 +1926,7 @@ function renderLiveChatMessages() {
     return (
       '<div class="' + rowCls + '">' +
         '<span class="livechat-sender-label">' + senderTitle + '</span>' +
-        '<div class="livechat-bubble">' + escapeHtml(msg.message || msg.text || '') + '</div>' +
+        '<div class="livechat-bubble">' + formatChatMessageHtml(msg.message || msg.text || '') + '</div>' +
         (timeStr ? '<span class="livechat-time">' + escapeHtml(timeStr) + '</span>' : '') +
       '</div>'
     );
@@ -2286,20 +2322,10 @@ function continueLiveChatToWhatsApp() {
     .slice(-3)
     .map(function (m) { return m.message; });
 
-  const combinedText = customerMsgs.join(' ').toLowerCase();
   const cartMetrics = calculateCartMetrics();
-  const isPoTopic =
-    cartMetrics.hasCustomPo ||
-    combinedText.includes('snack box') ||
-    combinedText.includes('snackbox') ||
-    combinedText.includes('tampah') ||
-    combinedText.includes('tray') ||
-    combinedText.includes('grosir') ||
-    combinedText.includes('agen') ||
-    combinedText.includes('pre-order');
-
-  const targetPhone = isPoTopic ? WA_MANAGER_PHONE : WA_KASIR_PHONE;
-  const targetLabel = isPoTopic ? 'Manager PO' : 'Kasir Toko';
+  const waTarget = getActiveWaAdminByWib();
+  const targetPhone = waTarget.phone;
+  const targetLabel = waTarget.label;
 
   const lines = [
     'Halo ' + targetLabel + ' Sin Tradisional (Jl. Situ No. 41 Bandung),',
