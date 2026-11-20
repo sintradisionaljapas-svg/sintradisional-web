@@ -1,12 +1,16 @@
 /**
  * ============================================================================
  * Website Resmi Sin Tradisional (sintradisional.com) - Katalog End-User,
- * Pembanding Harga Toko vs Aplikasi Online, Stok Live POS & Info Snack Box PO
+ * Pembanding Harga Toko vs Aplikasi Online, Stok Live POS, Info Snack Box PO
+ * & Widget Live Chat AI + Human Takeover Kasir Toko (v3.1.0)
  * ============================================================================
  */
 
+const GAS_CHAT_WEBHOOK_URL =
+  'https://script.google.com/macros/s/AKfycbyY0YGcRD-PqxtMrC7-RAWskRzzfzEbxfJ_5lmZRAn7GzL9ReVYNweHRlkZUuFU6iRM/exec';
+
 const POS_PUBLIC_STOK_URL =
-  'https://script.google.com/macros/s/AKfycbyCBySvO-HcLsmnmchp1RL4WC8AKSQ2iMxru2OZMoJKteyqZjvcnvCY9d4IiC_Y2ur-/exec?action=public_stok';
+  GAS_CHAT_WEBHOOK_URL + '?action=public_stok';
 
 const WA_KASIR_PHONE = '62895330012673';
 const WA_MANAGER_PHONE = '62895412228351';
@@ -699,6 +703,7 @@ let cart = {}; // { itemId: qty }
 let liveStockStatus = 'loading'; // 'loading' | 'live' | 'fallback'
 let liveStockMeta = { tanggalStok: '', waktuStok: '', totalReady: 0 };
 let liveStockBySku = {}; // { [sku]: { stok, hargaToko, hargaOnline, nama, kategori } }
+let posStockMap = liveStockBySku;
 
 let activeModalItemId = null;
 let activeModalVariantIdx = 0;
@@ -914,6 +919,7 @@ async function fetchLivePosStock() {
     });
 
     liveStockBySku = nextMap;
+    posStockMap = nextMap;
     liveStockMeta = {
       tanggalStok: data.tanggalStok || '',
       waktuStok: data.waktuStok || '',
@@ -1190,14 +1196,18 @@ function calculateCartMetrics() {
     }
   });
 
-  // Aturan diskon bertingkat POS_Sintra (hanya Regular, Spesial, Kue)
+  // Aturan diskon bertingkat & subsidi ongkir POS_Sintra (hanya Regular, Spesial, Kue)
   let discountPct = 0;
   if (eligibleSubtotal >= 300000) discountPct = 10;
   else if (eligibleSubtotal >= 250000) discountPct = 7.5;
   else if (eligibleSubtotal >= 150000) discountPct = 5;
 
   const discountAmount = Math.round((eligibleSubtotal * discountPct) / 100);
-  const grandTotal = subtotalToko - discountAmount;
+  const shippingSubsidy = eligibleSubtotal >= 100000
+    ? Math.min(15000, Math.max(0, eligibleSubtotal - discountAmount))
+    : 0;
+  const nonEligibleSubtotal = Math.max(0, subtotalToko - eligibleSubtotal);
+  const grandTotal = (eligibleSubtotal - discountAmount - shippingSubsidy) + nonEligibleSubtotal;
   const directOnlineSaving = Math.max(0, subtotalOnline - grandTotal);
 
   return {
@@ -1206,8 +1216,10 @@ function calculateCartMetrics() {
     subtotalToko: subtotalToko,
     subtotalOnline: subtotalOnline,
     eligibleSubtotal: eligibleSubtotal,
+    nonEligibleSubtotal: nonEligibleSubtotal,
     discountPct: discountPct,
     discountAmount: discountAmount,
+    shippingSubsidy: shippingSubsidy,
     grandTotal: grandTotal,
     directOnlineSaving: directOnlineSaving,
     hasCustomPo: hasCustomPo
@@ -1226,13 +1238,18 @@ function syncCartUI() {
   const notesEl = document.getElementById('order-notes');
   const orderTypeSelect = document.getElementById('order-type');
 
+  const livechatFab = document.getElementById('livechat-fab');
   if (m.entries.length === 0) {
     if (stickyBar) stickyBar.hidden = true;
     if (summaryBox) summaryBox.hidden = true;
+    if (document.body) document.body.classList.remove('has-sticky-cart');
+    if (livechatFab) livechatFab.classList.remove('has-sticky-cart');
     return;
   }
 
   if (stickyBar) stickyBar.hidden = false;
+  if (document.body) document.body.classList.add('has-sticky-cart');
+  if (livechatFab) livechatFab.classList.add('has-sticky-cart');
   if (stickyBadge) stickyBadge.textContent = m.totalItems + ' pcs';
   if (stickyTitle) {
     if (m.grandTotal > 0) {
@@ -1268,6 +1285,13 @@ function syncCartUI() {
     let rowsHtml = '';
     if (m.subtotalToko > 0) {
       rowsHtml += '<div class="cart-total-row"><span>Subtotal Harga Toko</span><span>' + formatRp(m.subtotalToko) + '</span></div>';
+      if (m.nonEligibleSubtotal > 0) {
+        rowsHtml +=
+          '<div class="cart-total-row" style="font-size:0.84rem;color:#475569;">' +
+            '<span>Kue Basah Eligible Promo (Regular/Spesial/Kue)</span>' +
+            '<span>' + formatRp(m.eligibleSubtotal) + '</span>' +
+          '</div>';
+      }
       if (m.discountAmount > 0) {
         rowsHtml +=
           '<div class="cart-total-row" style="color:#166534;">' +
@@ -1275,9 +1299,16 @@ function syncCartUI() {
             '<span>-' + formatRp(m.discountAmount) + '</span>' +
           '</div>';
       }
+      if (m.shippingSubsidy > 0) {
+        rowsHtml +=
+          '<div class="cart-total-row" style="color:#0369a1;font-weight:700;">' +
+            '<span>Potongan Subsidi Ongkir (Min. 100rb Kue Basah)</span>' +
+            '<span>-' + formatRp(m.shippingSubsidy) + '</span>' +
+          '</div>';
+      }
       rowsHtml +=
         '<div class="cart-total-row grand">' +
-          '<span>Estimasi Total Bayar Langsung</span>' +
+          '<span>Estimasi Total Bayar di Kasir</span>' +
           '<span>' + formatRp(m.grandTotal) + (m.hasCustomPo ? ' + Paket PO' : '') + '</span>' +
         '</div>';
       if (m.directOnlineSaving > 0) {
@@ -1286,15 +1317,15 @@ function syncCartUI() {
             '🎉 Lebih hemat ' + formatRp(m.directOnlineSaving) + ' dibanding pesan lewat App Online (' + formatRp(m.subtotalOnline) + ')! (Walk-in 14.00–17.00 WIB dapat Happy Hour 15%)' +
           '</div>';
       }
-      if (m.subtotalToko >= 100000) {
+      if (m.shippingSubsidy > 0) {
         rowsHtml +=
           '<div class="cart-saving-highlight" style="margin-top:6px;background:#e0f2fe;border-color:#7dd3fc;color:#0c4a6e;">' +
-            '🚚 <strong>Memenuhi Syarat Subsidi Ongkir Kurir Lokal s/d Rp 15.000</strong> (Min. belanja Rp 100.000 via Web &amp; WA).' +
+            '🚚 <strong>Potongan Subsidi Ongkir Rp 15.000 Aktif!</strong> (Berlaku untuk pembelian kategori Regular, Spesial &amp; Kue &ge; Rp 100.000 via Website/WA maupun datang ke Toko Jl. Situ No. 41).' +
           '</div>';
       } else {
         rowsHtml +=
           '<div class="cart-saving-highlight" style="margin-top:6px;background:#f8fafc;border-color:#cbd5e1;color:#334155;">' +
-            '🚚 Tambah <strong>' + formatRp(100000 - m.subtotalToko) + '</strong> lagi untuk dapat <strong>Subsidi Ongkir s/d Rp 15.000</strong>.' +
+            '🚚 Tambah <strong>' + formatRp(Math.max(0, 100000 - m.eligibleSubtotal)) + '</strong> kue basah (Regular/Spesial/Kue) lagi untuk dapat potongan <strong>Subsidi Ongkir Rp 15.000</strong> (tidak termasuk Keringan &amp; Minuman).' +
           '</div>';
       }
       if (getUtmSourceLabel() === 'Kartu Sisipan Ojol') {
@@ -1324,12 +1355,16 @@ function syncCartUI() {
       return '- ' + item.name + ' x' + pair[1] + ' (' + formatRp((prices.hargaToko || 0) * pair[1]) + ')';
     }).filter(Boolean);
 
-    if (m.grandTotal > 0) {
+    if (m.subtotalToko > 0) {
       lines.push('---');
-      lines.push('Estimasi Total Harga Toko: ' + formatRp(m.grandTotal) + (m.discountAmount > 0 ? ' (Diskon ' + m.discountPct + '%)' : ''));
-      if (m.subtotalToko >= 100000) {
-        lines.push('Promo: Memenuhi syarat Subsidi Ongkir Kurir Lokal s/d Rp 15.000 (PRM-06)');
+      lines.push('Subtotal Harga Toko: ' + formatRp(m.subtotalToko));
+      if (m.discountAmount > 0) {
+        lines.push('Diskon Kue Basah (' + m.discountPct + '%): -' + formatRp(m.discountAmount));
       }
+      if (m.shippingSubsidy > 0) {
+        lines.push('Potongan Subsidi Ongkir (PRM-06, Min. 100rb Kue Basah): -' + formatRp(m.shippingSubsidy));
+      }
+      lines.push('Estimasi Total Bayar di Kasir: ' + formatRp(m.grandTotal));
       if (getUtmSourceLabel() === 'Kartu Sisipan Ojol' && m.subtotalToko >= 75000) {
         lines.push('Promo: Voucher Flyer Pelanggan Baru Ojol (PRM-07)');
       }
@@ -1409,7 +1444,7 @@ function openProductModal(itemId) {
 
   if (modalNote) {
     modalNote.innerHTML =
-      '💡 <strong>Keuntungan Beli Langsung (Harga Toko):</strong> Jauh lebih hemat dibanding GoFood/GrabFood/ShopeeFood + berlaku diskon bertingkat hingga 10% (dan Happy Hour 15% walk-in pkl 14.00–17.00 WIB).';
+      '💡 <strong>Keuntungan Beli Langsung (Harga Toko):</strong> Jauh lebih hemat dibanding GoFood/GrabFood/ShopeeFood + diskon bertingkat 5%–10% &amp; Subsidi Ongkir Rp 15.000 (min. Rp 100.000) khusus kategori Regular, Spesial &amp; Kue (plus Happy Hour 15% walk-in 14.00–17.00 WIB).';
   }
 
   if (qtyControls) qtyControls.hidden = false;
@@ -1692,6 +1727,636 @@ document.addEventListener('DOMContentLoaded', function () {
     if (e.key === 'Escape') {
       closeProductModal();
       closeHalalModal();
+      closeLiveChatPanel();
     }
   });
+
+  initLiveChatWidget();
 });
+
+/* ==========================================================================
+   WIDGET LIVE CHAT AI & HUMAN TAKEOVER KASIR TOKO (RAMAH USIA 40-60 TAHUN)
+   ========================================================================== */
+
+const LIVECHAT_SESSION_KEY = 'sintra_chat_session_id';
+const LIVECHAT_HISTORY_KEY = 'sintra_chat_history_v1';
+const LIVECHAT_CUST_NAME_KEY = 'sintra_chat_customer_name';
+const LIVECHAT_POLL_INTERVAL_MS = 5000;
+
+let liveChatSessionId = '';
+let liveChatMessages = [];
+let liveChatMode = 'AI'; // 'AI' | 'HUMAN_KASIR'
+let liveChatHandledBy = '';
+let isLiveChatOpen = false;
+let liveChatPollTimer = null;
+let isLiveChatSending = false;
+let isLiveChatPolling = false;
+
+function formatChatTimeWib(rawTs) {
+  try {
+    if (rawTs && typeof rawTs === 'string') {
+      const m = rawTs.match(/(\d{2}:\d{2})/);
+      if (m) return m[1] + ' WIB';
+    }
+    const now = rawTs ? new Date(rawTs) : new Date();
+    if (isNaN(now.getTime())) return '';
+    return now.toLocaleTimeString('en-GB', {
+      timeZone: 'Asia/Jakarta',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    }) + ' WIB';
+  } catch (e) {
+    return '';
+  }
+}
+
+function getOrCreateChatSessionId() {
+  try {
+    let sid = (localStorage.getItem(LIVECHAT_SESSION_KEY) || '').trim();
+    if (!sid) {
+      sid = 'WEB-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).substring(2, 7).toUpperCase();
+      localStorage.setItem(LIVECHAT_SESSION_KEY, sid);
+    }
+    return sid;
+  } catch (e) {
+    return 'WEB-' + Date.now().toString(36).toUpperCase();
+  }
+}
+
+function getLiveChatCustomerName() {
+  const chatNameEl = document.getElementById('livechat-cust-name');
+  const orderNameEl = document.getElementById('cust-name');
+  let name = (chatNameEl && chatNameEl.value ? chatNameEl.value : '').trim();
+  if (!name && orderNameEl && orderNameEl.value) {
+    name = orderNameEl.value.trim();
+  }
+  if (!name) {
+    try {
+      name = (localStorage.getItem(LIVECHAT_CUST_NAME_KEY) || '').trim();
+    } catch (e) {}
+  }
+  return name || 'Pelanggan Web';
+}
+
+function saveLiveChatHistory() {
+  try {
+    const trimmed = liveChatMessages.slice(-60);
+    localStorage.setItem(LIVECHAT_HISTORY_KEY, JSON.stringify({
+      sessionId: liveChatSessionId,
+      mode: liveChatMode,
+      handledBy: liveChatHandledBy,
+      messages: trimmed
+    }));
+  } catch (e) {}
+}
+
+function loadLiveChatHistory() {
+  let loaded = [];
+  try {
+    const raw = localStorage.getItem(LIVECHAT_HISTORY_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && parsed.sessionId === liveChatSessionId && Array.isArray(parsed.messages)) {
+        loaded = parsed.messages;
+        if (parsed.mode) liveChatMode = parsed.mode;
+        if (parsed.handledBy) liveChatHandledBy = parsed.handledBy;
+      }
+    }
+  } catch (e) {}
+
+  if (!loaded || loaded.length === 0) {
+    loaded = [
+      {
+        msgId: 'WELCOME-INIT',
+        sender: 'AI',
+        senderName: 'Asisten AI Sin Tradisional',
+        message:
+          'Halo Ibu/Bapak! Selamat datang di Sin Tradisional Bandung (Jl. Situ No. 41 — Kue Basah 100% Tanpa Pengawet Sejak 1978).\n\n' +
+          'Silakan ketuk tombol pertanyaan cepat di bawah atau ketik pertanyaan mengenai stok kue hari ini, perbandingan Harga Toko vs Ojol, maupun paket Snack Box & Kue Tampah.',
+        timestamp: formatChatTimeWib()
+      }
+    ];
+  }
+  liveChatMessages = loaded;
+}
+
+function updateLiveChatStatusBadge(mode, handledBy) {
+  const normalizedMode = String(mode || 'AI').toUpperCase().includes('HUMAN') || String(mode || '').toUpperCase().includes('KASIR')
+    ? 'HUMAN_KASIR'
+    : 'AI';
+  liveChatMode = normalizedMode;
+  if (handledBy !== undefined && handledBy !== null) {
+    liveChatHandledBy = String(handledBy || '').trim();
+  }
+
+  const badge = document.getElementById('livechat-status-badge');
+  if (!badge) return;
+
+  if (liveChatMode === 'HUMAN_KASIR') {
+    badge.className = 'livechat-status-badge mode-human';
+    badge.textContent = '👩🏻‍💼 Terhubung dengan Kasir Toko';
+  } else {
+    badge.className = 'livechat-status-badge mode-ai';
+    badge.textContent = '🤖 Asisten AI Sin Tradisional';
+  }
+}
+
+function renderLiveChatMessages() {
+  const container = document.getElementById('livechat-messages');
+  if (!container) return;
+
+  container.innerHTML = liveChatMessages.map(function (msg) {
+    const senderUpper = String(msg.sender || 'AI').toUpperCase();
+    const isCustomer = senderUpper === 'CUSTOMER' || senderUpper === 'USER' || senderUpper === 'PELANGGAN';
+    const isKasir = senderUpper === 'KASIR' || senderUpper === 'HUMAN_KASIR' || senderUpper === 'ADMIN';
+    const isSystem = senderUpper === 'SYSTEM';
+    const rowCls = isCustomer
+      ? 'livechat-msg-row sender-customer'
+      : ('livechat-msg-row sender-agent' + ((isKasir || isSystem) ? ' is-kasir' : ''));
+
+    let senderTitle = '🤖 Asisten AI Sin Tradisional';
+    if (isCustomer) {
+      senderTitle = 'Ibu/Bapak (' + escapeHtml(msg.senderName || getLiveChatCustomerName()) + ')';
+    } else if (isSystem) {
+      senderTitle = 'ℹ️ Info Layanan Toko';
+    } else if (isKasir) {
+      const kasirName = msg.senderName && msg.senderName !== 'KASIR' ? msg.senderName : (liveChatHandledBy || 'Kasir Toko');
+      senderTitle = '👩🏻‍💼 Kasir Toko (' + escapeHtml(kasirName) + ')';
+    }
+
+    const timeStr = msg.timestamp ? formatChatTimeWib(msg.timestamp) : '';
+
+    return (
+      '<div class="' + rowCls + '">' +
+        '<span class="livechat-sender-label">' + senderTitle + '</span>' +
+        '<div class="livechat-bubble">' + escapeHtml(msg.message || msg.text || '') + '</div>' +
+        (timeStr ? '<span class="livechat-time">' + escapeHtml(timeStr) + '</span>' : '') +
+      '</div>'
+    );
+  }).join('');
+
+  container.scrollTop = container.scrollHeight;
+}
+
+function normalizeIncomingMessage(raw) {
+  if (!raw) return null;
+  const text = String(raw.message || raw.Message_Text || raw.text || '').trim();
+  if (!text) return null;
+  const sender = String(raw.sender || raw.Sender || 'AI').toUpperCase();
+  const senderName = String(raw.senderName || raw.Sender_Name || (sender.includes('KASIR') ? 'Kasir Toko' : 'Asisten AI')).trim();
+  const msgId = String(raw.msgId || raw.Msg_ID || raw.id || (sender + '-' + text.slice(0, 24) + '-' + (raw.timestamp || raw.Timestamp || ''))).trim();
+  const ts = String(raw.timestamp || raw.Timestamp || raw.waktu || formatChatTimeWib()).trim();
+
+  return {
+    msgId: msgId,
+    sender: sender,
+    senderName: senderName,
+    message: text,
+    timestamp: ts
+  };
+}
+
+function mergeIncomingChatMessages(rawList) {
+  if (!Array.isArray(rawList) || rawList.length === 0) return false;
+  let changed = false;
+
+  rawList.forEach(function (raw) {
+    const norm = normalizeIncomingMessage(raw);
+    if (!norm) return;
+
+    const existsById = liveChatMessages.some(function (m) {
+      return m.msgId && norm.msgId && m.msgId === norm.msgId;
+    });
+    if (existsById) return;
+
+    // Jika pesan CUSTOMER lokal baru saja dikirim, update msgId lokalnya agar tidak duplikat
+    if (norm.sender === 'CUSTOMER') {
+      const pendingLocal = liveChatMessages.find(function (m) {
+        return m.sender === 'CUSTOMER' && String(m.msgId || '').indexOf('LOCAL-') === 0 && m.message === norm.message;
+      });
+      if (pendingLocal) {
+        pendingLocal.msgId = norm.msgId;
+        pendingLocal.timestamp = norm.timestamp || pendingLocal.timestamp;
+        changed = true;
+        return;
+      }
+    }
+
+    liveChatMessages.push(norm);
+    changed = true;
+  });
+
+  if (changed) {
+    saveLiveChatHistory();
+    renderLiveChatMessages();
+  }
+  return changed;
+}
+
+function buildLocalFallbackChatReply(userText) {
+  const q = String(userText || '').toLowerCase();
+
+  // 1. Pertanyaan Diskon & Subsidi Ongkir Toko
+  if (q.includes('diskon') || q.includes('promo') || q.includes('ongkir') || q.includes('subsidi') || q.includes('happy hour')) {
+    return (
+      'Berikut aturan Promo Resmi Pembelian Toko & WhatsApp Sin Tradisional (Jl. Situ No. 41, Bandung) khusus kategori kue basah Regular, Spesial & Kue (tidak termasuk Keringan, Minuman, Dus):\n\n' +
+      '• Belanja Kue Basah >= Rp 100.000: Subsidi Ongkir Rp 15.000 (otomatis memotong tagihan kasir, termasuk datang langsung ke toko & kumulatif dengan diskon).\n' +
+      '• Belanja >= Rp 150.000: Diskon 5%\n' +
+      '• Belanja >= Rp 250.000: Diskon 7,5%\n' +
+      '• Belanja >= Rp 300.000: Diskon 10%\n' +
+      '• Happy Hour 14.00–17.00 WIB: Diskon 15% khusus walk-in langsung di Toko Jl. Situ No. 41.\n\n' +
+      'Silakan pilih kue di katalog atau tekan tombol "💬 Lanjut Pesan via WhatsApp Admin" di bawah.'
+    );
+  }
+
+  // 2. Pertanyaan Snack Box / Kue Tampah / Pre-Order / Grosir
+  if (q.includes('snack box') || q.includes('snackbox') || q.includes('tampah') || q.includes('tray') || q.includes('acara') || q.includes('rapat') || q.includes('grosir') || q.includes('agen')) {
+    return (
+      'Untuk pesanan Snack Box kantor, pengajian, atau Kue Tampah Tradisional:\n\n' +
+      '• Seluruh kue kami 100% tanpa pengawet kimia, sehingga pemesanan Snack Box & Kue Tampah idealnya dilakukan H-1 agar diproduksi segar pagi hari.\n' +
+      '• Menggunakan Harga Asli Toko (0% komisi aplikasi) + berlaku Diskon Bertingkat 5%–10% untuk kue basah >= Rp 150.000.\n' +
+      '• Rekomendasi kombinasi favorit: Kue Bugis, Talam Ebi (Asin), Risoles Ragout, Lemper Ayam, dan Kue Pelita / Soes Mini.\n\n' +
+      'Ketuk tombol "💬 Lanjut Pesan via WhatsApp Admin" di bawah untuk langsung terhubung ke WA Admin 1 Manager PO (0895-4122-28351).'
+    );
+  }
+
+  // 3. Cek apakah pelanggan menanyakan produk spesifik di katalog
+  const matchedProducts = PRODUCTS.filter(function (p) {
+    return q.includes(p.name.toLowerCase()) || (p.id && q.includes(p.id.replace(/-/g, ' ')));
+  });
+
+  if (matchedProducts.length > 0) {
+    const lines = matchedProducts.slice(0, 4).map(function (p) {
+      const prices = getEffectivePrices(p);
+      const stockInfo = getLiveStockInfo(p);
+      if (p.isPreOrder) {
+        return '• ' + p.name + ': Khusus Pre-Order via WA Manager PO (0895-4122-28351).';
+      }
+      const stockText = liveStockStatus === 'live' ? stockInfo.label : 'Tersedia harian di Toko';
+      const savingText = prices.hargaOnline > prices.hargaToko
+        ? ' (Harga Ojol Rp ' + prices.hargaOnline.toLocaleString('id-ID') + ', hemat Rp ' + (prices.hargaOnline - prices.hargaToko).toLocaleString('id-ID') + ')'
+        : '';
+      return '• ' + p.name + ' (' + p.unit + '): Harga Toko ' + formatRp(prices.hargaToko) + savingText + ' — Status: ' + stockText;
+    });
+    return (
+      'Berikut info menu yang Ibu/Bapak tanyakan di Toko Jl. Situ No. 41 Bandung:\n\n' +
+      lines.join('\n') +
+      '\n\nUntuk kunci stok atau pesan langsung dengan Harga Toko, silakan klik tombol "💬 Lanjut Pesan via WhatsApp Admin" di bawah.'
+    );
+  }
+
+  // 4. Pertanyaan Stok Kue Hari Ini
+  if (q.includes('stok') || q.includes('ready') || q.includes('hari ini') || q.includes('menu') || q.includes('ada apa')) {
+    const readyItems = PRODUCTS.filter(function (p) {
+      if (p.isPreOrder) return false;
+      const info = getLiveStockInfo(p);
+      return info.state === 'ready' || info.state === 'low';
+    });
+
+    if (liveStockStatus === 'live' && readyItems.length > 0) {
+      const sampleList = readyItems.slice(0, 8).map(function (p) {
+        const prices = getEffectivePrices(p);
+        const info = getLiveStockInfo(p);
+        return '• ' + p.name + ': ' + formatRp(prices.hargaToko) + ' (' + info.label + ')';
+      }).join('\n');
+      return (
+        'Saat ini terdapat ' + readyItems.length + ' menu yang Ready di POS Kasir Toko Jl. Situ No. 41, di antaranya:\n\n' +
+        sampleList +
+        (readyItems.length > 8 ? '\n• ...dan ' + (readyItems.length - 8) + ' menu lainnya di katalog atas.' : '') +
+        '\n\nIbu/Bapak bisa klik "+ Pesan" pada foto kue atau tekan "💬 Lanjut Pesan via WhatsApp Admin" di bawah.'
+      );
+    }
+
+    return (
+      'Menu kue basah favorit Sin Tradisional (Jl. Situ No. 41, buka setiap hari 06.30–17.00 WIB):\n\n' +
+      '• Kue Regular (Rp 5.000/pcs, di Ojol Rp 6.500): Kue Bugis, Nagasari, Talam Pandan, Talam Ubi, Talam Ebi, Lupis, Serabi Kinca/Oncom.\n' +
+      '• Kue Spesial Cup (Rp 10.000–Rp 15.000): Bugis Mandi, Kue Pelita, Biji Salak, Singkong Bangkok.\n' +
+      '• Gurih Favorit: Risoles Ragout (Rp 11.000/mika isi 2), Otak-Otak Bakar (Rp 20.000/isi 5, hemat Rp 10.000 vs Ojol!).\n\n' +
+      'Untuk konfirmasi cepat stok etalase ke Kasir Toko, ketuk tombol "💬 Lanjut Pesan via WhatsApp Admin" di bawah.'
+    );
+  }
+
+  // 5. Jawaban Umum Ramah
+  return (
+    'Terima kasih sudah menghubungi Sin Tradisional Bandung (Jl. Situ No. 41 • Buka 06.30–17.00 WIB).\n\n' +
+    'Pesan langsung via Website/WhatsApp jauh lebih hemat karena memakai Harga Asli Toko (0% komisi aplikasi) + Subsidi Ongkir Rp 15.000 (min. Rp 100.000 kue basah) & Diskon 5%–10% (min. Rp 150.000).\n\n' +
+    'Silakan klik tombol "💬 Lanjut Pesan via WhatsApp Admin" di bawah agar langsung dibantu oleh Kasir Toko / Manager PO kami.'
+  );
+}
+
+async function sendLiveChatMessage(rawText) {
+  const message = String(rawText || '').trim();
+  if (!message || isLiveChatSending) return;
+
+  const inputEl = document.getElementById('livechat-input');
+  const sendBtn = document.getElementById('livechat-send-btn');
+  if (inputEl && inputEl.value.trim() === message) {
+    inputEl.value = '';
+  }
+
+  const customerName = getLiveChatCustomerName();
+  try {
+    if (customerName && customerName !== 'Pelanggan Web') {
+      localStorage.setItem(LIVECHAT_CUST_NAME_KEY, customerName);
+    }
+  } catch (e) {}
+
+  const localMsg = {
+    msgId: 'LOCAL-' + Date.now(),
+    sender: 'CUSTOMER',
+    senderName: customerName,
+    message: message,
+    timestamp: formatChatTimeWib()
+  };
+
+  liveChatMessages.push(localMsg);
+  saveLiveChatHistory();
+  renderLiveChatMessages();
+
+  isLiveChatSending = true;
+  if (sendBtn) {
+    sendBtn.disabled = true;
+    sendBtn.textContent = '...';
+  }
+
+  const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+  const timeoutId = controller ? setTimeout(function () { controller.abort(); }, 12000) : null;
+
+  try {
+    const res = await fetch(GAS_CHAT_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        action: 'send_customer_msg',
+        sessionId: liveChatSessionId,
+        customerName: customerName,
+        message: message
+      }),
+      redirect: 'follow',
+      signal: controller ? controller.signal : undefined
+    });
+    if (timeoutId) clearTimeout(timeoutId);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+
+    const text = await res.text();
+    if (!text || text.trim().charAt(0) === '<') {
+      throw new Error('Endpoint GAS belum mengembalikan JSON Live Chat');
+    }
+
+    const data = JSON.parse(text);
+    if (!data || (data.ok === false && data.status !== 'success')) {
+      throw new Error((data && (data.error || data.message)) || 'Gagal memproses chat');
+    }
+
+    const modeFromServer = (data.session && (data.session.statusMode || data.session.Status_Mode || data.session.mode)) ||
+      data.statusMode || data.Status_Mode || data.mode || liveChatMode;
+    const handlerFromServer = (data.session && (data.session.handledBy || data.session.Handled_By)) ||
+      data.handledBy || data.Handled_By || liveChatHandledBy;
+    updateLiveChatStatusBadge(modeFromServer, handlerFromServer);
+
+    if (Array.isArray(data.messages) && data.messages.length > 0) {
+      mergeIncomingChatMessages(data.messages);
+    } else if (data.reply || data.aiReply || data.replyText) {
+      mergeIncomingChatMessages([
+        {
+          msgId: data.replyMsgId || ('SRV-AI-' + Date.now()),
+          sender: liveChatMode === 'HUMAN_KASIR' ? 'KASIR' : 'AI',
+          senderName: liveChatMode === 'HUMAN_KASIR' ? (liveChatHandledBy || 'Kasir Toko') : 'Asisten AI Sin Tradisional',
+          message: data.reply || data.aiReply || data.replyText,
+          timestamp: data.timestamp || formatChatTimeWib()
+        }
+      ]);
+    }
+  } catch (err) {
+    if (timeoutId) clearTimeout(timeoutId);
+    // Fallback cerdas berbasis katalog & stok live di browser jika GAS gagal/timeout
+    const fallbackText = buildLocalFallbackChatReply(message);
+    mergeIncomingChatMessages([
+      {
+        msgId: 'FALLBACK-' + Date.now(),
+        sender: 'AI',
+        senderName: 'Asisten AI Sin Tradisional',
+        message: fallbackText,
+        timestamp: formatChatTimeWib()
+      }
+    ]);
+  } finally {
+    isLiveChatSending = false;
+    if (sendBtn) {
+      sendBtn.disabled = false;
+      sendBtn.textContent = 'Kirim';
+    }
+  }
+}
+
+async function pollLiveChatMessages() {
+  if (!isLiveChatOpen || isLiveChatPolling || isLiveChatSending) return;
+  isLiveChatPolling = true;
+
+  const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+  const timeoutId = controller ? setTimeout(function () { controller.abort(); }, 7000) : null;
+
+  try {
+    const res = await fetch(GAS_CHAT_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        action: 'poll_messages',
+        sessionId: liveChatSessionId
+      }),
+      redirect: 'follow',
+      signal: controller ? controller.signal : undefined
+    });
+    if (timeoutId) clearTimeout(timeoutId);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+
+    const text = await res.text();
+    if (!text || text.trim().charAt(0) === '<') return;
+
+    const data = JSON.parse(text);
+    if (!data || (data.ok === false && data.status !== 'success')) return;
+
+    const modeFromServer = (data.session && (data.session.statusMode || data.session.Status_Mode || data.session.mode)) ||
+      data.statusMode || data.Status_Mode || data.mode;
+    const handlerFromServer = (data.session && (data.session.handledBy || data.session.Handled_By)) ||
+      data.handledBy || data.Handled_By;
+
+    if (modeFromServer) {
+      updateLiveChatStatusBadge(modeFromServer, handlerFromServer);
+    }
+    if (Array.isArray(data.messages) && data.messages.length > 0) {
+      mergeIncomingChatMessages(data.messages);
+    }
+  } catch (e) {
+    if (timeoutId) clearTimeout(timeoutId);
+  } finally {
+    isLiveChatPolling = false;
+  }
+}
+
+function startLiveChatPolling() {
+  stopLiveChatPolling();
+  liveChatPollTimer = setInterval(function () {
+    if (isLiveChatOpen && !document.hidden) {
+      pollLiveChatMessages();
+    }
+  }, LIVECHAT_POLL_INTERVAL_MS);
+}
+
+function stopLiveChatPolling() {
+  if (liveChatPollTimer) {
+    clearInterval(liveChatPollTimer);
+    liveChatPollTimer = null;
+  }
+}
+
+function openLiveChatPanel() {
+  const panel = document.getElementById('livechat-panel');
+  const fab = document.getElementById('livechat-fab');
+  const fabBadge = document.getElementById('livechat-fab-badge');
+  const inputEl = document.getElementById('livechat-input');
+  const chatNameEl = document.getElementById('livechat-cust-name');
+  const orderNameEl = document.getElementById('cust-name');
+
+  if (chatNameEl && !chatNameEl.value && orderNameEl && orderNameEl.value) {
+    chatNameEl.value = orderNameEl.value.trim();
+  }
+
+  isLiveChatOpen = true;
+  if (panel) panel.hidden = false;
+  if (fab) {
+    fab.hidden = true;
+    fab.setAttribute('aria-expanded', 'true');
+  }
+  if (fabBadge) {
+    fabBadge.hidden = true;
+    fabBadge.textContent = '0';
+  }
+
+  renderLiveChatMessages();
+  startLiveChatPolling();
+  pollLiveChatMessages();
+
+  setTimeout(function () {
+    if (inputEl) inputEl.focus();
+  }, 120);
+}
+
+function closeLiveChatPanel() {
+  const panel = document.getElementById('livechat-panel');
+  const fab = document.getElementById('livechat-fab');
+
+  isLiveChatOpen = false;
+  stopLiveChatPolling();
+
+  if (panel) panel.hidden = true;
+  if (fab) {
+    fab.hidden = false;
+    fab.setAttribute('aria-expanded', 'false');
+  }
+}
+
+function toggleLiveChatPanel() {
+  if (isLiveChatOpen) {
+    closeLiveChatPanel();
+  } else {
+    openLiveChatPanel();
+  }
+}
+
+function sendLiveChatQuickReply(text) {
+  if (!isLiveChatOpen) openLiveChatPanel();
+  sendLiveChatMessage(text);
+}
+
+function handleLiveChatSubmit(e) {
+  if (e && typeof e.preventDefault === 'function') e.preventDefault();
+  const inputEl = document.getElementById('livechat-input');
+  if (!inputEl) return;
+  const val = inputEl.value.trim();
+  if (!val) return;
+  sendLiveChatMessage(val);
+}
+
+function continueLiveChatToWhatsApp() {
+  const customerName = getLiveChatCustomerName();
+  const customerMsgs = liveChatMessages
+    .filter(function (m) { return String(m.sender || '').toUpperCase() === 'CUSTOMER'; })
+    .slice(-3)
+    .map(function (m) { return m.message; });
+
+  const combinedText = customerMsgs.join(' ').toLowerCase();
+  const cartMetrics = calculateCartMetrics();
+  const isPoTopic =
+    cartMetrics.hasCustomPo ||
+    combinedText.includes('snack box') ||
+    combinedText.includes('snackbox') ||
+    combinedText.includes('tampah') ||
+    combinedText.includes('tray') ||
+    combinedText.includes('grosir') ||
+    combinedText.includes('agen') ||
+    combinedText.includes('pre-order');
+
+  const targetPhone = isPoTopic ? WA_MANAGER_PHONE : WA_KASIR_PHONE;
+  const targetLabel = isPoTopic ? 'Manager PO' : 'Kasir Toko';
+
+  const lines = [
+    'Halo ' + targetLabel + ' Sin Tradisional (Jl. Situ No. 41 Bandung),',
+    'Saya melanjutkan percakapan dari Live Chat Website sintradisional.com (Harga Toko):'
+  ];
+
+  if (customerName && customerName !== 'Pelanggan Web') {
+    lines.push('*Nama:* ' + customerName);
+  }
+
+  if (customerMsgs.length > 0) {
+    lines.push('*Pertanyaan Chat:* ' + customerMsgs.join(' | '));
+  }
+
+  if (cartMetrics.entries.length > 0) {
+    lines.push('');
+    lines.push('*Pilihan Kue di Keranjang Web:*');
+    cartMetrics.entries.forEach(function (pair) {
+      const item = findItemById(pair[0]);
+      if (!item) return;
+      const prices = getEffectivePrices(item);
+      lines.push('- ' + item.name + ' x' + pair[1] + (item.isPreOrder ? ' (Pre-Order)' : ' (' + formatRp((prices.hargaToko || 0) * pair[1]) + ')'));
+    });
+    if (cartMetrics.grandTotal > 0) {
+      lines.push('*Estimasi Total Harga Toko:* ' + formatRp(cartMetrics.grandTotal));
+    }
+  }
+
+  lines.push('');
+  lines.push('Mohon dibantu konfirmasi stok / pemesanannya. Terima kasih.');
+
+  const finalMessage = appendUtmSourceNote(lines.join('\n'));
+  window.open('https://wa.me/' + targetPhone + '?text=' + encodeURIComponent(finalMessage), '_blank', 'noopener');
+}
+
+function initLiveChatWidget() {
+  liveChatSessionId = getOrCreateChatSessionId();
+  loadLiveChatHistory();
+  updateLiveChatStatusBadge(liveChatMode, liveChatHandledBy);
+  renderLiveChatMessages();
+
+  const chatNameEl = document.getElementById('livechat-cust-name');
+  if (chatNameEl) {
+    try {
+      const savedName = (localStorage.getItem(LIVECHAT_CUST_NAME_KEY) || '').trim();
+      if (savedName) chatNameEl.value = savedName;
+    } catch (e) {}
+
+    chatNameEl.addEventListener('change', function () {
+      const val = chatNameEl.value.trim();
+      try {
+        if (val) localStorage.setItem(LIVECHAT_CUST_NAME_KEY, val);
+      } catch (e) {}
+      const orderNameEl = document.getElementById('cust-name');
+      if (orderNameEl && !orderNameEl.value && val) {
+        orderNameEl.value = val;
+      }
+    });
+  }
+}

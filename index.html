@@ -302,18 +302,18 @@
 
         <article class="voucher-card voucher-ongkir" role="listitem">
           <div class="voucher-left">
-            <span class="voucher-tag">KURIR LOKAL</span>
+            <span class="voucher-tag">POTONGAN KASIR</span>
             <strong class="voucher-pct">Subsidi Ongkir</strong>
           </div>
           <div class="voucher-right">
-            <h3>s/d Rp 15.000</h3>
-            <p>Min. belanja Rp 100.000 khusus pesanan Website &amp; WA Resmi</p>
+            <h3>Rp 15.000</h3>
+            <p>Min. kue basah Rp 100.000 via Toko, Website &amp; WA (termasuk ambil di toko)</p>
           </div>
         </article>
       </div>
 
       <p class="promo-terms">
-        *Diskon 5%–15% berlaku khusus pembelian langsung di Toko Jl. Situ No. 41 &amp; WhatsApp Resmi untuk kategori <strong>Regular, Spesial, dan Kue</strong> (tidak berlaku untuk Keringan &amp; Minuman). Subsidi ongkir kurir lokal s/d Rp 15.000 berlaku untuk semua kategori toko dengan min. belanja Rp 100.000 via Website &amp; WA.
+        *Diskon bertingkat 5%–10% &amp; Subsidi Ongkir Rp 15.000 (min. Rp 100.000) berlaku khusus pembelian langsung di Toko Jl. Situ No. 41, Website &amp; WhatsApp Resmi untuk kategori <strong>Regular, Spesial, dan Kue</strong> (tidak berlaku untuk Keringan &amp; Minuman), otomatis dipotong di aplikasi kasir termasuk saat datang langsung ke toko. Happy Hour 15% (14.00–17.00 WIB) khusus walk-in langsung di Toko.
       </p>
     </section>
 
@@ -592,7 +592,7 @@
         <div id="modal-variants" class="modal-variants" hidden></div>
         <p id="modal-desc" class="modal-desc">Deskripsi kue tradisional.</p>
         <div class="modal-price-note" id="modal-price-note">
-          💡 <strong>Keuntungan Pesan via Toko / WA:</strong> Mendapatkan Harga Asli Toko (jauh lebih murah dibanding harga aplikasi online) plus diskon bertingkat 5%–10% untuk kategori Regular, Spesial &amp; Kue (dan Happy Hour 15% walk-in 14.00–17.00 WIB).
+          💡 <strong>Keuntungan Pesan via Toko / WA:</strong> Mendapatkan Harga Asli Toko (jauh lebih murah dibanding harga aplikasi online) plus diskon bertingkat 5%–10% &amp; Subsidi Ongkir Rp 15.000 (min. Rp 100.000) khusus kategori Regular, Spesial &amp; Kue (dan Happy Hour 15% walk-in 14.00–17.00 WIB).
         </div>
         <div class="modal-actions">
           <div class="modal-qty-control">
@@ -680,6 +680,111 @@
     </div>
   </div>
 
-  <script src="assets/app.js?v=3.0.14"></script>
+  <!-- WIDGET LIVE CHAT AI & KASIR TOKO (RAMAH USIA 40-60 TAHUN) -->
+  <div id="livechat-widget" class="livechat-widget">
+    <button
+      type="button"
+      id="livechat-fab"
+      class="livechat-fab"
+      onclick="toggleLiveChatPanel()"
+      aria-label="Tanya Stok dan Menu via Live Chat"
+      aria-expanded="false"
+    >
+      <span class="livechat-fab-icon" aria-hidden="true">💬</span>
+      <span class="livechat-fab-text">Tanya Stok &amp; Menu</span>
+      <span id="livechat-fab-badge" class="livechat-fab-badge" hidden>0</span>
+    </button>
+
+    <section
+      id="livechat-panel"
+      class="livechat-panel"
+      role="dialog"
+      aria-modal="false"
+      aria-labelledby="livechat-header-title"
+      hidden
+    >
+      <header class="livechat-header">
+        <div class="livechat-header-top">
+          <div class="livechat-brand">
+            <img
+              src="assets/img/logo-sin-tradisional.png"
+              alt="Logo Sin Tradisional"
+              class="livechat-logo"
+              onerror="this.style.display='none'"
+            >
+            <div>
+              <h3 id="livechat-header-title" class="livechat-title">Tanya Sin Tradisional</h3>
+              <p class="livechat-subtitle">Jl. Situ No. 41, Bandung • Harga Asli Toko</p>
+            </div>
+          </div>
+          <button
+            type="button"
+            id="livechat-close-btn"
+            class="livechat-close-btn"
+            onclick="closeLiveChatPanel()"
+            aria-label="Tutup jendela chat"
+          >
+            ✕ Tutup
+          </button>
+        </div>
+        <div class="livechat-status-row">
+          <span id="livechat-status-badge" class="livechat-status-badge mode-ai">
+            🤖 Asisten AI Sin Tradisional
+          </span>
+        </div>
+      </header>
+
+      <div class="livechat-name-bar">
+        <label for="livechat-cust-name">Nama Ibu/Bapak:</label>
+        <input
+          type="text"
+          id="livechat-cust-name"
+          placeholder="Contoh: Ibu Rina (Opsional)"
+          autocomplete="name"
+        >
+      </div>
+
+      <div id="livechat-messages" class="livechat-messages" aria-live="polite"></div>
+
+      <div id="livechat-quick-replies" class="livechat-quick-replies" aria-label="Pertanyaan Cepat">
+        <button type="button" class="livechat-chip" onclick="sendLiveChatQuickReply('Stok kue hari ini?')">
+          Stok kue hari ini?
+        </button>
+        <button type="button" class="livechat-chip" onclick="sendLiveChatQuickReply('Rekomendasi Snack Box')">
+          Rekomendasi Snack Box
+        </button>
+        <button type="button" class="livechat-chip" onclick="sendLiveChatQuickReply('Info diskon toko')">
+          Info diskon toko
+        </button>
+      </div>
+
+      <form id="livechat-form" class="livechat-input-bar" onsubmit="handleLiveChatSubmit(event)">
+        <input
+          type="text"
+          id="livechat-input"
+          class="livechat-input"
+          placeholder="Ketik pertanyaan Ibu/Bapak di sini..."
+          aria-label="Tulis pesan chat"
+          autocomplete="off"
+        >
+        <button type="submit" id="livechat-send-btn" class="livechat-send-btn">
+          Kirim
+        </button>
+      </form>
+
+      <footer class="livechat-footer">
+        <button
+          type="button"
+          id="btn-livechat-wa"
+          class="btn-livechat-wa"
+          onclick="continueLiveChatToWhatsApp()"
+        >
+          💬 Lanjut Pesan via WhatsApp Admin
+        </button>
+      </footer>
+    </section>
+  </div>
+
+  <script src="assets/app.js?v=3.1.0"></script>
 </body>
 </html>
